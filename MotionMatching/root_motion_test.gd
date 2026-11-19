@@ -28,11 +28,7 @@ const DESIRED_FACING_YAW: float = 0.0
 const MATCH_INTERVAL: float = 0.20
 const DEBUG_INTERVAL: float = 1.0
 
-# Penalty for switching to a different animation.
 const ANIMATION_SWITCH_PENALTY: float = 0.05
-
-# Penalty for selecting a timestamp far from the current
-# playback position when continuing the same animation.
 const SAME_ANIMATION_TIME_WEIGHT: float = 0.5
 
 
@@ -69,6 +65,10 @@ var switch_count: int = 0
 var current_animation_path: String = ""
 var current_animation_index: int = -1
 
+# Physical movement diagnostics.
+var debug_previous_position: Vector3 = Vector3.ZERO
+var last_root_motion: Vector3 = Vector3.ZERO
+
 
 # ============================================================
 # INITIALIZATION
@@ -94,6 +94,8 @@ func _ready() -> void:
 
 	if not _initialize_motion_matching():
 		return
+
+	debug_previous_position = global_position
 
 	_start_motion_matching()
 
@@ -207,7 +209,9 @@ func _configure_animation_tree() -> bool:
 
 	character_player.root_node = NodePath("..")
 
-	animation_tree.root_node = NodePath("../Character_01")
+	animation_tree.root_node = NodePath("../Character_01"
+
+	)
 
 	animation_tree.anim_player = animation_tree.get_path_to(
 		character_player
@@ -401,6 +405,7 @@ func _start_motion_matching() -> void:
 	print("\nMotion Matching is running.")
 	print("Search interval: ", MATCH_INTERVAL, " seconds")
 	print("Continuity-aware candidate selection enabled.")
+	print("Physical displacement diagnostics enabled.")
 
 
 # ============================================================
@@ -460,7 +465,6 @@ func _select_continuous_candidate(
 
 		if current_animation_index >= 0:
 			if candidate_animation_index == current_animation_index:
-				# Prefer a nearby timestamp in the current animation.
 				var time_difference := absf(
 					candidate_time - current_playback_time
 				)
@@ -471,7 +475,6 @@ func _select_continuous_candidate(
 					SAME_ANIMATION_TIME_WEIGHT
 				)
 			else:
-				# Switching animations requires a meaningful improvement.
 				continuity_cost = ANIMATION_SWITCH_PENALTY
 
 		var final_score := base_cost + continuity_cost
@@ -566,17 +569,9 @@ func _update_motion_match() -> void:
 		motion_matching_started = false
 		return
 
-	# --------------------------------------------------------
-	# CONTINUE CURRENT ANIMATION WITHOUT RESTARTING
-	# --------------------------------------------------------
-
 	if animation_index == current_animation_index:
 		skipped_restart_count += 1
 		return
-
-	# --------------------------------------------------------
-	# SWITCH TO A DIFFERENT ANIMATION
-	# --------------------------------------------------------
 
 	var state_machine := animation_tree.tree_root as AnimationNodeStateMachine
 
@@ -653,13 +648,20 @@ func _physics_process(delta: float) -> void:
 	# APPLY ROOT MOTION
 	# --------------------------------------------------------
 
+	var position_before: Vector3 = global_position
+
 	var root_motion: Vector3 = animation_tree.get_root_motion_position()
 
 	var world_motion: Vector3 = global_transform.basis * root_motion
 
+	last_root_motion = world_motion
+
 	velocity = world_motion / delta
 
 	move_and_slide()
+
+	var position_after: Vector3 = global_position
+	var actual_displacement: Vector3 = position_after - position_before
 
 	# --------------------------------------------------------
 	# UPDATE TIMERS
@@ -669,26 +671,52 @@ func _physics_process(delta: float) -> void:
 	debug_timer += delta
 
 	# --------------------------------------------------------
-	# DEBUG INFORMATION
+	# PHYSICAL MOVEMENT DIAGNOSTICS
 	# --------------------------------------------------------
 
 	if debug_timer >= DEBUG_INTERVAL:
 		debug_timer = 0.0
 
-		print(
-			"[RUNTIME] Position: ",
-			global_position,
-			" | Velocity: ",
-			velocity,
-			" | Playback time: ",
-			_get_current_playback_time(),
-			" | Animation: ",
-			current_animation_path,
-			" | Switches: ",
-			switch_count,
-			" | Skipped restarts: ",
-			skipped_restart_count
+		var interval_displacement: Vector3 = (
+			global_position - debug_previous_position
 		)
+
+		var actual_world_velocity: Vector3 = (
+			interval_displacement / DEBUG_INTERVAL
+		)
+
+		debug_previous_position = global_position
+
+		print("\n========== PHYSICAL MOVEMENT DIAGNOSTICS ==========")
+
+		print("CharacterBody3D world position: ", global_position)
+
+		print("Actual displacement during last second: ",
+			interval_displacement)
+
+		print("Actual world velocity: ", actual_world_velocity)
+
+		print("Root motion this frame: ", last_root_motion)
+
+		print("Velocity requested from move_and_slide(): ", velocity)
+
+		print("Colliding: ", is_on_wall() or is_on_floor() or is_on_ceiling())
+
+		if get_slide_collision_count() > 0:
+			var collision := get_slide_collision(0)
+			print("First collision normal: ", collision.get_normal())
+		else:
+			print("No slide collisions detected.")
+
+		print("Animation playback time: ", _get_current_playback_time())
+
+		print("Animation: ", current_animation_path)
+
+		print("Animation switches: ", switch_count)
+
+		print("Skipped restarts: ", skipped_restart_count)
+
+		print("====================================================")
 
 	# --------------------------------------------------------
 	# SEARCH
