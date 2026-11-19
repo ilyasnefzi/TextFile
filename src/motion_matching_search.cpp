@@ -1020,6 +1020,223 @@ Dictionary MotionMatchingSearch::search_best_match(
 
 
 // ==================================================
+// CONTINUITY-AWARE MOTION MATCHING SEARCH
+// ==================================================
+
+static double continuity_time_distance(double candidate_time, double current_time, double duration) {
+    if (duration <= 0.000001) return std::abs(candidate_time - current_time);
+    double difference = std::fmod(std::abs(candidate_time - current_time), duration);
+    return std::min(difference, duration - difference);
+}
+
+Dictionary MotionMatchingSearch::search_best_match_continuous(
+    Vector3 desired_velocity,
+    Array desired_future_positions,
+    double desired_facing_yaw,
+    int current_animation_index,
+    double current_animation_time,
+    double animation_switch_penalty,
+    double same_animation_time_weight
+) {
+    Dictionary result;
+    if (database.empty()) {
+        result["success"] = false;
+        result["error"] = "Database has not been loaded.";
+        return result;
+    }
+    if (desired_future_positions.size() != 3) {
+        result["success"] = false;
+        result["error"] = "Expected exactly 3 future trajectory positions.";
+        return result;
+    }
+
+    std::array<Vector3, 3> desired_positions;
+    for (int i = 0; i < 3; i++) {
+        Variant value = desired_future_positions[i];
+        if (value.get_type() != Variant::VECTOR3) {
+            result["success"] = false;
+            result["error"] = "Future trajectory positions must be Vector3 values.";
+            return result;
+        }
+        desired_positions[i] = value;
+    }
+
+    struct Candidate {
+        double selection_score = 0.0;
+        double base_cost = 0.0;
+        double continuity_cost = 0.0;
+        double velocity_cost = 0.0;
+        double trajectory_cost = 0.0;
+        double facing_cost = 0.0;
+        double rotation_cost = 0.0;
+        int animation_index = -1;
+        int sample_index = -1;
+        double time = 0.0;
+        double yaw = 0.0;
+        Vector3 position;
+        Vector3 raw_velocity;
+        Vector3 matching_velocity;
+        std::array<Vector3, 3> future_positions;
+        std::array<double, 3> future_yaw_deltas;
+    };
+
+    std::vector<Candidate> candidates;
+    int evaluated_samples = 0;
+    const bool has_current_animation =
+        current_animation_index >= 0 &&
+        current_animation_index < (int)database.size();
+
+    for (int animation_index = 0; animation_index < (int)database.size(); animation_index++) {
+        const MotionAnimation &animation = database[animation_index];
+        if (!animation.eligible_steady_locomotion) continue;
+
+        for (int sample_index = 0; sample_index < (int)animation.samples.size(); sample_index++) {
+            const MotionSample &sample = animation.samples[sample_index];
+            if (!sample.has_future_trajectory || !sample.has_future_rotation) continue;
+            evaluated_samples++;
+
+            const double velocity_cost = calculate_cost(sample.matching_velocity, desired_velocity);
+            double trajectory_cost = 0.0;
+            for (int i = 0; i < 3; i++) {
+                trajectory_cost += sample.future_positions[i].distance_squared_to(desired_positions[i]);
+            }
+
+            const double facing_difference = wrap_angle(sample.yaw - desired_facing_yaw);
+            const double facing_cost = facing_difference * facing_difference;
+            double rotation_cost = 0.0;
+            for (int i = 0; i < 3; i++) {
+                const double yaw_difference = wrap_angle(sample.future_yaw_deltas[i]);
+                rotation_cost += yaw_difference * yaw_difference;
+            }
+
+            const double base_cost =
+                velocity_cost +
+                trajectory_cost * TRAJECTORY_WEIGHT +
+                facing_cost * FACING_WEIGHT +
+                rotation_cost * ROTATION_WEIGHT;
+
+            double continuity_cost = 0.0;
+            if (has_current_animation) {
+                if (animation_index == current_animation_index) {
+                    const double time_distance = continuity_time_distance(
+                        sample.time, current_animation_time, animation.duration
+                    );
+                    continuity_cost = time_distance * time_distance *
+                        std::max(0.0, same_animation_time_weight);
+                } else {
+                    continuity_cost = std::max(0.0, animation_switch_penalty);
+                }
+            }
+
+            Candidate candidate;
+            candidate.selection_score = base_cost + continuity_cost;
+            candidate.base_cost = base_cost;
+            candidate.continuity_cost = continuity_cost;
+            candidate.velocity_cost = velocity_cost;
+            candidate.trajectory_cost = trajectory_cost;
+            candidate.facing_cost = facing_cost;
+            candidate.rotation_cost = rotation_cost;
+            candidate.animation_index = animation_index;
+            candidate.sample_index = sample_index;
+            candidate.time = sample.time;
+            candidate.yaw = sample.yaw;
+            candidate.position = sample.position;
+            candidate.raw_velocity = sample.velocity;
+            candidate.matching_velocity = sample.matching_velocity;
+            candidate.future_positions = sample.future_positions;
+            candidate.future_yaw_deltas = sample.future_yaw_deltas;
+            candidates.push_back(candidate);
+        }
+    }
+
+    if (candidates.empty()) {
+        result["success"] = false;
+        result["error"] = "No eligible steady locomotion samples found.";
+        result["eligible_animations"] = eligible_animation_count;
+        result["eligible_samples"] = eligible_search_samples;
+        return result;
+    }
+
+    std::sort(candidates.begin(), candidates.end(),
+        [](const Candidate &a, const Candidate &b) {
+            return a.selection_score < b.selection_score;
+        });
+
+    Array top_matches;
+    const int result_count = std::min(10, (int)candidates.size());
+    for (int i = 0; i < result_count; i++) {
+        const Candidate &candidate = candidates[i];
+        const MotionAnimation &animation = database[candidate.animation_index];
+        Dictionary match;
+        match["rank"] = i + 1;
+        match["animation_name"] = animation.name;
+        match["animation_index"] = candidate.animation_index;
+        match["sample_index"] = candidate.sample_index;
+        match["time"] = candidate.time;
+        match["duration"] = animation.duration;
+        match["position"] = candidate.position;
+        match["yaw"] = candidate.yaw;
+        match["yaw_degrees"] = Math::rad_to_deg(candidate.yaw);
+        match["raw_velocity"] = candidate.raw_velocity;
+        match["velocity"] = candidate.matching_velocity;
+        Array future_positions;
+        Array future_yaw_deltas;
+        for (int j = 0; j < 3; j++) {
+            future_positions.push_back(candidate.future_positions[j]);
+            future_yaw_deltas.push_back(Math::rad_to_deg(candidate.future_yaw_deltas[j]));
+        }
+        match["future_positions"] = future_positions;
+        match["future_yaw_deltas_degrees"] = future_yaw_deltas;
+        match["velocity_cost"] = candidate.velocity_cost;
+        match["trajectory_cost"] = candidate.trajectory_cost;
+        match["facing_cost"] = candidate.facing_cost;
+        match["rotation_cost"] = candidate.rotation_cost;
+        match["base_cost"] = candidate.base_cost;
+        match["continuity_cost"] = candidate.continuity_cost;
+        match["selection_score"] = candidate.selection_score;
+        match["cost"] = candidate.selection_score;
+        top_matches.push_back(match);
+    }
+
+    const Candidate &best = candidates.front();
+    const MotionAnimation &best_animation = database[best.animation_index];
+    result["success"] = true;
+    result["animation_name"] = best_animation.name;
+    result["animation_index"] = best.animation_index;
+    result["sample_index"] = best.sample_index;
+    result["time"] = best.time;
+    result["duration"] = best_animation.duration;
+    result["position"] = best.position;
+    result["raw_velocity"] = best.raw_velocity;
+    result["velocity"] = best.matching_velocity;
+    result["yaw"] = best.yaw;
+    result["yaw_degrees"] = Math::rad_to_deg(best.yaw);
+    result["desired_facing_yaw_degrees"] = Math::rad_to_deg(desired_facing_yaw);
+    result["velocity_cost"] = best.velocity_cost;
+    result["trajectory_cost"] = best.trajectory_cost;
+    result["facing_cost"] = best.facing_cost;
+    result["rotation_cost"] = best.rotation_cost;
+    result["base_cost"] = best.base_cost;
+    result["continuity_cost"] = best.continuity_cost;
+    result["selection_score"] = best.selection_score;
+    result["cost"] = best.selection_score;
+    result["samples_evaluated"] = evaluated_samples;
+    result["valid_database_samples"] = valid_search_samples;
+    result["eligible_animations"] = eligible_animation_count;
+    result["eligible_samples"] = eligible_search_samples;
+    result["current_animation_index"] = current_animation_index;
+    result["current_animation_time"] = current_animation_time;
+    result["top_matches"] = top_matches;
+    Array best_future_yaw_deltas;
+    for (int i = 0; i < 3; i++) {
+        best_future_yaw_deltas.push_back(Math::rad_to_deg(best.future_yaw_deltas[i]));
+    }
+    result["future_yaw_deltas_degrees"] = best_future_yaw_deltas;
+    return result;
+}
+
+
+// ==================================================
 // DATABASE COVERAGE ANALYZER
 // ==================================================
 
@@ -1886,7 +2103,21 @@ void MotionMatchingSearch::_bind_methods() {
     );
 
     ClassDB::bind_method(
-        D_METHOD("analyze_database_coverage"),
+        D_METHOD(
+            "search_best_match_continuous",
+            "desired_velocity",
+            "desired_future_positions",
+            "desired_facing_yaw",
+            "current_animation_index",
+            "current_animation_time",
+            "animation_switch_penalty",
+            "same_animation_time_weight"
+        ),
+        &MotionMatchingSearch::search_best_match_continuous
+    );
+
+    ClassDB::bind_method(
+
         &MotionMatchingSearch::analyze_database_coverage
     );
 
