@@ -1,0 +1,100 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+================================================================
+        TRAJECTORY / CURVATURE DIAGNOSTIC
+================================================================
+Generated: 2026-11-19T19:47:01
+Project database: user://motion_database.json
+Speed: 4.500000 m/s
+Future times: [0.200000, 0.400000, 0.600000] s
+Coordinate convention: forward=+Z, backward=-Z, left=-X, right=+X
+Turn labeling: omega > 0 => +X => RIGHT; omega < 0 => -X => LEFT
+Desired facing yaw: 0.000000 rad
+Top candidates printed: 10
+
+Method names checked before use:
+  load_database(String) -> bool
+  get_animation_count() -> int
+  get_sample_count() -> int
+  get_eligible_animation_count() -> int
+  get_eligible_sample_count() -> int
+  search_best_match(Vector3, Array, float) -> Dictionary
+  search_best_match_continuous(Vector3, Array, float, int, float, float, float) -> Dictionary
+  get_last_error() -> String
+---------- DATABASE INITIALIZATION ----------
+load_database(user://motion_database.json): true
+Animation count: 718
+Sample count: 82385
+Eligible animation count: 37
+Eligible sample count: 3191
+
+================================================================
+ GROUP 1 - STRAIGHT LOCOMOTION
+================================================================
+
+================================================================
+TEST: STRAIGHT FORWARD
+Category: STRAIGHT | basic
+Desired velocity: (0.000000, 0.000000, 4.500000)
+Desired future positions:
+  t=0.200000 s -> (0.000000, 0.000000, 0.900000)
+  t=0.400000 s -> (0.000000, 0.000000, 1.800000)
+  t=0.600000 s -> (0.000000, 0.000000, 2.700000)
+API NOTE: Straight query: velocity + future positions are directly supported.
+
+---------- RESULT ----------
+BEST MATCH
+  Animation: M Neutral Run Loop F_fit_Armature_114
+  Animation index: 111
+  Sample time: 1.866667
+  Yaw degrees: 0.000000
+  Local velocity: (0.000000, -0.000000, 4.578523)
+  Raw velocity: (0.000000, -0.000000, 4.578523)
+  Future yaw deltas (deg): [0.000000, 0.000000, 0.000000]
+  Meaningful root rotation: NO(max_abs=0.000000 deg)
+  Future positions (from top_matches[0]): [(0.000000, -0.000000, 0.915707), (0.000000, -0.000000, 1.831412), (0.000000, -0.000000, 2.747120)]
+
+BEST COST COMPONENTS
+  velocity_cost:   0.006166
+  trajectory_cost: 0.003454
+  facing_cost:     0.000000
+  rotation_cost:   0.000000
+  cost (total):    0.013073
+  samples_evaluated: 3191
+  valid_database_samples: 69461
+  eligible_animations: 37
+  eligible_samples: 3191
+
+TOP 10 CANDIDATES
+
+#1 | M Neutral Run Loop F_fit_Armature_114 | class=STRAIGHT_LOOP
+  animation_index: 111
+  sample_index: 56
+  sample time: 1.866667
+  duration: 2.500000
+  local velocity: (0.000000, -0.000000, 4.578523)
+  raw velocity: (0.000000, -0.000000, 4.578523)
+  velocity_cost:   0.006166
+  trajectory_cost: 0.003454
+  facing_cost:     0.000000
+  rotation_cost:   0.000000
+  cost:            0.013073
+  future positions: [(0.000000, -0.000000, 0.915707), (0.000000, -0.000000, 1.831412), (0.000000, -0.000000, 2.747120)]
+  future yaw deltas (deg): [0.000000, 0.000000, 0.000000]
+  meaningful root rotation: NO(max_abs=0.000000 deg)
+
+#2 | M Neutral Run Loop F_fit_Armature_114 | class=STRAIGHT_LOOP
+  animation_index: 111
+  sample_index: 57
+  sample time: 1.900000
+  duration: 2.500000
+  local velocity: (0.000000, -0.000000, 4.578523)
+  raw velocity: (0.000000, -0.000000, 4.578523)
+  velocity_cost:   0.006166
+  trajectory_cost: 0.003454
+  facing_cost:     0.000000
+  rotation_cost:   0.000000
+  cost:            0.013073
+  future positions: [(0.000000, -0.000000, 0.915707), (0.000000, -0.000000, 1.831412), (0.000000, -0.000000, 2.747120)]
+  future yaw deltas (deg): [0.000000, 0.000000, 0.000000]
+  meaningful root rotation: NO(max_abs=0.000000 deg)
