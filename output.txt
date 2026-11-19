@@ -1,442 +1,718 @@
-extends Node
-
-# ============================================================
-# LOOP CANDIDATE DIAGNOSTIC
-# ============================================================
-
-const SAMPLE_RATE: float = 30.0
-const EDGE_WINDOW: float = 0.05
-
-const VELOCITY_DIRECTION_LIMIT: float = 0.35
-const VELOCITY_MAGNITUDE_LIMIT: float = 0.35
-const ROTATION_SEAM_LIMIT_DEGREES: float = 15.0
-
-const ANIMATION_FILES: Array[String] = [
-	"res://Assets/Animations/Run.glb",
-	"res://Assets/Animations/Walk.glb",
-	"res://Assets/Animations/Sprint.glb",
-	"res://Assets/Animations/Crouch.glb",
-	"res://Assets/Animations/Idle.glb"
-]
-
-
-func _ready() -> void:
-	run_diagnostic()
-
-
-# ============================================================
-# MAIN
-# ============================================================
-
-func run_diagnostic() -> void:
-	print("\n")
-	print("============================================================")
-	print("             ANIMATION LOOP CANDIDATE DIAGNOSTIC")
-	print("============================================================")
-
-	var total_animations: int = 0
-	var total_candidates: int = 0
-
-	for source_file in ANIMATION_FILES:
-		print("\n")
-		print("============================================================")
-		print("SOURCE: ", source_file)
-		print("============================================================")
-
-		var packed_scene: PackedScene = load(source_file) as PackedScene
-
-		if packed_scene == null:
-			push_error("Could not load: " + source_file)
-			continue
-
-		var instance: Node = packed_scene.instantiate()
-		add_child(instance)
-
-		var animation_player: AnimationPlayer = find_animation_player(instance)
-
-		if animation_player == null:
-			push_error("No AnimationPlayer found: " + source_file)
-			instance.queue_free()
-			continue
-
-		var file_candidates: Array[Dictionary] = []
-		var file_animations: int = 0
-
-		for animation_name in animation_player.get_animation_list():
-			var animation: Animation = animation_player.get_animation(animation_name)
-
-			if animation == null:
-				continue
-
-			var position_track: int = find_root_track(
-				animation,
-				Animation.TYPE_POSITION_3D
-			)
-
-			if position_track == -1:
-				continue
-
-			if animation.length <= EDGE_WINDOW * 2.0:
-				continue
-
-			if animation.track_get_key_count(position_track) < 2:
-				continue
-
-			var rotation_track: int = find_root_track(
-				animation,
-				Animation.TYPE_ROTATION_3D
-			)
-
-			var result: Dictionary = analyze_animation(
-				animation,
-				position_track,
-				rotation_track
-			)
-
-			result["name"] = str(animation_name)
-			result["source"] = source_file.get_file()
-			result["has_loop_tag"] = has_loop_tag(str(animation_name))
-
-			file_animations += 1
-			total_animations += 1
-
-			if is_candidate(result):
-				file_candidates.append(result)
-
-		file_candidates.sort_custom(
-			func(a: Dictionary, b: Dictionary) -> bool:
-				return float(a["score"]) < float(b["score"])
-		)
-
-		print("\nAnimations inspected: ", file_animations)
-		print("Potential loop candidates: ", file_candidates.size())
-
-		for candidate in file_candidates:
-			total_candidates += 1
-			print_candidate(candidate)
-
-		instance.queue_free()
-
-	print("\n")
-	print("============================================================")
-	print("                 DIAGNOSTIC SUMMARY")
-	print("============================================================")
-	print("Animations inspected: ", total_animations)
-	print("Potential loop candidates: ", total_candidates)
-	print("============================================================\n")
-
-
-# ============================================================
-# ANALYZE ONE ANIMATION
-# ============================================================
-
-func analyze_animation(
-	animation: Animation,
-	position_track: int,
-	rotation_track: int
-) -> Dictionary:
-
-	var duration: float = animation.length
-
-	var initial_position: Vector3 = (
-		animation.position_track_interpolate(position_track, 0.0)
-	)
-
-	var final_position: Vector3 = (
-		animation.position_track_interpolate(position_track, duration)
-	)
-
-	var displacement: Vector3 = final_position - initial_position
-
-	var horizontal_displacement: Vector3 = Vector3(
-		displacement.x,
-		0.0,
-		displacement.z
-	)
-
-	var average_velocity: Vector3 = displacement / duration
-
-	var initial_velocity: Vector3 = estimate_velocity(
-		animation,
-		position_track,
-		EDGE_WINDOW,
-		true
-	)
-
-	var final_velocity: Vector3 = estimate_velocity(
-		animation,
-		position_track,
-		EDGE_WINDOW,
-		false
-	)
-
-	var initial_horizontal: Vector3 = Vector3(
-		initial_velocity.x,
-		0.0,
-		initial_velocity.z
-	)
-
-	var final_horizontal: Vector3 = Vector3(
-		final_velocity.x,
-		0.0,
-		final_velocity.z
-	)
-
-	var initial_speed: float = initial_horizontal.length()
-	var final_speed: float = final_horizontal.length()
-
-	var velocity_magnitude_difference: float = absf(
-		initial_speed - final_speed
-	)
-
-	var velocity_direction_difference: float = 1.0
-
-	if initial_speed > 0.05 and final_speed > 0.05:
-		velocity_direction_difference = (
-			1.0 - initial_horizontal.normalized().dot(
-				final_horizontal.normalized()
-			)
-		) * 0.5
-	else:
-		velocity_direction_difference = 0.0 if (
-			initial_speed <= 0.05 and final_speed <= 0.05
-		) else 1.0
-
-	var rotation_difference_degrees: float = 0.0
-
-	if rotation_track != -1:
-		var initial_rotation: Quaternion = (
-			animation.rotation_track_interpolate(
-				rotation_track,
-				0.0
-			)
-		)
-
-		var final_rotation: Quaternion = (
-			animation.rotation_track_interpolate(
-				rotation_track,
-				duration
-			)
-		)
-
-		var relative_rotation: Quaternion = (
-			initial_rotation.inverse() * final_rotation
-		).normalized()
-
-		rotation_difference_degrees = rad_to_deg(
-			relative_rotation.get_angle()
-		)
-
-	var score: float = (
-		velocity_direction_difference * 100.0
-		+ velocity_magnitude_difference * 10.0
-		+ rotation_difference_degrees
-	)
-
-	return {
-		"duration": duration,
-		"displacement": displacement,
-		"horizontal_displacement": horizontal_displacement,
-		"average_velocity": average_velocity,
-		"initial_velocity": initial_velocity,
-		"final_velocity": final_velocity,
-		"initial_speed": initial_speed,
-		"final_speed": final_speed,
-		"velocity_direction_difference": velocity_direction_difference,
-		"velocity_magnitude_difference": velocity_magnitude_difference,
-		"rotation_difference_degrees": rotation_difference_degrees,
-		"score": score
-	}
-
-
-# ============================================================
-# ROOT VELOCITY
-# ============================================================
-
-func estimate_velocity(
-	animation: Animation,
-	position_track: int,
-	window: float,
-	at_start: bool
-) -> Vector3:
-
-	var first_time: float
-	var second_time: float
-
-	if at_start:
-		first_time = 0.0
-		second_time = window
-	else:
-		first_time = animation.length - window
-		second_time = animation.length
-
-	var first_position: Vector3 = (
-		animation.position_track_interpolate(
-			position_track,
-			first_time
-		)
-	)
-
-	var second_position: Vector3 = (
-		animation.position_track_interpolate(
-			position_track,
-			second_time
-		)
-	)
-
-	return (second_position - first_position) / window
-
-
-# ============================================================
-# CANDIDATE FILTER
-# ============================================================
-
-func is_candidate(result: Dictionary) -> bool:
-
-	var initial_speed: float = float(result["initial_speed"])
-	var final_speed: float = float(result["final_speed"])
-
-	var direction_difference: float = float(
-		result["velocity_direction_difference"]
-	)
-
-	var magnitude_difference: float = float(
-		result["velocity_magnitude_difference"]
-	)
-
-	var rotation_difference: float = float(
-		result["rotation_difference_degrees"]
-	)
-
-	var average_velocity: Vector3 = result["average_velocity"]
-
-	var average_horizontal_speed: float = Vector2(
-		average_velocity.x,
-		average_velocity.z
-	).length()
-
-	# Exclude clips that are clearly not locomotion speed.
-	if average_horizontal_speed > 8.0:
-		return false
-
-	# Exclude large endpoint velocity discontinuities.
-	if direction_difference > VELOCITY_DIRECTION_LIMIT:
-		return false
-
-	if magnitude_difference > VELOCITY_MAGNITUDE_LIMIT:
-		return false
-
-	# Exclude large accumulated root rotations.
-	if rotation_difference > ROTATION_SEAM_LIMIT_DEGREES:
-		return false
-
-	# Require some actual movement, unless it is an in-place loop.
-	var displacement: Vector3 = result["horizontal_displacement"]
-
-	if displacement.length() < 0.01:
-		if maxf(initial_speed, final_speed) > 0.5:
-			return true
-
-		return false
-
-	# Moving clips must have meaningful movement.
-	if average_horizontal_speed < 0.1:
-		return false
-
-	return true
-
-
-# ============================================================
-# PRINT
-# ============================================================
-
-func print_candidate(result: Dictionary) -> void:
-
-	print("\n----------------------------------------")
-	print("CANDIDATE: ", result["name"])
-
-	print("Already has loop tag: ", result["has_loop_tag"])
-	print("Duration: ", snappedf(float(result["duration"]), 0.001))
-
-	print("Displacement: ", result["displacement"])
-	print("Average velocity: ", result["average_velocity"])
-
-	print("Initial velocity: ", result["initial_velocity"])
-	print("Final velocity: ", result["final_velocity"])
-
-	print(
-		"Initial speed: ",
-		snappedf(float(result["initial_speed"]), 0.001)
-	)
-
-	print(
-		"Final speed: ",
-		snappedf(float(result["final_speed"]), 0.001)
-	)
-
-	print(
-		"Velocity direction difference: ",
-		snappedf(float(result["velocity_direction_difference"]), 0.001)
-	)
-
-	print(
-		"Velocity magnitude difference: ",
-		snappedf(float(result["velocity_magnitude_difference"]), 0.001)
-	)
-
-	print(
-		"Accumulated root rotation: ",
-		snappedf(float(result["rotation_difference_degrees"]), 0.01),
-		" degrees"
-	)
-
-	print("Diagnostic score: ", snappedf(float(result["score"]), 0.001))
-
-
-# ============================================================
-# HELPERS
-# ============================================================
-
-func find_animation_player(node: Node) -> AnimationPlayer:
-
-	if node is AnimationPlayer:
-		return node as AnimationPlayer
-
-	for child in node.get_children():
-		var result: AnimationPlayer = find_animation_player(child)
-
-		if result != null:
-			return result
-
-	return null
-
-
-func find_root_track(
-	animation: Animation,
-	track_type: Animation.TrackType
-) -> int:
-
-	for track_index in range(animation.get_track_count()):
-
-		if animation.track_get_type(track_index) != track_type:
-			continue
-
-		var track_path: String = str(
-			animation.track_get_path(track_index)
-		)
-
-		if track_path.ends_with(":root"):
-			return track_index
-
-	return -1
-
-
-func has_loop_tag(animation_name: String) -> bool:
-
-	var tokens: PackedStringArray = (
-		animation_name.to_lower()
-		.replace("_", " ")
-		.split(" ", false)
-	)
-
-	return "loop" in tokens
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward Mobile - Using Device #0: NVIDIA - NVIDIA T500
+
+
+
+============================================================
+             ANIMATION LOOP CANDIDATE DIAGNOSTIC
+============================================================
+
+
+============================================================
+SOURCE: res://Assets/Animations/Run.glb
+============================================================
+
+Animations inspected: 221
+Potential loop candidates: 10
+
+----------------------------------------
+CANDIDATE: M Neutral Run Loop F_fit_Armature_114
+Already has loop tag: true
+Duration: 2.5
+Displacement: (0.0, -0.0, 11.44633)
+Average velocity: (0.0, -0.0, 4.578533)
+Initial velocity: (0.0, -0.0, 4.578533)
+Final velocity: (0.0, -0.0, 4.578533)
+Initial speed: 4.579
+Final speed: 4.579
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Loop F L 20_fit_Armature_113
+Already has loop tag: true
+Duration: 2.5
+Displacement: (3.914876, -0.0, 10.75604)
+Average velocity: (1.56595, -0.0, 4.302415)
+Initial velocity: (1.56595, -0.0, 4.302414)
+Final velocity: (1.565948, -0.0, 4.302406)
+Initial speed: 4.579
+Final speed: 4.579
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Loop F R 20_fit_Armature_112
+Already has loop tag: true
+Duration: 2.5
+Displacement: (-3.914876, -0.0, 10.75604)
+Average velocity: (-1.56595, -0.0, 4.302415)
+Initial velocity: (-1.56595, -0.0, 4.302414)
+Final velocity: (-1.565948, -0.0, 4.302406)
+Initial speed: 4.579
+Final speed: 4.579
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Shuffle RR to RL Lfoot_fit_Armature_062
+Already has loop tag: false
+Duration: 2.833
+Displacement: (-9.080733, 0.0, 0.0)
+Average velocity: (-3.204965, 0.0, 0.0)
+Initial velocity: (-3.204966, 0.0, 0.0)
+Final velocity: (-3.204956, 0.0, 0.0)
+Initial speed: 3.205
+Final speed: 3.205
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Loop FL_fit_Armature_111
+Already has loop tag: true
+Duration: 2.5
+Displacement: (8.09378, -0.0, 8.09378)
+Average velocity: (3.237512, -0.0, 3.237512)
+Initial velocity: (3.237512, -0.0, 3.237512)
+Final velocity: (3.237505, -0.0, 3.237505)
+Initial speed: 4.579
+Final speed: 4.579
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Loop FR_fit_Armature_110
+Already has loop tag: true
+Duration: 2.5
+Displacement: (-8.09378, -0.0, 8.09378)
+Average velocity: (-3.237512, -0.0, 3.237512)
+Initial velocity: (-3.237512, -0.0, 3.237512)
+Final velocity: (-3.237505, -0.0, 3.237505)
+Initial speed: 4.579
+Final speed: 4.579
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Loop Strafe FL_fit_Armature_102
+Already has loop tag: true
+Duration: 2.5
+Displacement: (8.093781, -0.0, 8.093781)
+Average velocity: (3.237513, -0.0, 3.237513)
+Initial velocity: (3.237512, -0.0, 3.237512)
+Final velocity: (3.237505, -0.0, 3.237505)
+Initial speed: 4.579
+Final speed: 4.579
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Run Circle Strafe R_fit_Armature_189
+Already has loop tag: false
+Duration: 8.333
+Displacement: (0.0, 0.0, 0.0)
+Average velocity: (0.0, 0.0, 0.0)
+Initial velocity: (0.07251, 0.0, -0.958106)
+Final velocity: (-0.300445, 0.0, -0.911713)
+Initial speed: 0.961
+Final speed: 0.96
+Velocity direction difference: 0.038
+Velocity magnitude difference: 0.001
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 3.837
+
+----------------------------------------
+CANDIDATE: M Neutral Run Prism FR F Rfoot_fit_Armature_073
+Already has loop tag: false
+Duration: 2.667
+Displacement: (-3.369885, -0.0, 10.89787)
+Average velocity: (-1.263707, -0.0, 4.086701)
+Initial velocity: (-3.241987, -0.0, 3.230596)
+Final velocity: (-0.07122, -0.0, 4.575157)
+Initial speed: 4.577
+Final speed: 4.576
+Velocity direction difference: 0.142
+Velocity magnitude difference: 0.001
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.171
+
+----------------------------------------
+CANDIDATE: M Neutral Run Prism FR F Lfoot_fit_Armature_074
+Already has loop tag: false
+Duration: 2.667
+Displacement: (-3.582417, -0.0, 10.80782)
+Average velocity: (-1.343406, -0.0, 4.052932)
+Initial velocity: (-3.233581, -0.0, 3.232341)
+Final velocity: (-0.053847, -0.0, 4.577541)
+Initial speed: 4.572
+Final speed: 4.578
+Velocity direction difference: 0.142
+Velocity magnitude difference: 0.006
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.296
+
+
+============================================================
+SOURCE: res://Assets/Animations/Walk.glb
+============================================================
+
+Animations inspected: 224
+Potential loop candidates: 20
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Shuffle RR to RL Rfoot_fit_Armature_058
+Already has loop tag: false
+Duration: 4.333
+Displacement: (-7.142515, 0.0, 0.0)
+Average velocity: (-1.648273, 0.0, 0.0)
+Initial velocity: (-1.648273, 0.0, 0.0)
+Final velocity: (-1.648273, 0.0, 0.0)
+Initial speed: 1.648
+Final speed: 1.648
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop F L 20_fit_Armature_111
+Already has loop tag: true
+Duration: 4.0
+Displacement: (2.505543, -0.0, 6.883925)
+Average velocity: (0.626386, -0.0, 1.720981)
+Initial velocity: (0.626386, -0.0, 1.720981)
+Final velocity: (0.626388, -0.0, 1.720982)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop F R 20_fit_Armature_110
+Already has loop tag: true
+Duration: 4.0
+Displacement: (-2.505543, -0.0, 6.883925)
+Average velocity: (-0.626386, -0.0, 1.720981)
+Initial velocity: (-0.626386, -0.0, 1.720981)
+Final velocity: (-0.626388, -0.0, 1.720982)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop FL_fit_Armature_109
+Already has loop tag: true
+Duration: 4.0
+Displacement: (5.180057, -0.0, 5.180057)
+Average velocity: (1.295014, -0.0, 1.295014)
+Initial velocity: (1.295014, -0.0, 1.295014)
+Final velocity: (1.295013, -0.0, 1.295013)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop FR_fit_Armature_108
+Already has loop tag: true
+Duration: 4.0
+Displacement: (-5.180291, -0.0, 5.180291)
+Average velocity: (-1.295073, -0.0, 1.295073)
+Initial velocity: (-1.295073, -0.0, 1.295073)
+Final velocity: (-1.295071, -0.0, 1.295071)
+Initial speed: 1.832
+Final speed: 1.832
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop F_fit_Armature_112
+Already has loop tag: true
+Duration: 4.0
+Displacement: (0.0, -0.0, 7.325719)
+Average velocity: (0.0, -0.0, 1.83143)
+Initial velocity: (0.0, -0.0, 1.83143)
+Final velocity: (0.0, -0.0, 1.831427)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Shuffle F RFF to LFF Rfoot_fit_Armature_062
+Already has loop tag: false
+Duration: 4.208
+Displacement: (0.0, -0.0, 7.319545)
+Average velocity: (0.0, -0.0, 1.739298)
+Initial velocity: (0.0, -0.0, 1.648252)
+Final velocity: (0.0, -0.0, 1.526194)
+Initial speed: 1.648
+Final speed: 1.526
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.122
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 1.221
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop BR_fit_Armature_113
+Already has loop tag: true
+Duration: 4.042
+Displacement: (-3.91753, 0.0, -3.91753)
+Average velocity: (-0.969286, 0.0, -0.969286)
+Initial velocity: (-0.971288, 0.0, -0.971288)
+Final velocity: (-0.809417, 0.0, -0.809417)
+Initial speed: 1.374
+Final speed: 1.145
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.229
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 2.289
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop BL_fit_Armature_114
+Already has loop tag: true
+Duration: 4.042
+Displacement: (3.91753, 0.0, -3.91753)
+Average velocity: (0.969286, 0.0, -0.969286)
+Initial velocity: (0.971288, 0.0, -0.971288)
+Final velocity: (0.809417, 0.0, -0.809417)
+Initial speed: 1.374
+Final speed: 1.145
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.229
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 2.289
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop B_fit_Armature_115
+Already has loop tag: true
+Duration: 4.042
+Displacement: (0.0, 0.0, -5.540038)
+Average velocity: (0.0, 0.0, -1.370731)
+Initial velocity: (0.0, 0.0, -1.373563)
+Final velocity: (0.0, 0.0, -1.144638)
+Initial speed: 1.374
+Final speed: 1.145
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.229
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 2.289
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop LL_fit_Armature_107
+Already has loop tag: true
+Duration: 3.708
+Displacement: (6.098456, 0.0, 0.0)
+Average velocity: (1.644527, 0.0, 0.0)
+Initial velocity: (1.648231, 0.0, 0.0)
+Final velocity: (1.373539, 0.0, 0.0)
+Initial speed: 1.648
+Final speed: 1.374
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.275
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 2.747
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop RR_fit_Armature_103
+Already has loop tag: true
+Duration: 3.708
+Displacement: (-6.098456, 0.0, 0.0)
+Average velocity: (-1.644527, 0.0, 0.0)
+Initial velocity: (-1.648231, 0.0, 0.0)
+Final velocity: (-1.373539, 0.0, 0.0)
+Initial speed: 1.648
+Final speed: 1.374
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.275
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 2.747
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Loop RR offset_fit_Armature_102
+Already has loop tag: true
+Duration: 3.708
+Displacement: (-5.634238, 0.0, -2.333778)
+Average velocity: (-1.519345, 0.0, -0.629333)
+Initial velocity: (-1.522767, 0.0, -0.630751)
+Final velocity: (-1.268978, 0.0, -0.525641)
+Initial speed: 1.648
+Final speed: 1.374
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.275
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 2.747
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism F FL Rfoot_fit_Armature_080
+Already has loop tag: false
+Duration: 5.0
+Displacement: (4.680687, -0.0, 7.230433)
+Average velocity: (0.936137, -0.0, 1.446087)
+Initial velocity: (0.008753, -0.0, 1.830301)
+Final velocity: (1.294928, -0.0, 1.294928)
+Initial speed: 1.83
+Final speed: 1.831
+Velocity direction difference: 0.145
+Velocity magnitude difference: 0.001
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.486
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism FL F Lfoot_fit_Armature_077
+Already has loop tag: false
+Duration: 5.0
+Displacement: (1.866539, -0.0, 8.412692)
+Average velocity: (0.373308, -0.0, 1.682538)
+Initial velocity: (1.290982, -0.0, 1.298723)
+Final velocity: (0.0, -0.0, 1.831846)
+Initial speed: 1.831
+Final speed: 1.832
+Velocity direction difference: 0.145
+Velocity magnitude difference: 0.001
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.546
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism FL F Rfoot_fit_Armature_076
+Already has loop tag: false
+Duration: 5.0
+Displacement: (1.931288, -0.0, 8.385389)
+Average velocity: (0.386258, -0.0, 1.677078)
+Initial velocity: (1.292982, -0.0, 1.297235)
+Final velocity: (0.000001, -0.0, 1.832256)
+Initial speed: 1.832
+Final speed: 1.832
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.001
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.594
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism FR F Lfoot_fit_Armature_075
+Already has loop tag: false
+Duration: 5.0
+Displacement: (-1.805248, -0.0, 8.438509)
+Average velocity: (-0.36105, -0.0, 1.687702)
+Initial velocity: (-1.294205, -0.0, 1.296535)
+Final velocity: (0.0, -0.0, 1.831617)
+Initial speed: 1.832
+Final speed: 1.832
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.616
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism FR F Rfoot_fit_Armature_074
+Already has loop tag: false
+Duration: 5.0
+Displacement: (-1.783663, -0.0, 8.44745)
+Average velocity: (-0.356733, -0.0, 1.68949)
+Initial velocity: (-1.294804, -0.0, 1.295881)
+Final velocity: (0.0, -0.0, 1.831551)
+Initial speed: 1.832
+Final speed: 1.832
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.633
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism F FL Lfoot_fit_Armature_081
+Already has loop tag: false
+Duration: 5.0
+Displacement: (4.57433, -0.0, 7.276697)
+Average velocity: (0.914866, -0.0, 1.455339)
+Initial velocity: (0.0, -0.0, 1.831431)
+Final velocity: (1.295013, -0.0, 1.295013)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.645
+
+----------------------------------------
+CANDIDATE: M Neutral Walk Prism F FR Rfoot_fit_Armature_078
+Already has loop tag: false
+Duration: 5.0
+Displacement: (-4.640169, -0.0, 7.263856)
+Average velocity: (-0.928034, -0.0, 1.452771)
+Initial velocity: (-0.0, -0.0, 1.831431)
+Final velocity: (-1.295862, -0.0, 1.295862)
+Initial speed: 1.831
+Final speed: 1.833
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.001
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 14.657
+
+
+============================================================
+SOURCE: res://Assets/Animations/Sprint.glb
+============================================================
+
+Animations inspected: 37
+Potential loop candidates: 5
+
+----------------------------------------
+CANDIDATE: M Neutral Sprint Loop FL_fit_Armature_036
+Already has loop tag: true
+Duration: 2.0
+Displacement: (9.065034, -0.0, 9.065034)
+Average velocity: (4.532517, -0.0, 4.532517)
+Initial velocity: (4.532517, -0.0, 4.532517)
+Final velocity: (4.532509, -0.0, 4.532509)
+Initial speed: 6.41
+Final speed: 6.41
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Sprint Loop FR_fit_Armature_035
+Already has loop tag: true
+Duration: 2.0
+Displacement: (-9.065034, -0.0, 9.065034)
+Average velocity: (-4.532517, -0.0, 4.532517)
+Initial velocity: (-4.532517, -0.0, 4.532517)
+Final velocity: (-4.532509, -0.0, 4.532509)
+Initial speed: 6.41
+Final speed: 6.41
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Sprint Loop F L 20_fit_Armature_038
+Already has loop tag: true
+Duration: 2.0
+Displacement: (4.384661, -0.0, 12.04676)
+Average velocity: (2.192331, -0.0, 6.023381)
+Initial velocity: (2.192331, -0.0, 6.023381)
+Final velocity: (2.192326, -0.0, 6.023369)
+Initial speed: 6.41
+Final speed: 6.41
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Sprint Loop F R 20_fit_Armature_037
+Already has loop tag: true
+Duration: 2.0
+Displacement: (-4.384661, -0.0, 12.04676)
+Average velocity: (-2.192331, -0.0, 6.023381)
+Initial velocity: (-2.192331, -0.0, 6.023381)
+Final velocity: (-2.192326, -0.0, 6.023369)
+Initial speed: 6.41
+Final speed: 6.41
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Sprint Loop F_fit_Armature_039
+Already has loop tag: true
+Duration: 2.0
+Displacement: (0.0, -0.0, 12.81989)
+Average velocity: (0.0, -0.0, 6.409946)
+Initial velocity: (0.0, -0.0, 6.409946)
+Final velocity: (0.0, -0.0, 6.409931)
+Initial speed: 6.41
+Final speed: 6.41
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+
+============================================================
+SOURCE: res://Assets/Animations/Crouch.glb
+============================================================
+
+Animations inspected: 213
+Potential loop candidates: 9
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Loop B_fit_Armature_109
+Already has loop tag: true
+Duration: 3.833
+Displacement: (0.0, 0.0, -6.318286)
+Average velocity: (0.0, 0.0, -1.648249)
+Initial velocity: (0.0, 0.0, -1.648249)
+Final velocity: (0.0, 0.0, -1.648245)
+Initial speed: 1.648
+Final speed: 1.648
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Shuffle RR to RL Rfoot_fit_Armature_058
+Already has loop tag: false
+Duration: 4.333
+Displacement: (-7.935871, 0.0, 0.0)
+Average velocity: (-1.831355, 0.0, 0.0)
+Initial velocity: (-1.831355, 0.0, 0.0)
+Final velocity: (-1.83136, 0.0, 0.0)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Loop LL_fit_Armature_101
+Already has loop tag: true
+Duration: 3.833
+Displacement: (7.020746, 0.0, 0.0)
+Average velocity: (1.831499, 0.0, 0.0)
+Initial velocity: (1.831499, 0.0, 0.0)
+Final velocity: (1.831493, 0.0, 0.0)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Loop RL_fit_Armature_099
+Already has loop tag: true
+Duration: 3.833
+Displacement: (-7.0206, 0.0, 0.0)
+Average velocity: (-1.831461, 0.0, 0.0)
+Initial velocity: (-1.831461, 0.0, 0.0)
+Final velocity: (-1.831455, 0.0, 0.0)
+Initial speed: 1.831
+Final speed: 1.831
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.0
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 0.0
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Loop F L 20_fit_Armature_105
+Already has loop tag: true
+Duration: 3.708
+Displacement: (2.917334, -0.0, 7.043069)
+Average velocity: (0.786697, -0.0, 1.899255)
+Initial velocity: (0.788469, -0.0, 1.903532)
+Final velocity: (0.657048, -0.0, 1.586285)
+Initial speed: 2.06
+Final speed: 1.717
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.343
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 3.434
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Loop F R 20_fit_Armature_104
+Already has loop tag: true
+Duration: 3.708
+Displacement: (-2.917334, -0.0, 7.043069)
+Average velocity: (-0.786697, -0.0, 1.899255)
+Initial velocity: (-0.788469, -0.0, 1.903532)
+Final velocity: (-0.657048, -0.0, 1.586285)
+Initial speed: 2.06
+Final speed: 1.717
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.343
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 3.434
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Loop F_fit_Armature_106
+Already has loop tag: true
+Duration: 3.708
+Displacement: (0.0, -0.0, 7.623363)
+Average velocity: (0.0, -0.0, 2.055738)
+Initial velocity: (0.0, -0.0, 2.060368)
+Final velocity: (0.0, -0.0, 1.716967)
+Initial speed: 2.06
+Final speed: 1.717
+Velocity direction difference: 0.0
+Velocity magnitude difference: 0.343
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 3.434
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Prism FR F Rfoot_fit_Armature_070
+Already has loop tag: false
+Duration: 3.208
+Displacement: (-2.019965, -0.0, 5.780429)
+Average velocity: (-0.6296, -0.0, 1.801692)
+Initial velocity: (-1.456437, -0.0, 1.456437)
+Final velocity: (0.0, -0.0, 1.717048)
+Initial speed: 2.06
+Final speed: 1.717
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.343
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 18.071
+
+----------------------------------------
+CANDIDATE: M Neutral Crouch Prism F FR Rfoot_fit_Armature_074
+Already has loop tag: false
+Duration: 3.208
+Displacement: (-2.707052, -0.0, 5.495506)
+Average velocity: (-0.843756, -0.0, 1.712885)
+Initial velocity: (0.0, -0.0, 2.059989)
+Final velocity: (-1.213946, -0.0, 1.213937)
+Initial speed: 2.06
+Final speed: 1.717
+Velocity direction difference: 0.146
+Velocity magnitude difference: 0.343
+Accumulated root rotation: 0.0 degrees
+Diagnostic score: 18.077
+
+
+============================================================
+SOURCE: res://Assets/Animations/Idle.glb
+============================================================
+
+Animations inspected: 23
+Potential loop candidates: 0
+
+
+============================================================
+                 DIAGNOSTIC SUMMARY
+============================================================
+Animations inspected: 718
+Potential loop candidates: 44
+============================================================
+
+--- Debugging process stopped ---
