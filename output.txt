@@ -520,7 +520,7 @@ TOTAL COST: 0.0073072060186
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.86 ms
+Search time: 11.865 ms
 
 ========================================
 TEST: BACKWARD
@@ -642,7 +642,7 @@ TOTAL COST: 6.47182264924049
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 13.877 ms
+Search time: 11.368 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -764,7 +764,7 @@ TOTAL COST: 3.17230535298586
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 15.33 ms
+Search time: 11.349 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -886,7 +886,7 @@ TOTAL COST: 3.39603653550148
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 15.262 ms
+Search time: 12.109 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -1008,7 +1008,7 @@ TOTAL COST: 0.0074778572889
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.613 ms
+Search time: 15.633 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -1130,7 +1130,7 @@ TOTAL COST: 0.00718434622831
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.78 ms
+Search time: 15.733 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1252,7 +1252,7 @@ TOTAL COST: 6.50248402357101
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.339 ms
+Search time: 15.465 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1374,13 +1374,13 @@ TOTAL COST: 6.07472166419029
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.573 ms
+Search time: 15.463 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
 
 ==================================================
-       MOTION MATCHING - PLAYBACK CONTINUITY TEST
+       CONTINUITY-AWARE MOTION MATCHING TEST
 ==================================================
 
 ----------------------------------------
@@ -1422,50 +1422,182 @@ Animation entries: 718
 ----------------------------------------
 BUILDING ANIMATION LOOKUP
 ----------------------------------------
+[RUNTIME] Position: (0.000001, -0.0, 4.428524) | Velocity: (0.000001, 0.0, 4.498236) | Playback time: 0.98333334922791 | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Switches: 0 | Skipped restarts: 4
 
-Animation mapping completed.
-Database entries: 718
-Mapped animations: 718
-Missing animations: 0
-All database animations mapped successfully.
+========== ANIMATION SELECTION #2 ==========
+Animation: M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation index: 33
+Sample index: 41
+Selected timestamp: 1.36666666666667
+Playback time before selection: 1.28333330154419
+Duration: 3.0
+Runtime path: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Matched velocity: (-0.017306, -0.0, 4.528838)
+Matching yaw: 0.0
+Base cost: 0.0067876513931
+Continuity cost: 0.05
+Selection score: 0.0567876513931
+Animation switches: 1
+Skipped restarts: 5
+========================================
 
-----------------------------------------
-INITIALIZING C++ MOTION MATCHING
-----------------------------------------
-C++ database loaded successfully.
-Total animations: 718
-Total samples: 82385
-Eligible animations: 251
-Eligible samples: 25164
-
-----------------------------------------
-STARTING MOTION MATCHING
-----------------------------------------
-
-========== NEW MATCH #1 ==========
+========== ANIMATION SELECTION #3 ==========
 Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
 Animation index: 56
 Sample index: 13
-Timestamp: 0.43333333333333
+Selected timestamp: 0.43333333333333
+Playback time before selection: 0.21666666865349
 Duration: 4.5
 Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
 Matched velocity: (0.000001, -0.0, 4.49825)
 Matching yaw: 0.0
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
+Base cost: 0.00593432220808
+Continuity cost: 0.05
+Selection score: 0.05593432220808
+Animation switches: 2
+Skipped restarts: 5
+========================================
+[RUNTIME] Position: (0.120277, -0.0, 8.602411) | Velocity: (0.000001, 0.0, 4.498272) | Playback time: 0.48333331942558 | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Switches: 2 | Skipped restarts: 7
+
+========== ANIMATION SELECTION #4 ==========
+Animation: M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation index: 33
+Sample index: 41
+Selected timestamp: 1.36666666666667
+Playback time before selection: 1.29999995231628
+Duration: 3.0
+Runtime path: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Matched velocity: (-0.017306, -0.0, 4.528838)
+Matching yaw: 0.0
+Base cost: 0.0067876513931
+Continuity cost: 0.05
+Selection score: 0.0567876513931
+Animation switches: 3
+Skipped restarts: 10
+========================================
+[RUNTIME] Position: (0.263118, -0.0, 12.70113) | Velocity: (-0.004453, 0.0, 4.593329) | Playback time: 0.18333333730698 | Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195 | Switches: 3 | Skipped restarts: 10
+
+========== ANIMATION SELECTION #5 ==========
+Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Animation index: 56
+Sample index: 13
+Selected timestamp: 0.43333333333333
+Playback time before selection: 0.21666666865349
+Duration: 4.5
+Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Matched velocity: (0.000001, -0.0, 4.49825)
+Matching yaw: 0.0
+Base cost: 0.00593432220808
+Continuity cost: 0.05
+Selection score: 0.05593432220808
+Animation switches: 4
+Skipped restarts: 10
+========================================
+[RUNTIME] Position: (0.26297, -0.0, 17.28275) | Velocity: (0.000001, 0.0, 4.613857) | Playback time: 0.96666663885117 | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Switches: 4 | Skipped restarts: 14
+
+========== ANIMATION SELECTION #6 ==========
+Animation: M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation index: 33
+Sample index: 41
+Selected timestamp: 1.36666666666667
+Playback time before selection: 1.29999995231628
+Duration: 3.0
+Runtime path: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Matched velocity: (-0.017306, -0.0, 4.528838)
+Matching yaw: 0.0
+Base cost: 0.0067876513931
+Continuity cost: 0.05
+Selection score: 0.0567876513931
+Animation switches: 5
+Skipped restarts: 15
 ========================================
 
-Motion Matching is running.
-Search interval: 0.2 seconds
-Repeated identical matches will not restart playback.
-[RUNTIME] Position: (0.000001, -0.0, 4.428524) | Velocity: (0.000001, 0.0, 4.498236) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 4
-[RUNTIME] Position: (1.541155, -0.0, 4.187672) | Velocity: (1.905591, 0.0, -1.899755) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 9
-[RUNTIME] Position: (3.371574, -0.0, 2.371173) | Velocity: (1.942363, 0.0, -1.942348) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 13
-[RUNTIME] Position: (5.313941, -0.0, 0.428824) | Velocity: (1.942377, 0.0, -1.942348) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 18
-[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 23
-[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 27
-[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 32
-[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 36
-[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 41
+========== ANIMATION SELECTION #7 ==========
+Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Animation index: 56
+Sample index: 13
+Selected timestamp: 0.43333333333333
+Playback time before selection: 0.21666666865349
+Duration: 4.5
+Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Matched velocity: (0.000001, -0.0, 4.49825)
+Matching yaw: 0.0
+Base cost: 0.00593432220808
+Continuity cost: 0.05
+Selection score: 0.05593432220808
+Animation switches: 6
+Skipped restarts: 15
+========================================
+[RUNTIME] Position: (0.405662, -0.0, 21.38272) | Velocity: (0.000001, 0.0, 4.613814) | Playback time: 0.44999998807907 | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Switches: 6 | Skipped restarts: 17
+
+========== ANIMATION SELECTION #8 ==========
+Animation: M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation index: 33
+Sample index: 41
+Selected timestamp: 1.36666666666667
+Playback time before selection: 1.29999995231628
+Duration: 3.0
+Runtime path: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Matched velocity: (-0.017306, -0.0, 4.528838)
+Matching yaw: 0.0
+Base cost: 0.0067876513931
+Continuity cost: 0.05
+Selection score: 0.0567876513931
+Animation switches: 7
+Skipped restarts: 20
+========================================
+[RUNTIME] Position: (0.548651, -0.0, 25.48021) | Velocity: (-0.004453, 0.0, 4.593329) | Playback time: 0.15000000596046 | Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195 | Switches: 7 | Skipped restarts: 20
+
+========== ANIMATION SELECTION #9 ==========
+Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Animation index: 56
+Sample index: 13
+Selected timestamp: 0.43333333333333
+Playback time before selection: 0.21666666865349
+Duration: 4.5
+Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Matched velocity: (0.000001, -0.0, 4.49825)
+Matching yaw: 0.0
+Base cost: 0.00593432220808
+Continuity cost: 0.05
+Selection score: 0.05593432220808
+Animation switches: 8
+Skipped restarts: 20
+========================================
+[RUNTIME] Position: (0.548354, -0.0, 30.06117) | Velocity: (0.000001, 0.0, 4.814229) | Playback time: 0.93333333730698 | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Switches: 8 | Skipped restarts: 24
+
+========== ANIMATION SELECTION #10 ==========
+Animation: M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation index: 33
+Sample index: 41
+Selected timestamp: 1.36666666666667
+Playback time before selection: 1.29999995231628
+Duration: 3.0
+Runtime path: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Matched velocity: (-0.017306, -0.0, 4.528838)
+Matching yaw: 0.0
+Base cost: 0.0067876513931
+Continuity cost: 0.05
+Selection score: 0.0567876513931
+Animation switches: 9
+Skipped restarts: 25
+========================================
+
+========== ANIMATION SELECTION #11 ==========
+Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Animation index: 56
+Sample index: 13
+Selected timestamp: 0.43333333333333
+Playback time before selection: 0.21666666865349
+Duration: 4.5
+Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Matched velocity: (0.000001, -0.0, 4.49825)
+Matching yaw: 0.0
+Base cost: 0.00593432220808
+Continuity cost: 0.05
+Selection score: 0.05593432220808
+Animation switches: 10
+Skipped restarts: 25
+========================================
+[RUNTIME] Position: (0.691047, -0.0, 34.15777) | Velocity: (0.000001, 0.0, 4.814229) | Playback time: 0.41666665673256 | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Switches: 10 | Skipped restarts: 26
 --- Debugging process stopped ---
