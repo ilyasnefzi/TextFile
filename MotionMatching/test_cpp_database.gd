@@ -1,73 +1,58 @@
 extends Node
 
-var motion_matching: MotionMatchingSearch
-
 
 func _ready() -> void:
+	print("\n========== CONTINUOUS SEARCH TEST ==========")
 
-	print("\n========== UNIQUE ANIMATION COVERAGE TEST ==========")
-
-	motion_matching = MotionMatchingSearch.new()
+	var motion_matching := MotionMatchingSearch.new()
 
 	var database_path := "user://motion_database.json"
 
 	print("Loading database: ", database_path)
 
-	var loaded: bool = motion_matching.load_database(database_path)
-
-	if not loaded:
-		print("\nDATABASE LOAD FAILED")
-		print("Error: ", motion_matching.get_last_error())
+	if not motion_matching.load_database(database_path):
+		print("DATABASE LOAD FAILED")
+		print(motion_matching.get_last_error())
 		return
 
-	print("\nDATABASE LOADED SUCCESSFULLY")
-
-	print("Total animations: ", motion_matching.get_animation_count())
-	print("Total samples: ", motion_matching.get_sample_count())
-
+	print("Database loaded successfully.")
+	print("Animations: ", motion_matching.get_animation_count())
 	print("Eligible animations: ", motion_matching.get_eligible_animation_count())
-	print("Eligible samples: ", motion_matching.get_eligible_sample_count())
 
-	analyze_unique_animations()
+	var desired_velocity := Vector3(0.0, 0.0, 4.5)
 
+	var desired_future_positions: Array = [
+		Vector3(0.0, 0.0, 0.9),
+		Vector3(0.0, 0.0, 1.8),
+		Vector3(0.0, 0.0, 2.7)
+	]
 
-func analyze_unique_animations() -> void:
+	var desired_facing_yaw := 0.0
 
-	print("\n========== FASTEST UNIQUE ANIMATIONS ==========")
+	# -1 means this is the initial search (no continuity penalty).
+	var current_animation_index := -1
+	var current_animation_time := 0.0
 
-	var report: Dictionary = motion_matching.analyze_fastest_unique_animations(20)
+	var animation_switch_penalty := 1.0
+	var same_animation_time_weight := 0.5
 
-	if not report.get("success", false):
-		print("Analysis failed: ", report.get("error", "Unknown error"))
-		return
+	print("\nRunning continuous search...")
 
-	print("Eligible animations: ", report["eligible_animations"])
-	print("Eligible samples: ", report["eligible_samples"])
+	var start_time := Time.get_ticks_usec()
 
-	print("Directional alignment: ", report["direction_alignment_degrees"], " degrees")
+	var result: Dictionary = motion_matching.search_best_match_continuous(
+		desired_velocity,
+		desired_future_positions,
+		desired_facing_yaw,
+		current_animation_index,
+		current_animation_time,
+		animation_switch_penalty,
+		same_animation_time_weight
+	)
 
-	print("Total directional samples: ", report["total_directional_samples"])
+	var elapsed_ms := (Time.get_ticks_usec() - start_time) / 1000.0
 
-	print("Total unique directional animations: ", report["total_unique_directional_animations"])
-
-	for direction_data in report["directions"]:
-
-		print("\n========================================")
-		print(direction_data["direction"].to_upper())
-		print("========================================")
-
-		print("Directional samples: ", direction_data["available_directional_samples"])
-		print("Unique animations: ", direction_data["unique_animation_count"])
-
-		for animation in direction_data["fastest_animations"]:
-
-			print(
-				"#", animation["rank"],
-				" | ", animation["family"].to_upper(),
-				" | Speed: ", snappedf(animation["projected_speed"], 0.01),
-				" | Time: ", snappedf(animation["best_sample_time"], 0.01),
-				" | Velocity: ", animation["velocity"],
-				" | ", animation["animation_name"]
-			)
-
-	print("\n========== UNIQUE ANIMATION ANALYSIS COMPLETE ==========")
+	print("\n========== SEARCH RESULT ==========")
+	print(result)
+	print("\nSearch time: ", elapsed_ms, " ms")
+	print("\n========== TEST FINISHED ==========")
