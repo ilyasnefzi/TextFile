@@ -169,20 +169,412 @@ Database exported to: user://motion_database.json
 ========================================
 
 
-========== CONTINUOUS SEARCH TEST ==========
+
+====================================================
+       MOTION MATCHING - DATABASE COVERAGE
+====================================================
+
 Loading database: user://motion_database.json
-Database loaded successfully.
-Animations: 718
+
+DATABASE LOADED SUCCESSFULLY
+Total animations: 718
+Total samples: 82385
 Eligible animations: 35
+Eligible samples: 2547
 
-Running continuous search...
+Analyzing directional coverage...
 
-========== SEARCH RESULT ==========
-{ "success": true, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 57, "time": 1.9, "duration": 2.5, "position": (0.0, -0.0, 8.699213), "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "yaw": 0.0, "yaw_degrees": 0.0, "desired_facing_yaw_degrees": 0.0, "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345371654839, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307331939461, "continuity_cost": 0.0, "selection_score": 0.01307331939461, "cost": 0.01307331939461, "samples_evaluated": 2547, "valid_database_samples": 69461, "eligible_animations": 35, "eligible_samples": 2547, "current_animation_index": -1, "current_animation_time": 0.0, "top_matches": [{ "rank": 1, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 57, "time": 1.9, "duration": 2.5, "position": (0.0, -0.0, 8.699213), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915707), (0.0, -0.0, 1.831412), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345371654839, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307331939461, "continuity_cost": 0.0, "selection_score": 0.01307331939461, "cost": 0.01307331939461 }, { "rank": 2, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 56, "time": 1.86666666666667, "duration": 2.5, "position": (0.0, -0.0, 8.546596), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915707), (0.0, -0.0, 1.831412), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345371654839, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307331939461, "continuity_cost": 0.0, "selection_score": 0.01307331939461, "cost": 0.01307331939461 }, { "rank": 3, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 52, "time": 1.73333333333333, "duration": 2.5, "position": (0.0, -0.0, 7.936124), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915706), (0.0, -0.0, 1.831414), (0.0, -0.0, 2.747119)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345374649623, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307337929029, "continuity_cost": 0.0, "selection_score": 0.01307337929029, "cost": 0.01307337929029 }, { "rank": 4, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 42, "time": 1.4, "duration": 2.5, "position": (0.0, -0.0, 6.409946), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915707), (0.0, -0.0, 1.831413), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345377650228, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307343930239, "continuity_cost": 0.0, "selection_score": 0.01307343930239, "cost": 0.01307343930239 }, { "rank": 5, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 46, "time": 1.53333333333333, "duration": 2.5, "position": (0.0, -0.0, 7.020418), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915707), (0.0, -0.0, 1.831413), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345379151986, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307346933754, "continuity_cost": 0.0, "selection_score": 0.01307346933754, "cost": 0.01307346933754 }, { "rank": 6, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 33, "time": 1.1, "duration": 2.5, "position": (0.0, -0.0, 5.036386), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915707), (0.0, -0.0, 1.831414), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345380642102, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307349913986, "continuity_cost": 0.0, "selection_score": 0.01307349913986, "cost": 0.01307349913986 }, { "rank": 7, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 49, "time": 1.63333333333333, "duration": 2.5, "position": (0.0, -0.0, 7.478271), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578523), "velocity": (0.0, -0.0, 4.578523), "future_positions": [(0.0, -0.0, 0.915708), (0.0, -0.0, 1.831413), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616588629782, "trajectory_cost": 0.00345380645012, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307349919807, "continuity_cost": 0.0, "selection_score": 0.01307349919807, "cost": 0.01307349919807 }, { "rank": 8, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 24, "time": 0.8, "duration": 2.5, "position": (0.0, -0.0, 3.662827), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.578527), "velocity": (0.0, -0.0, 4.578527), "future_positions": [(0.0, -0.0, 0.915707), (0.0, -0.0, 1.831413), (0.0, -0.0, 2.74712)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.0061664856039, "trajectory_cost": 0.00345377650228, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307403860847, "continuity_cost": 0.0, "selection_score": 0.01307403860847, "cost": 0.01307403860847 }, { "rank": 9, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 32, "time": 1.06666666666667, "duration": 2.5, "position": (0.0, -0.0, 4.883769), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.57853), "velocity": (0.0, -0.0, 4.57853), "future_positions": [(0.0, -0.0, 0.915706), (0.0, -0.0, 1.831413), (0.0, -0.0, 2.747119)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616700993851, "trajectory_cost": 0.00345367164118, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307435322087, "continuity_cost": 0.0, "selection_score": 0.01307435322087, "cost": 0.01307435322087 }, { "rank": 10, "animation_name": "M Neutral Run Loop F_fit_Armature_114", "animation_index": 111, "sample_index": 45, "time": 1.5, "duration": 2.5, "position": (0.0, -0.0, 6.8678), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.57853), "velocity": (0.0, -0.0, 4.57853), "future_positions": [(0.0, -0.0, 0.915706), (0.0, -0.0, 1.831413), (0.0, -0.0, 2.747119)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00616700993851, "trajectory_cost": 0.00345368665876, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.01307438325603, "continuity_cost": 0.0, "selection_score": 0.01307438325603, "cost": 0.01307438325603 }], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0] }
+====================================================
+                 COVERAGE RESULTS
+====================================================
+{
+	"direction_alignment_degrees": 25.0,
+	"directions": [
+		{
+			"direction": "forward",
+			"groups": {
+				"all": {
+					"aligned_samples": 612,
+					"fastest_animation": "M Neutral Sprint Loop F_fit_Armature_039",
+					"fastest_time": 1.33333333333333,
+					"fastest_velocity": "(0.0, 0.0, 6.409964)",
+					"has_samples": true,
+					"maximum_speed": 6.40996408462524,
+					"maximum_total_speed": 6.40996408462524,
+					"minimum_speed": 1.72097671031952
+				},
+				"run": {
+					"aligned_samples": 174,
+					"fastest_animation": "M Neutral Run Loop F_fit_Armature_114",
+					"fastest_time": 1.8,
+					"fastest_velocity": "(0.0, 0.0, 4.578552)",
+					"has_samples": true,
+					"maximum_speed": 4.57855176925659,
+					"maximum_total_speed": 4.57855176925659,
+					"minimum_speed": 4.30240631103516
+				},
+				"sprint": {
+					"aligned_samples": 129,
+					"fastest_animation": "M Neutral Sprint Loop F_fit_Armature_039",
+					"fastest_time": 1.33333333333333,
+					"fastest_velocity": "(0.0, 0.0, 6.409964)",
+					"has_samples": true,
+					"maximum_speed": 6.40996408462524,
+					"maximum_total_speed": 6.40996408462524,
+					"minimum_speed": 6.02336835861206
+				},
+				"walk": {
+					"aligned_samples": 309,
+					"fastest_animation": "M Neutral Walk Loop F_fit_Armature_112",
+					"fastest_time": 2.36666666666667,
+					"fastest_velocity": "(0.0, 0.0, 1.831441)",
+					"has_samples": true,
+					"maximum_speed": 1.83144080638886,
+					"maximum_total_speed": 1.83144080638886,
+					"minimum_speed": 1.72097671031952
+				}
+			}
+		},
+		{
+			"direction": "backward",
+			"groups": {
+				"all": {
+					"aligned_samples": 164,
+					"fastest_animation": "M Neutral Run Loop B_fit_Armature_117",
+					"fastest_time": 1.43333333333333,
+					"fastest_velocity": "(0.0, 0.0, -2.747125)",
+					"has_samples": true,
+					"maximum_speed": 2.74712538719177,
+					"maximum_total_speed": 2.74712538719177,
+					"minimum_speed": 1.37355554103851
+				},
+				"run": {
+					"aligned_samples": 60,
+					"fastest_animation": "M Neutral Run Loop B_fit_Armature_117",
+					"fastest_time": 1.43333333333333,
+					"fastest_velocity": "(0.0, 0.0, -2.747125)",
+					"has_samples": true,
+					"maximum_speed": 2.74712538719177,
+					"maximum_total_speed": 2.74712538719177,
+					"minimum_speed": 2.74711108207703
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 104,
+					"fastest_animation": "M Neutral Walk Loop B_fit_Armature_115",
+					"fastest_time": 2.9,
+					"fastest_velocity": "(0.0, 0.0, -1.37357)",
+					"has_samples": true,
+					"maximum_speed": 1.37356984615326,
+					"maximum_total_speed": 1.37356984615326,
+					"minimum_speed": 1.37355554103851
+				}
+			}
+		},
+		{
+			"direction": "left",
+			"groups": {
+				"all": {
+					"aligned_samples": 455,
+					"fastest_animation": "M Neutral Run Loop RR_fit_Armature_105",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(-3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 1.52276504039764
+				},
+				"run": {
+					"aligned_samples": 164,
+					"fastest_animation": "M Neutral Run Loop RR_fit_Armature_105",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(-3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 2.96100473403931
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 291,
+					"fastest_animation": "M Neutral Walk Loop RL_fit_Armature_104",
+					"fastest_time": 2.36666666666667,
+					"fastest_velocity": "(-1.6483, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 1.64829957485199,
+					"maximum_total_speed": 1.64829957485199,
+					"minimum_speed": 1.52276504039764
+				}
+			}
+		},
+		{
+			"direction": "right",
+			"groups": {
+				"all": {
+					"aligned_samples": 462,
+					"fastest_animation": "M Neutral Run Loop LL_fit_Armature_109",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 1.52281510829926
+				},
+				"run": {
+					"aligned_samples": 162,
+					"fastest_animation": "M Neutral Run Loop LL_fit_Armature_109",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 2.96100473403931
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 300,
+					"fastest_animation": "M Neutral Walk Loop LR_fit_Armature_106",
+					"fastest_time": 2.36666666666667,
+					"fastest_velocity": "(1.6483, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 1.64829957485199,
+					"maximum_total_speed": 1.64829957485199,
+					"minimum_speed": 1.52281510829926
+				}
+			}
+		},
+		{
+			"direction": "forward_left",
+			"groups": {
+				"all": {
+					"aligned_samples": 250,
+					"fastest_animation": "M Neutral Sprint Loop FR_fit_Armature_035",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(-4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 1.65983545780182
+				},
+				"run": {
+					"aligned_samples": 65,
+					"fastest_animation": "M Neutral Run Loop FR_fit_Armature_110",
+					"fastest_time": 1.3,
+					"fastest_velocity": "(-3.237519, 0.0, 3.237519)",
+					"has_samples": true,
+					"maximum_speed": 4.57854318618774,
+					"maximum_total_speed": 4.57854318618774,
+					"minimum_speed": 4.1495532989502
+				},
+				"sprint": {
+					"aligned_samples": 50,
+					"fastest_animation": "M Neutral Sprint Loop FR_fit_Armature_035",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(-4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 5.80938148498535
+				},
+				"walk": {
+					"aligned_samples": 135,
+					"fastest_animation": "M Neutral Walk Loop FR_fit_Armature_108",
+					"fastest_time": 2.1,
+					"fastest_velocity": "(-1.295078, 0.0, 1.295078)",
+					"has_samples": true,
+					"maximum_speed": 1.83151638507843,
+					"maximum_total_speed": 1.83151638507843,
+					"minimum_speed": 1.65983545780182
+				}
+			}
+		},
+		{
+			"direction": "forward_right",
+			"groups": {
+				"all": {
+					"aligned_samples": 465,
+					"fastest_animation": "M Neutral Sprint Loop FL_fit_Armature_036",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 1.52281427383423
+				},
+				"run": {
+					"aligned_samples": 177,
+					"fastest_animation": "M Neutral Run Loop FL_fit_Armature_111",
+					"fastest_time": 1.3,
+					"fastest_velocity": "(3.237519, 0.0, 3.237519)",
+					"has_samples": true,
+					"maximum_speed": 4.57854318618774,
+					"maximum_total_speed": 4.57854318618774,
+					"minimum_speed": 2.96100449562073
+				},
+				"sprint": {
+					"aligned_samples": 50,
+					"fastest_animation": "M Neutral Sprint Loop FL_fit_Armature_036",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 5.80938148498535
+				},
+				"walk": {
+					"aligned_samples": 238,
+					"fastest_animation": "M Neutral Walk Loop FL_fit_Armature_109",
+					"fastest_time": 2.86666666666667,
+					"fastest_velocity": "(1.29502, 0.0, 1.29502)",
+					"has_samples": true,
+					"maximum_speed": 1.83143544197083,
+					"maximum_total_speed": 1.83143556118011,
+					"minimum_speed": 1.52281427383423
+				}
+			}
+		},
+		{
+			"direction": "backward_left",
+			"groups": {
+				"all": {
+					"aligned_samples": 372,
+					"fastest_animation": "M Neutral Run Loop RR offset_fit_Armature_104",
+					"fastest_time": 1.46666666666667,
+					"fastest_velocity": "(-2.961015, 0.0, -1.226494)",
+					"has_samples": true,
+					"maximum_speed": 2.96101593971252,
+					"maximum_total_speed": 3.20498037338257,
+					"minimum_speed": 1.37360441684723
+				},
+				"run": {
+					"aligned_samples": 174,
+					"fastest_animation": "M Neutral Run Loop RR offset_fit_Armature_104",
+					"fastest_time": 1.46666666666667,
+					"fastest_velocity": "(-2.961015, 0.0, -1.226494)",
+					"has_samples": true,
+					"maximum_speed": 2.96101593971252,
+					"maximum_total_speed": 3.20498037338257,
+					"minimum_speed": 2.74711275100708
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 198,
+					"fastest_animation": "M Neutral Walk Loop RR offset_fit_Armature_102",
+					"fastest_time": 3.1,
+					"fastest_velocity": "(-1.522772, 0.0, -0.630754)",
+					"has_samples": true,
+					"maximum_speed": 1.52277266979218,
+					"maximum_total_speed": 1.64823698997498,
+					"minimum_speed": 1.37360441684723
+				}
+			}
+		},
+		{
+			"direction": "backward_right",
+			"groups": {
+				"all": {
+					"aligned_samples": 164,
+					"fastest_animation": "M Neutral Run Loop BL_fit_Armature_116",
+					"fastest_time": 1.06666666666667,
+					"fastest_velocity": "(1.942509, 0.0, -1.942509)",
+					"has_samples": true,
+					"maximum_speed": 2.74712300300598,
+					"maximum_total_speed": 2.74712300300598,
+					"minimum_speed": 1.37360441684723
+				},
+				"run": {
+					"aligned_samples": 60,
+					"fastest_animation": "M Neutral Run Loop BL_fit_Armature_116",
+					"fastest_time": 1.06666666666667,
+					"fastest_velocity": "(1.942509, 0.0, -1.942509)",
+					"has_samples": true,
+					"maximum_speed": 2.74712300300598,
+					"maximum_total_speed": 2.74712300300598,
+					"minimum_speed": 2.74711275100708
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 104,
+					"fastest_animation": "M Neutral Walk Loop BL_fit_Armature_114",
+					"fastest_time": 2.1,
+					"fastest_velocity": "(0.971292, 0.0, -0.971292)",
+					"has_samples": true,
+					"maximum_speed": 1.37361454963684,
+					"maximum_total_speed": 1.37361466884613,
+					"minimum_speed": 1.37360441684723
+				}
+			}
+		}
+	],
+	"eligible_animation_count": 35,
+	"eligible_search_samples": 2547,
+	"families": {
+		"run": {
+			"animation_count": 16,
+			"valid_sample_count": 914
+		},
+		"sprint": {
+			"animation_count": 5,
+			"valid_sample_count": 215
+		},
+		"walk": {
+			"animation_count": 14,
+			"valid_sample_count": 1418
+		}
+	},
+	"success": true
+}
 
-Search time: 1.546 ms
+Analysis time: 0.56 ms
 
-========== TEST FINISHED ==========
+====================================================
+                  TEST FINISHED
+====================================================
 
 ========== 8-DIRECTIONAL MOTION MATCHING TEST ==========
 Database loaded successfully.
@@ -309,7 +701,7 @@ TOTAL COST: 0.01307436439674
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 1.456 ms
+Search time: 1.332 ms
 
 ========================================
 TEST: BACKWARD
@@ -431,7 +823,7 @@ TOTAL COST: 6.51387998461723
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.869 ms
+Search time: 0.773 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -553,7 +945,7 @@ TOTAL COST: 3.55543446540833
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.761 ms
+Search time: 0.741 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -675,7 +1067,7 @@ TOTAL COST: 3.55543303489685
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.733 ms
+Search time: 0.698 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -797,7 +1189,7 @@ TOTAL COST: 0.01307357446058
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.755 ms
+Search time: 0.701 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -919,7 +1311,7 @@ TOTAL COST: 0.01307357446058
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.733 ms
+Search time: 0.716 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1041,7 +1433,7 @@ TOTAL COST: 6.5138712823391
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.685 ms
+Search time: 0.721 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1163,7 +1555,7 @@ TOTAL COST: 6.51388081908226
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 2547
-Search time: 0.696 ms
+Search time: 0.777 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
@@ -1271,6 +1663,47 @@ Animation entries: 718
 ----------------------------------------
 BUILDING ANIMATION LOOKUP
 ----------------------------------------
+
+Animation mapping completed.
+Database entries: 718
+Mapped animations: 718
+Missing animations: 0
+All database animations mapped successfully.
+
+----------------------------------------
+INITIALIZING C++ MOTION MATCHING
+----------------------------------------
+C++ database loaded successfully.
+Total animations: 718
+Total samples: 82385
+Eligible animations: 35
+Eligible samples: 2547
+
+----------------------------------------
+STARTING MOTION MATCHING
+----------------------------------------
+
+========== ANIMATION SELECTION #1 ==========
+Animation: M Neutral Run Loop F_fit_Armature_114
+Animation index: 111
+Sample index: 57
+Selected source timestamp: 1.9
+Duration: 2.5
+Runtime path: Run/M Neutral Run Loop F_fit_Armature_114
+Node loop mode: 1 (1 = LOOP_LINEAR)
+Matched velocity: (0.0, -0.0, 4.578523)
+Base cost: 0.01307331939461
+Continuity cost: 0.0
+Selection score: 0.01307331939461
+Current absolute clip time: 1.9
+Animation switches: 0
+Same-clip decisions (no restart): 0
+========================================
+
+Motion Matching is running.
+Search interval: 0.2 seconds
+C++ continuous search: enabled
+AnimationNodeAnimation loop mode: LOOP_LINEAR
 
 ========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
 CharacterBody3D world position: (0.0, -0.0, 4.349607)
@@ -1442,22 +1875,6 @@ Absolute source-animation time: 0.40000000000013
 Animation: Run/M Neutral Run Loop F_fit_Armature_114
 Animation switches: 0
 Same-clip decisions (no restart): 50
-On floor: true
-On wall: false
-On ceiling: false
-No slide collisions detected.
-====================================================
-
-========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
-CharacterBody3D world position: (0.0, -0.0, 54.71359)
-Actual displacement: (0.0, -0.0, 4.578552)
-Actual world velocity: (0.0, -0.0, 4.578552)
-Root motion this frame: (0.0, -0.0, 0.076309)
-Velocity passed to move_and_slide(): (0.0, 0.0, 4.578523)
-Absolute source-animation time: 1.40000000000018
-Animation: Run/M Neutral Run Loop F_fit_Armature_114
-Animation switches: 0
-Same-clip decisions (no restart): 55
 On floor: true
 On wall: false
 On ceiling: false
