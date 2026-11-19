@@ -2117,7 +2117,7 @@ void MotionMatchingSearch::_bind_methods() {
     );
 
     ClassDB::bind_method(
-
+        D_METHOD("analyze_database_coverage"),
         &MotionMatchingSearch::analyze_database_coverage
     );
 
