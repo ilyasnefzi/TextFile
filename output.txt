@@ -1,718 +1,1500 @@
-Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
-D3D12 12_0 - Forward Mobile - Using Device #0: NVIDIA - NVIDIA T500
-
-
-
-============================================================
-             ANIMATION LOOP CANDIDATE DIAGNOSTIC
-============================================================
-
-
-============================================================
-SOURCE: res://Assets/Animations/Run.glb
-============================================================
-
-Animations inspected: 221
-Potential loop candidates: 10
-
-----------------------------------------
-CANDIDATE: M Neutral Run Loop F_fit_Armature_114
-Already has loop tag: true
-Duration: 2.5
-Displacement: (0.0, -0.0, 11.44633)
-Average velocity: (0.0, -0.0, 4.578533)
-Initial velocity: (0.0, -0.0, 4.578533)
-Final velocity: (0.0, -0.0, 4.578533)
-Initial speed: 4.579
-Final speed: 4.579
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Loop F L 20_fit_Armature_113
-Already has loop tag: true
-Duration: 2.5
-Displacement: (3.914876, -0.0, 10.75604)
-Average velocity: (1.56595, -0.0, 4.302415)
-Initial velocity: (1.56595, -0.0, 4.302414)
-Final velocity: (1.565948, -0.0, 4.302406)
-Initial speed: 4.579
-Final speed: 4.579
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Loop F R 20_fit_Armature_112
-Already has loop tag: true
-Duration: 2.5
-Displacement: (-3.914876, -0.0, 10.75604)
-Average velocity: (-1.56595, -0.0, 4.302415)
-Initial velocity: (-1.56595, -0.0, 4.302414)
-Final velocity: (-1.565948, -0.0, 4.302406)
-Initial speed: 4.579
-Final speed: 4.579
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Shuffle RR to RL Lfoot_fit_Armature_062
-Already has loop tag: false
-Duration: 2.833
-Displacement: (-9.080733, 0.0, 0.0)
-Average velocity: (-3.204965, 0.0, 0.0)
-Initial velocity: (-3.204966, 0.0, 0.0)
-Final velocity: (-3.204956, 0.0, 0.0)
-Initial speed: 3.205
-Final speed: 3.205
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Loop FL_fit_Armature_111
-Already has loop tag: true
-Duration: 2.5
-Displacement: (8.09378, -0.0, 8.09378)
-Average velocity: (3.237512, -0.0, 3.237512)
-Initial velocity: (3.237512, -0.0, 3.237512)
-Final velocity: (3.237505, -0.0, 3.237505)
-Initial speed: 4.579
-Final speed: 4.579
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Loop FR_fit_Armature_110
-Already has loop tag: true
-Duration: 2.5
-Displacement: (-8.09378, -0.0, 8.09378)
-Average velocity: (-3.237512, -0.0, 3.237512)
-Initial velocity: (-3.237512, -0.0, 3.237512)
-Final velocity: (-3.237505, -0.0, 3.237505)
-Initial speed: 4.579
-Final speed: 4.579
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Loop Strafe FL_fit_Armature_102
-Already has loop tag: true
-Duration: 2.5
-Displacement: (8.093781, -0.0, 8.093781)
-Average velocity: (3.237513, -0.0, 3.237513)
-Initial velocity: (3.237512, -0.0, 3.237512)
-Final velocity: (3.237505, -0.0, 3.237505)
-Initial speed: 4.579
-Final speed: 4.579
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Run Circle Strafe R_fit_Armature_189
-Already has loop tag: false
-Duration: 8.333
-Displacement: (0.0, 0.0, 0.0)
-Average velocity: (0.0, 0.0, 0.0)
-Initial velocity: (0.07251, 0.0, -0.958106)
-Final velocity: (-0.300445, 0.0, -0.911713)
-Initial speed: 0.961
-Final speed: 0.96
-Velocity direction difference: 0.038
-Velocity magnitude difference: 0.001
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 3.837
-
-----------------------------------------
-CANDIDATE: M Neutral Run Prism FR F Rfoot_fit_Armature_073
-Already has loop tag: false
-Duration: 2.667
-Displacement: (-3.369885, -0.0, 10.89787)
-Average velocity: (-1.263707, -0.0, 4.086701)
-Initial velocity: (-3.241987, -0.0, 3.230596)
-Final velocity: (-0.07122, -0.0, 4.575157)
-Initial speed: 4.577
-Final speed: 4.576
-Velocity direction difference: 0.142
-Velocity magnitude difference: 0.001
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.171
-
-----------------------------------------
-CANDIDATE: M Neutral Run Prism FR F Lfoot_fit_Armature_074
-Already has loop tag: false
-Duration: 2.667
-Displacement: (-3.582417, -0.0, 10.80782)
-Average velocity: (-1.343406, -0.0, 4.052932)
-Initial velocity: (-3.233581, -0.0, 3.232341)
-Final velocity: (-0.053847, -0.0, 4.577541)
-Initial speed: 4.572
-Final speed: 4.578
-Velocity direction difference: 0.142
-Velocity magnitude difference: 0.006
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.296
-
-
-============================================================
-SOURCE: res://Assets/Animations/Walk.glb
-============================================================
-
-Animations inspected: 224
-Potential loop candidates: 20
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Shuffle RR to RL Rfoot_fit_Armature_058
-Already has loop tag: false
-Duration: 4.333
-Displacement: (-7.142515, 0.0, 0.0)
-Average velocity: (-1.648273, 0.0, 0.0)
-Initial velocity: (-1.648273, 0.0, 0.0)
-Final velocity: (-1.648273, 0.0, 0.0)
-Initial speed: 1.648
-Final speed: 1.648
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop F L 20_fit_Armature_111
-Already has loop tag: true
-Duration: 4.0
-Displacement: (2.505543, -0.0, 6.883925)
-Average velocity: (0.626386, -0.0, 1.720981)
-Initial velocity: (0.626386, -0.0, 1.720981)
-Final velocity: (0.626388, -0.0, 1.720982)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop F R 20_fit_Armature_110
-Already has loop tag: true
-Duration: 4.0
-Displacement: (-2.505543, -0.0, 6.883925)
-Average velocity: (-0.626386, -0.0, 1.720981)
-Initial velocity: (-0.626386, -0.0, 1.720981)
-Final velocity: (-0.626388, -0.0, 1.720982)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop FL_fit_Armature_109
-Already has loop tag: true
-Duration: 4.0
-Displacement: (5.180057, -0.0, 5.180057)
-Average velocity: (1.295014, -0.0, 1.295014)
-Initial velocity: (1.295014, -0.0, 1.295014)
-Final velocity: (1.295013, -0.0, 1.295013)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop FR_fit_Armature_108
-Already has loop tag: true
-Duration: 4.0
-Displacement: (-5.180291, -0.0, 5.180291)
-Average velocity: (-1.295073, -0.0, 1.295073)
-Initial velocity: (-1.295073, -0.0, 1.295073)
-Final velocity: (-1.295071, -0.0, 1.295071)
-Initial speed: 1.832
-Final speed: 1.832
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop F_fit_Armature_112
-Already has loop tag: true
-Duration: 4.0
-Displacement: (0.0, -0.0, 7.325719)
-Average velocity: (0.0, -0.0, 1.83143)
-Initial velocity: (0.0, -0.0, 1.83143)
-Final velocity: (0.0, -0.0, 1.831427)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Shuffle F RFF to LFF Rfoot_fit_Armature_062
-Already has loop tag: false
-Duration: 4.208
-Displacement: (0.0, -0.0, 7.319545)
-Average velocity: (0.0, -0.0, 1.739298)
-Initial velocity: (0.0, -0.0, 1.648252)
-Final velocity: (0.0, -0.0, 1.526194)
-Initial speed: 1.648
-Final speed: 1.526
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.122
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 1.221
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop BR_fit_Armature_113
-Already has loop tag: true
-Duration: 4.042
-Displacement: (-3.91753, 0.0, -3.91753)
-Average velocity: (-0.969286, 0.0, -0.969286)
-Initial velocity: (-0.971288, 0.0, -0.971288)
-Final velocity: (-0.809417, 0.0, -0.809417)
-Initial speed: 1.374
-Final speed: 1.145
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.229
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 2.289
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop BL_fit_Armature_114
-Already has loop tag: true
-Duration: 4.042
-Displacement: (3.91753, 0.0, -3.91753)
-Average velocity: (0.969286, 0.0, -0.969286)
-Initial velocity: (0.971288, 0.0, -0.971288)
-Final velocity: (0.809417, 0.0, -0.809417)
-Initial speed: 1.374
-Final speed: 1.145
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.229
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 2.289
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop B_fit_Armature_115
-Already has loop tag: true
-Duration: 4.042
-Displacement: (0.0, 0.0, -5.540038)
-Average velocity: (0.0, 0.0, -1.370731)
-Initial velocity: (0.0, 0.0, -1.373563)
-Final velocity: (0.0, 0.0, -1.144638)
-Initial speed: 1.374
-Final speed: 1.145
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.229
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 2.289
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop LL_fit_Armature_107
-Already has loop tag: true
-Duration: 3.708
-Displacement: (6.098456, 0.0, 0.0)
-Average velocity: (1.644527, 0.0, 0.0)
-Initial velocity: (1.648231, 0.0, 0.0)
-Final velocity: (1.373539, 0.0, 0.0)
-Initial speed: 1.648
-Final speed: 1.374
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.275
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 2.747
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop RR_fit_Armature_103
-Already has loop tag: true
-Duration: 3.708
-Displacement: (-6.098456, 0.0, 0.0)
-Average velocity: (-1.644527, 0.0, 0.0)
-Initial velocity: (-1.648231, 0.0, 0.0)
-Final velocity: (-1.373539, 0.0, 0.0)
-Initial speed: 1.648
-Final speed: 1.374
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.275
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 2.747
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Loop RR offset_fit_Armature_102
-Already has loop tag: true
-Duration: 3.708
-Displacement: (-5.634238, 0.0, -2.333778)
-Average velocity: (-1.519345, 0.0, -0.629333)
-Initial velocity: (-1.522767, 0.0, -0.630751)
-Final velocity: (-1.268978, 0.0, -0.525641)
-Initial speed: 1.648
-Final speed: 1.374
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.275
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 2.747
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism F FL Rfoot_fit_Armature_080
-Already has loop tag: false
-Duration: 5.0
-Displacement: (4.680687, -0.0, 7.230433)
-Average velocity: (0.936137, -0.0, 1.446087)
-Initial velocity: (0.008753, -0.0, 1.830301)
-Final velocity: (1.294928, -0.0, 1.294928)
-Initial speed: 1.83
-Final speed: 1.831
-Velocity direction difference: 0.145
-Velocity magnitude difference: 0.001
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.486
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism FL F Lfoot_fit_Armature_077
-Already has loop tag: false
-Duration: 5.0
-Displacement: (1.866539, -0.0, 8.412692)
-Average velocity: (0.373308, -0.0, 1.682538)
-Initial velocity: (1.290982, -0.0, 1.298723)
-Final velocity: (0.0, -0.0, 1.831846)
-Initial speed: 1.831
-Final speed: 1.832
-Velocity direction difference: 0.145
-Velocity magnitude difference: 0.001
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.546
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism FL F Rfoot_fit_Armature_076
-Already has loop tag: false
-Duration: 5.0
-Displacement: (1.931288, -0.0, 8.385389)
-Average velocity: (0.386258, -0.0, 1.677078)
-Initial velocity: (1.292982, -0.0, 1.297235)
-Final velocity: (0.000001, -0.0, 1.832256)
-Initial speed: 1.832
-Final speed: 1.832
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.001
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.594
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism FR F Lfoot_fit_Armature_075
-Already has loop tag: false
-Duration: 5.0
-Displacement: (-1.805248, -0.0, 8.438509)
-Average velocity: (-0.36105, -0.0, 1.687702)
-Initial velocity: (-1.294205, -0.0, 1.296535)
-Final velocity: (0.0, -0.0, 1.831617)
-Initial speed: 1.832
-Final speed: 1.832
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.616
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism FR F Rfoot_fit_Armature_074
-Already has loop tag: false
-Duration: 5.0
-Displacement: (-1.783663, -0.0, 8.44745)
-Average velocity: (-0.356733, -0.0, 1.68949)
-Initial velocity: (-1.294804, -0.0, 1.295881)
-Final velocity: (0.0, -0.0, 1.831551)
-Initial speed: 1.832
-Final speed: 1.832
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.633
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism F FL Lfoot_fit_Armature_081
-Already has loop tag: false
-Duration: 5.0
-Displacement: (4.57433, -0.0, 7.276697)
-Average velocity: (0.914866, -0.0, 1.455339)
-Initial velocity: (0.0, -0.0, 1.831431)
-Final velocity: (1.295013, -0.0, 1.295013)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.645
-
-----------------------------------------
-CANDIDATE: M Neutral Walk Prism F FR Rfoot_fit_Armature_078
-Already has loop tag: false
-Duration: 5.0
-Displacement: (-4.640169, -0.0, 7.263856)
-Average velocity: (-0.928034, -0.0, 1.452771)
-Initial velocity: (-0.0, -0.0, 1.831431)
-Final velocity: (-1.295862, -0.0, 1.295862)
-Initial speed: 1.831
-Final speed: 1.833
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.001
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 14.657
-
-
-============================================================
-SOURCE: res://Assets/Animations/Sprint.glb
-============================================================
-
-Animations inspected: 37
-Potential loop candidates: 5
-
-----------------------------------------
-CANDIDATE: M Neutral Sprint Loop FL_fit_Armature_036
-Already has loop tag: true
-Duration: 2.0
-Displacement: (9.065034, -0.0, 9.065034)
-Average velocity: (4.532517, -0.0, 4.532517)
-Initial velocity: (4.532517, -0.0, 4.532517)
-Final velocity: (4.532509, -0.0, 4.532509)
-Initial speed: 6.41
-Final speed: 6.41
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Sprint Loop FR_fit_Armature_035
-Already has loop tag: true
-Duration: 2.0
-Displacement: (-9.065034, -0.0, 9.065034)
-Average velocity: (-4.532517, -0.0, 4.532517)
-Initial velocity: (-4.532517, -0.0, 4.532517)
-Final velocity: (-4.532509, -0.0, 4.532509)
-Initial speed: 6.41
-Final speed: 6.41
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Sprint Loop F L 20_fit_Armature_038
-Already has loop tag: true
-Duration: 2.0
-Displacement: (4.384661, -0.0, 12.04676)
-Average velocity: (2.192331, -0.0, 6.023381)
-Initial velocity: (2.192331, -0.0, 6.023381)
-Final velocity: (2.192326, -0.0, 6.023369)
-Initial speed: 6.41
-Final speed: 6.41
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Sprint Loop F R 20_fit_Armature_037
-Already has loop tag: true
-Duration: 2.0
-Displacement: (-4.384661, -0.0, 12.04676)
-Average velocity: (-2.192331, -0.0, 6.023381)
-Initial velocity: (-2.192331, -0.0, 6.023381)
-Final velocity: (-2.192326, -0.0, 6.023369)
-Initial speed: 6.41
-Final speed: 6.41
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Sprint Loop F_fit_Armature_039
-Already has loop tag: true
-Duration: 2.0
-Displacement: (0.0, -0.0, 12.81989)
-Average velocity: (0.0, -0.0, 6.409946)
-Initial velocity: (0.0, -0.0, 6.409946)
-Final velocity: (0.0, -0.0, 6.409931)
-Initial speed: 6.41
-Final speed: 6.41
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-
-============================================================
-SOURCE: res://Assets/Animations/Crouch.glb
-============================================================
-
-Animations inspected: 213
-Potential loop candidates: 9
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Loop B_fit_Armature_109
-Already has loop tag: true
-Duration: 3.833
-Displacement: (0.0, 0.0, -6.318286)
-Average velocity: (0.0, 0.0, -1.648249)
-Initial velocity: (0.0, 0.0, -1.648249)
-Final velocity: (0.0, 0.0, -1.648245)
-Initial speed: 1.648
-Final speed: 1.648
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Shuffle RR to RL Rfoot_fit_Armature_058
-Already has loop tag: false
-Duration: 4.333
-Displacement: (-7.935871, 0.0, 0.0)
-Average velocity: (-1.831355, 0.0, 0.0)
-Initial velocity: (-1.831355, 0.0, 0.0)
-Final velocity: (-1.83136, 0.0, 0.0)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Loop LL_fit_Armature_101
-Already has loop tag: true
-Duration: 3.833
-Displacement: (7.020746, 0.0, 0.0)
-Average velocity: (1.831499, 0.0, 0.0)
-Initial velocity: (1.831499, 0.0, 0.0)
-Final velocity: (1.831493, 0.0, 0.0)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Loop RL_fit_Armature_099
-Already has loop tag: true
-Duration: 3.833
-Displacement: (-7.0206, 0.0, 0.0)
-Average velocity: (-1.831461, 0.0, 0.0)
-Initial velocity: (-1.831461, 0.0, 0.0)
-Final velocity: (-1.831455, 0.0, 0.0)
-Initial speed: 1.831
-Final speed: 1.831
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.0
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 0.0
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Loop F L 20_fit_Armature_105
-Already has loop tag: true
-Duration: 3.708
-Displacement: (2.917334, -0.0, 7.043069)
-Average velocity: (0.786697, -0.0, 1.899255)
-Initial velocity: (0.788469, -0.0, 1.903532)
-Final velocity: (0.657048, -0.0, 1.586285)
-Initial speed: 2.06
-Final speed: 1.717
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.343
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 3.434
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Loop F R 20_fit_Armature_104
-Already has loop tag: true
-Duration: 3.708
-Displacement: (-2.917334, -0.0, 7.043069)
-Average velocity: (-0.786697, -0.0, 1.899255)
-Initial velocity: (-0.788469, -0.0, 1.903532)
-Final velocity: (-0.657048, -0.0, 1.586285)
-Initial speed: 2.06
-Final speed: 1.717
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.343
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 3.434
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Loop F_fit_Armature_106
-Already has loop tag: true
-Duration: 3.708
-Displacement: (0.0, -0.0, 7.623363)
-Average velocity: (0.0, -0.0, 2.055738)
-Initial velocity: (0.0, -0.0, 2.060368)
-Final velocity: (0.0, -0.0, 1.716967)
-Initial speed: 2.06
-Final speed: 1.717
-Velocity direction difference: 0.0
-Velocity magnitude difference: 0.343
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 3.434
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Prism FR F Rfoot_fit_Armature_070
-Already has loop tag: false
-Duration: 3.208
-Displacement: (-2.019965, -0.0, 5.780429)
-Average velocity: (-0.6296, -0.0, 1.801692)
-Initial velocity: (-1.456437, -0.0, 1.456437)
-Final velocity: (0.0, -0.0, 1.717048)
-Initial speed: 2.06
-Final speed: 1.717
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.343
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 18.071
-
-----------------------------------------
-CANDIDATE: M Neutral Crouch Prism F FR Rfoot_fit_Armature_074
-Already has loop tag: false
-Duration: 3.208
-Displacement: (-2.707052, -0.0, 5.495506)
-Average velocity: (-0.843756, -0.0, 1.712885)
-Initial velocity: (0.0, -0.0, 2.059989)
-Final velocity: (-1.213946, -0.0, 1.213937)
-Initial speed: 2.06
-Final speed: 1.717
-Velocity direction difference: 0.146
-Velocity magnitude difference: 0.343
-Accumulated root rotation: 0.0 degrees
-Diagnostic score: 18.077
-
-
-============================================================
-SOURCE: res://Assets/Animations/Idle.glb
-============================================================
-
-Animations inspected: 23
-Potential loop candidates: 0
-
-
-============================================================
-                 DIAGNOSTIC SUMMARY
-============================================================
-Animations inspected: 718
-Potential loop candidates: 44
-============================================================
-
---- Debugging process stopped ---
+================================================================
+        FRESH DIRECTIONAL COVERAGE ANALYSIS
+================================================================
+Generated: 2026-11-19T19:25:00
+Database: user://motion_database.json
+
+---------- DATABASE LOAD ----------
+load_database(): true
+Animations loaded: 718
+Trajectory samples loaded: 82385
+Eligible animations: 37
+Eligible samples: 3191
+Confirmation (37 eligible animations / 3191 eligible samples): PASS
+
+================================================================
+     ANALYZE_DATABASE_COVERAGE() - DIRECTIONAL COVERAGE
+================================================================
+
+--- Family totals ---
+walk: animation_count=14 | valid_sample_count=1418
+run: animation_count=18 | valid_sample_count=1558
+sprint: animation_count=5 | valid_sample_count=215
+Eligible from analysis: animations=37 | samples=3191
+Direction alignment degrees: 25.0
+Success: true
+
+--- Coverage per direction / family ---
+
+  [forward]
+    walk:
+      aligned_samples=309 | has_samples=true
+      fastest_animation=M Neutral Walk Loop F_fit_Armature_112
+      fastest_time=2.366667 | fastest_velocity=(0.0, 0.0, 1.831441)
+      minimum_speed=1.720977 | maximum_speed=1.831441 | maximum_total_speed=1.831441
+    run:
+      aligned_samples=257 | has_samples=true
+      fastest_animation=M Neutral Run Loop F_fit_Armature_114
+      fastest_time=1.800000 | fastest_velocity=(0.0, 0.0, 4.578552)
+      minimum_speed=0.570574 | maximum_speed=4.578552 | maximum_total_speed=4.578552
+    sprint:
+      aligned_samples=129 | has_samples=true
+      fastest_animation=M Neutral Sprint Loop F_fit_Armature_039
+      fastest_time=1.333333 | fastest_velocity=(0.0, 0.0, 6.409964)
+      minimum_speed=6.023368 | maximum_speed=6.409964 | maximum_total_speed=6.409964
+    all:
+      aligned_samples=695 | has_samples=true
+      fastest_animation=M Neutral Sprint Loop F_fit_Armature_039
+      fastest_time=1.333333 | fastest_velocity=(0.0, 0.0, 6.409964)
+      minimum_speed=0.570574 | maximum_speed=6.409964 | maximum_total_speed=6.409964
+
+  [backward]
+    walk:
+      aligned_samples=104 | has_samples=true
+      fastest_animation=M Neutral Walk Loop B_fit_Armature_115
+      fastest_time=2.900000 | fastest_velocity=(0.0, 0.0, -1.37357)
+      minimum_speed=1.373556 | maximum_speed=1.373570 | maximum_total_speed=1.373570
+    run:
+      aligned_samples=160 | has_samples=true
+      fastest_animation=M Neutral Run Loop B_fit_Armature_117
+      fastest_time=1.433333 | fastest_velocity=(0.0, 0.0, -2.747125)
+      minimum_speed=0.522283 | maximum_speed=2.747125 | maximum_total_speed=2.747125
+    sprint:
+      aligned_samples=0 | has_samples=false
+      fastest_animation=
+      fastest_time=0.000000 | fastest_velocity=(0.0, 0.0, 0.0)
+      minimum_speed=0.000000 | maximum_speed=0.000000 | maximum_total_speed=0.000000
+    all:
+      aligned_samples=264 | has_samples=true
+      fastest_animation=M Neutral Run Loop B_fit_Armature_117
+      fastest_time=1.433333 | fastest_velocity=(0.0, 0.0, -2.747125)
+      minimum_speed=0.522283 | maximum_speed=2.747125 | maximum_total_speed=2.747125
+
+  [left]
+    walk:
+      aligned_samples=291 | has_samples=true
+      fastest_animation=M Neutral Walk Loop RL_fit_Armature_104
+      fastest_time=2.366667 | fastest_velocity=(-1.6483, 0.0, 0.0)
+      minimum_speed=1.522765 | maximum_speed=1.648300 | maximum_total_speed=1.648300
+    run:
+      aligned_samples=242 | has_samples=true
+      fastest_animation=M Neutral Run Loop RR_fit_Armature_105
+      fastest_time=1.033333 | fastest_velocity=(-3.204978, 0.0, 0.0)
+      minimum_speed=0.559112 | maximum_speed=3.204978 | maximum_total_speed=3.204978
+    sprint:
+      aligned_samples=0 | has_samples=false
+      fastest_animation=
+      fastest_time=0.000000 | fastest_velocity=(0.0, 0.0, 0.0)
+      minimum_speed=0.000000 | maximum_speed=0.000000 | maximum_total_speed=0.000000
+    all:
+      aligned_samples=533 | has_samples=true
+      fastest_animation=M Neutral Run Loop RR_fit_Armature_105
+      fastest_time=1.033333 | fastest_velocity=(-3.204978, 0.0, 0.0)
+      minimum_speed=0.559112 | maximum_speed=3.204978 | maximum_total_speed=3.204978
+
+  [right]
+    walk:
+      aligned_samples=300 | has_samples=true
+      fastest_animation=M Neutral Walk Loop LR_fit_Armature_106
+      fastest_time=2.366667 | fastest_velocity=(1.6483, 0.0, 0.0)
+      minimum_speed=1.522815 | maximum_speed=1.648300 | maximum_total_speed=1.648300
+    run:
+      aligned_samples=258 | has_samples=true
+      fastest_animation=M Neutral Run Loop LL_fit_Armature_109
+      fastest_time=1.033333 | fastest_velocity=(3.204978, 0.0, 0.0)
+      minimum_speed=0.600551 | maximum_speed=3.204978 | maximum_total_speed=3.204978
+    sprint:
+      aligned_samples=0 | has_samples=false
+      fastest_animation=
+      fastest_time=0.000000 | fastest_velocity=(0.0, 0.0, 0.0)
+      minimum_speed=0.000000 | maximum_speed=0.000000 | maximum_total_speed=0.000000
+    all:
+      aligned_samples=558 | has_samples=true
+      fastest_animation=M Neutral Run Loop LL_fit_Armature_109
+      fastest_time=1.033333 | fastest_velocity=(3.204978, 0.0, 0.0)
+      minimum_speed=0.600551 | maximum_speed=3.204978 | maximum_total_speed=3.204978
+
+  [forward_left]
+    walk:
+      aligned_samples=135 | has_samples=true
+      fastest_animation=M Neutral Walk Loop FR_fit_Armature_108
+      fastest_time=2.100000 | fastest_velocity=(-1.295078, 0.0, 1.295078)
+      minimum_speed=1.659835 | maximum_speed=1.831516 | maximum_total_speed=1.831516
+    run:
+      aligned_samples=162 | has_samples=true
+      fastest_animation=M Neutral Run Loop FR_fit_Armature_110
+      fastest_time=1.300000 | fastest_velocity=(-3.237519, 0.0, 3.237519)
+      minimum_speed=0.523257 | maximum_speed=4.578543 | maximum_total_speed=4.578543
+    sprint:
+      aligned_samples=50 | has_samples=true
+      fastest_animation=M Neutral Sprint Loop FR_fit_Armature_035
+      fastest_time=0.266667 | fastest_velocity=(-4.532518, 0.0, 4.532518)
+      minimum_speed=5.809381 | maximum_speed=6.409949 | maximum_total_speed=6.409949
+    all:
+      aligned_samples=347 | has_samples=true
+      fastest_animation=M Neutral Sprint Loop FR_fit_Armature_035
+      fastest_time=0.266667 | fastest_velocity=(-4.532518, 0.0, 4.532518)
+      minimum_speed=0.523257 | maximum_speed=6.409949 | maximum_total_speed=6.409949
+
+  [forward_right]
+    walk:
+      aligned_samples=238 | has_samples=true
+      fastest_animation=M Neutral Walk Loop FL_fit_Armature_109
+      fastest_time=2.866667 | fastest_velocity=(1.29502, 0.0, 1.29502)
+      minimum_speed=1.522814 | maximum_speed=1.831435 | maximum_total_speed=1.831436
+    run:
+      aligned_samples=265 | has_samples=true
+      fastest_animation=M Neutral Run Loop FL_fit_Armature_111
+      fastest_time=1.300000 | fastest_velocity=(3.237519, 0.0, 3.237519)
+      minimum_speed=0.674075 | maximum_speed=4.578543 | maximum_total_speed=4.578543
+    sprint:
+      aligned_samples=50 | has_samples=true
+      fastest_animation=M Neutral Sprint Loop FL_fit_Armature_036
+      fastest_time=0.266667 | fastest_velocity=(4.532518, 0.0, 4.532518)
+      minimum_speed=5.809381 | maximum_speed=6.409949 | maximum_total_speed=6.409949
+    all:
+      aligned_samples=553 | has_samples=true
+      fastest_animation=M Neutral Sprint Loop FL_fit_Armature_036
+      fastest_time=0.266667 | fastest_velocity=(4.532518, 0.0, 4.532518)
+      minimum_speed=0.674075 | maximum_speed=6.409949 | maximum_total_speed=6.409949
+
+  [backward_left]
+    walk:
+      aligned_samples=198 | has_samples=true
+      fastest_animation=M Neutral Walk Loop RR offset_fit_Armature_102
+      fastest_time=3.100000 | fastest_velocity=(-1.522772, 0.0, -0.630754)
+      minimum_speed=1.373604 | maximum_speed=1.522773 | maximum_total_speed=1.648237
+    run:
+      aligned_samples=271 | has_samples=true
+      fastest_animation=M Neutral Run Loop RR offset_fit_Armature_104
+      fastest_time=1.466667 | fastest_velocity=(-2.961015, 0.0, -1.226494)
+      minimum_speed=0.529626 | maximum_speed=2.961016 | maximum_total_speed=3.204980
+    sprint:
+      aligned_samples=0 | has_samples=false
+      fastest_animation=
+      fastest_time=0.000000 | fastest_velocity=(0.0, 0.0, 0.0)
+      minimum_speed=0.000000 | maximum_speed=0.000000 | maximum_total_speed=0.000000
+    all:
+      aligned_samples=469 | has_samples=true
+      fastest_animation=M Neutral Run Loop RR offset_fit_Armature_104
+      fastest_time=1.466667 | fastest_velocity=(-2.961015, 0.0, -1.226494)
+      minimum_speed=0.529626 | maximum_speed=2.961016 | maximum_total_speed=3.204980
+
+  [backward_right]
+    walk:
+      aligned_samples=104 | has_samples=true
+      fastest_animation=M Neutral Walk Loop BL_fit_Armature_114
+      fastest_time=2.100000 | fastest_velocity=(0.971292, 0.0, -0.971292)
+      minimum_speed=1.373604 | maximum_speed=1.373615 | maximum_total_speed=1.373615
+    run:
+      aligned_samples=133 | has_samples=true
+      fastest_animation=M Neutral Run Loop BL_fit_Armature_116
+      fastest_time=1.066667 | fastest_velocity=(1.942509, 0.0, -1.942509)
+      minimum_speed=0.590950 | maximum_speed=2.747123 | maximum_total_speed=2.747123
+    sprint:
+      aligned_samples=0 | has_samples=false
+      fastest_animation=
+      fastest_time=0.000000 | fastest_velocity=(0.0, 0.0, 0.0)
+      minimum_speed=0.000000 | maximum_speed=0.000000 | maximum_total_speed=0.000000
+    all:
+      aligned_samples=237 | has_samples=true
+      fastest_animation=M Neutral Run Loop BL_fit_Armature_116
+      fastest_time=1.066667 | fastest_velocity=(1.942509, 0.0, -1.942509)
+      minimum_speed=0.590950 | maximum_speed=2.747123 | maximum_total_speed=2.747123
+
+--- Raw analyze_database_coverage() JSON ---
+{
+	"direction_alignment_degrees": 25.0,
+	"directions": [
+		{
+			"direction": "forward",
+			"groups": {
+				"all": {
+					"aligned_samples": 695,
+					"fastest_animation": "M Neutral Sprint Loop F_fit_Armature_039",
+					"fastest_time": 1.33333333333333,
+					"fastest_velocity": "(0.0, 0.0, 6.409964)",
+					"has_samples": true,
+					"maximum_speed": 6.40996408462524,
+					"maximum_total_speed": 6.40996408462524,
+					"minimum_speed": 0.570574223995209
+				},
+				"run": {
+					"aligned_samples": 257,
+					"fastest_animation": "M Neutral Run Loop F_fit_Armature_114",
+					"fastest_time": 1.8,
+					"fastest_velocity": "(0.0, 0.0, 4.578552)",
+					"has_samples": true,
+					"maximum_speed": 4.57855176925659,
+					"maximum_total_speed": 4.57855176925659,
+					"minimum_speed": 0.570574223995209
+				},
+				"sprint": {
+					"aligned_samples": 129,
+					"fastest_animation": "M Neutral Sprint Loop F_fit_Armature_039",
+					"fastest_time": 1.33333333333333,
+					"fastest_velocity": "(0.0, 0.0, 6.409964)",
+					"has_samples": true,
+					"maximum_speed": 6.40996408462524,
+					"maximum_total_speed": 6.40996408462524,
+					"minimum_speed": 6.02336835861206
+				},
+				"walk": {
+					"aligned_samples": 309,
+					"fastest_animation": "M Neutral Walk Loop F_fit_Armature_112",
+					"fastest_time": 2.36666666666667,
+					"fastest_velocity": "(0.0, 0.0, 1.831441)",
+					"has_samples": true,
+					"maximum_speed": 1.83144080638886,
+					"maximum_total_speed": 1.83144080638886,
+					"minimum_speed": 1.72097671031952
+				}
+			}
+		},
+		{
+			"direction": "backward",
+			"groups": {
+				"all": {
+					"aligned_samples": 264,
+					"fastest_animation": "M Neutral Run Loop B_fit_Armature_117",
+					"fastest_time": 1.43333333333333,
+					"fastest_velocity": "(0.0, 0.0, -2.747125)",
+					"has_samples": true,
+					"maximum_speed": 2.74712538719177,
+					"maximum_total_speed": 2.74712538719177,
+					"minimum_speed": 0.522282838821411
+				},
+				"run": {
+					"aligned_samples": 160,
+					"fastest_animation": "M Neutral Run Loop B_fit_Armature_117",
+					"fastest_time": 1.43333333333333,
+					"fastest_velocity": "(0.0, 0.0, -2.747125)",
+					"has_samples": true,
+					"maximum_speed": 2.74712538719177,
+					"maximum_total_speed": 2.74712538719177,
+					"minimum_speed": 0.522282838821411
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 104,
+					"fastest_animation": "M Neutral Walk Loop B_fit_Armature_115",
+					"fastest_time": 2.9,
+					"fastest_velocity": "(0.0, 0.0, -1.37357)",
+					"has_samples": true,
+					"maximum_speed": 1.37356984615326,
+					"maximum_total_speed": 1.37356984615326,
+					"minimum_speed": 1.37355554103851
+				}
+			}
+		},
+		{
+			"direction": "left",
+			"groups": {
+				"all": {
+					"aligned_samples": 533,
+					"fastest_animation": "M Neutral Run Loop RR_fit_Armature_105",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(-3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 0.559112012386322
+				},
+				"run": {
+					"aligned_samples": 242,
+					"fastest_animation": "M Neutral Run Loop RR_fit_Armature_105",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(-3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 0.559112012386322
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 291,
+					"fastest_animation": "M Neutral Walk Loop RL_fit_Armature_104",
+					"fastest_time": 2.36666666666667,
+					"fastest_velocity": "(-1.6483, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 1.64829957485199,
+					"maximum_total_speed": 1.64829957485199,
+					"minimum_speed": 1.52276504039764
+				}
+			}
+		},
+		{
+			"direction": "right",
+			"groups": {
+				"all": {
+					"aligned_samples": 558,
+					"fastest_animation": "M Neutral Run Loop LL_fit_Armature_109",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 0.60055148601532
+				},
+				"run": {
+					"aligned_samples": 258,
+					"fastest_animation": "M Neutral Run Loop LL_fit_Armature_109",
+					"fastest_time": 1.03333333333333,
+					"fastest_velocity": "(3.204978, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 3.20497846603394,
+					"maximum_total_speed": 3.20497846603394,
+					"minimum_speed": 0.60055148601532
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 300,
+					"fastest_animation": "M Neutral Walk Loop LR_fit_Armature_106",
+					"fastest_time": 2.36666666666667,
+					"fastest_velocity": "(1.6483, 0.0, 0.0)",
+					"has_samples": true,
+					"maximum_speed": 1.64829957485199,
+					"maximum_total_speed": 1.64829957485199,
+					"minimum_speed": 1.52281510829926
+				}
+			}
+		},
+		{
+			"direction": "forward_left",
+			"groups": {
+				"all": {
+					"aligned_samples": 347,
+					"fastest_animation": "M Neutral Sprint Loop FR_fit_Armature_035",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(-4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 0.523256957530975
+				},
+				"run": {
+					"aligned_samples": 162,
+					"fastest_animation": "M Neutral Run Loop FR_fit_Armature_110",
+					"fastest_time": 1.3,
+					"fastest_velocity": "(-3.237519, 0.0, 3.237519)",
+					"has_samples": true,
+					"maximum_speed": 4.57854318618774,
+					"maximum_total_speed": 4.57854318618774,
+					"minimum_speed": 0.523256957530975
+				},
+				"sprint": {
+					"aligned_samples": 50,
+					"fastest_animation": "M Neutral Sprint Loop FR_fit_Armature_035",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(-4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 5.80938148498535
+				},
+				"walk": {
+					"aligned_samples": 135,
+					"fastest_animation": "M Neutral Walk Loop FR_fit_Armature_108",
+					"fastest_time": 2.1,
+					"fastest_velocity": "(-1.295078, 0.0, 1.295078)",
+					"has_samples": true,
+					"maximum_speed": 1.83151638507843,
+					"maximum_total_speed": 1.83151638507843,
+					"minimum_speed": 1.65983545780182
+				}
+			}
+		},
+		{
+			"direction": "forward_right",
+			"groups": {
+				"all": {
+					"aligned_samples": 553,
+					"fastest_animation": "M Neutral Sprint Loop FL_fit_Armature_036",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 0.67407500743866
+				},
+				"run": {
+					"aligned_samples": 265,
+					"fastest_animation": "M Neutral Run Loop FL_fit_Armature_111",
+					"fastest_time": 1.3,
+					"fastest_velocity": "(3.237519, 0.0, 3.237519)",
+					"has_samples": true,
+					"maximum_speed": 4.57854318618774,
+					"maximum_total_speed": 4.57854318618774,
+					"minimum_speed": 0.67407500743866
+				},
+				"sprint": {
+					"aligned_samples": 50,
+					"fastest_animation": "M Neutral Sprint Loop FL_fit_Armature_036",
+					"fastest_time": 0.266666666666667,
+					"fastest_velocity": "(4.532518, 0.0, 4.532518)",
+					"has_samples": true,
+					"maximum_speed": 6.40994882583618,
+					"maximum_total_speed": 6.40994882583618,
+					"minimum_speed": 5.80938148498535
+				},
+				"walk": {
+					"aligned_samples": 238,
+					"fastest_animation": "M Neutral Walk Loop FL_fit_Armature_109",
+					"fastest_time": 2.86666666666667,
+					"fastest_velocity": "(1.29502, 0.0, 1.29502)",
+					"has_samples": true,
+					"maximum_speed": 1.83143544197083,
+					"maximum_total_speed": 1.83143556118011,
+					"minimum_speed": 1.52281427383423
+				}
+			}
+		},
+		{
+			"direction": "backward_left",
+			"groups": {
+				"all": {
+					"aligned_samples": 469,
+					"fastest_animation": "M Neutral Run Loop RR offset_fit_Armature_104",
+					"fastest_time": 1.46666666666667,
+					"fastest_velocity": "(-2.961015, 0.0, -1.226494)",
+					"has_samples": true,
+					"maximum_speed": 2.96101593971252,
+					"maximum_total_speed": 3.20498037338257,
+					"minimum_speed": 0.529626071453094
+				},
+				"run": {
+					"aligned_samples": 271,
+					"fastest_animation": "M Neutral Run Loop RR offset_fit_Armature_104",
+					"fastest_time": 1.46666666666667,
+					"fastest_velocity": "(-2.961015, 0.0, -1.226494)",
+					"has_samples": true,
+					"maximum_speed": 2.96101593971252,
+					"maximum_total_speed": 3.20498037338257,
+					"minimum_speed": 0.529626071453094
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 198,
+					"fastest_animation": "M Neutral Walk Loop RR offset_fit_Armature_102",
+					"fastest_time": 3.1,
+					"fastest_velocity": "(-1.522772, 0.0, -0.630754)",
+					"has_samples": true,
+					"maximum_speed": 1.52277266979218,
+					"maximum_total_speed": 1.64823698997498,
+					"minimum_speed": 1.37360441684723
+				}
+			}
+		},
+		{
+			"direction": "backward_right",
+			"groups": {
+				"all": {
+					"aligned_samples": 237,
+					"fastest_animation": "M Neutral Run Loop BL_fit_Armature_116",
+					"fastest_time": 1.06666666666667,
+					"fastest_velocity": "(1.942509, 0.0, -1.942509)",
+					"has_samples": true,
+					"maximum_speed": 2.74712300300598,
+					"maximum_total_speed": 2.74712300300598,
+					"minimum_speed": 0.590950131416321
+				},
+				"run": {
+					"aligned_samples": 133,
+					"fastest_animation": "M Neutral Run Loop BL_fit_Armature_116",
+					"fastest_time": 1.06666666666667,
+					"fastest_velocity": "(1.942509, 0.0, -1.942509)",
+					"has_samples": true,
+					"maximum_speed": 2.74712300300598,
+					"maximum_total_speed": 2.74712300300598,
+					"minimum_speed": 0.590950131416321
+				},
+				"sprint": {
+					"aligned_samples": 0,
+					"fastest_animation": "",
+					"fastest_time": 0.0,
+					"fastest_velocity": "(0.0, 0.0, 0.0)",
+					"has_samples": false,
+					"maximum_speed": 0.0,
+					"maximum_total_speed": 0.0,
+					"minimum_speed": 0.0
+				},
+				"walk": {
+					"aligned_samples": 104,
+					"fastest_animation": "M Neutral Walk Loop BL_fit_Armature_114",
+					"fastest_time": 2.1,
+					"fastest_velocity": "(0.971292, 0.0, -0.971292)",
+					"has_samples": true,
+					"maximum_speed": 1.37361454963684,
+					"maximum_total_speed": 1.37361466884613,
+					"minimum_speed": 1.37360441684723
+				}
+			}
+		}
+	],
+	"eligible_animation_count": 37,
+	"eligible_search_samples": 3191,
+	"families": {
+		"run": {
+			"animation_count": 18,
+			"valid_sample_count": 1558
+		},
+		"sprint": {
+			"animation_count": 5,
+			"valid_sample_count": 215
+		},
+		"walk": {
+			"animation_count": 14,
+			"valid_sample_count": 1418
+		}
+	},
+	"success": true
+}
+
+================================================================
+  ANALYZE_FASTEST_UNIQUE_ANIMATIONS(20) - UNIQUE COVERAGE
+================================================================
+animations_per_direction=20 | direction_alignment_degrees=25.0
+
+  [forward] available_directional_samples=695 | unique_animation_count=11
+    rank=1 | animation_name=M Neutral Sprint Loop F_fit_Armature_039 | family=sprint | total_speed=6.409964 | projected_speed=6.409964 | sample_time=1.333333 | sample_index=40 | velocity=(0.0, 0.0, 6.409964) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Sprint Loop F L 20_fit_Armature_038 | family=sprint | total_speed=6.409956 | projected_speed=6.023390 | sample_time=1.066667 | sample_index=32 | velocity=(2.19233, 0.0, 6.02339) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Sprint Loop F R 20_fit_Armature_037 | family=sprint | total_speed=6.409956 | projected_speed=6.023390 | sample_time=1.066667 | sample_index=32 | velocity=(-2.19233, 0.0, 6.02339) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Run Loop F_fit_Armature_114 | family=run | total_speed=4.578552 | projected_speed=4.578552 | sample_time=1.800000 | sample_index=54 | velocity=(0.0, 0.0, 4.578552) | yaw_degrees=0.000000
+    rank=5 | animation_name=M Neutral Run Loop F L 20_fit_Armature_113 | family=run | total_speed=4.578539 | projected_speed=4.302421 | sample_time=0.966667 | sample_index=29 | velocity=(1.56595, 0.0, 4.302421) | yaw_degrees=0.000000
+    rank=6 | animation_name=M Neutral Run Loop F R 20_fit_Armature_112 | family=run | total_speed=4.578539 | projected_speed=4.302421 | sample_time=0.966667 | sample_index=29 | velocity=(-1.56595, 0.0, 4.302421) | yaw_degrees=0.000000
+    rank=7 | animation_name=M Neutral Walk Loop F_fit_Armature_112 | family=walk | total_speed=1.831441 | projected_speed=1.831441 | sample_time=2.366667 | sample_index=71 | velocity=(0.0, 0.0, 1.831441) | yaw_degrees=0.000000
+    rank=8 | animation_name=M Neutral Walk Loop F L 20_fit_Armature_111 | family=walk | total_speed=1.831440 | projected_speed=1.720991 | sample_time=2.366667 | sample_index=71 | velocity=(0.626389, 0.0, 1.720991) | yaw_degrees=0.000000
+    rank=9 | animation_name=M Neutral Walk Loop F R 20_fit_Armature_110 | family=walk | total_speed=1.831440 | projected_speed=1.720991 | sample_time=2.366667 | sample_index=71 | velocity=(-0.626389, 0.0, 1.720991) | yaw_degrees=0.000000
+    rank=10 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.248573 | projected_speed=1.223202 | sample_time=11.400000 | sample_index=342 | velocity=(-0.250422, 0.0, 1.223202) | yaw_degrees=0.000000
+    rank=11 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=1.001120 | projected_speed=0.979771 | sample_time=1.600000 | sample_index=48 | velocity=(0.205642, 0.0, 0.979771) | yaw_degrees=0.000000
+
+  [backward] available_directional_samples=264 | unique_animation_count=4
+    rank=1 | animation_name=M Neutral Run Loop B_fit_Armature_117 | family=run | total_speed=2.747125 | projected_speed=2.747125 | sample_time=1.433333 | sample_index=43 | velocity=(0.0, 0.0, -2.747125) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Walk Loop B_fit_Armature_115 | family=walk | total_speed=1.373570 | projected_speed=1.373570 | sample_time=2.900000 | sample_index=87 | velocity=(0.0, 0.0, -1.37357) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.144055 | projected_speed=1.132615 | sample_time=12.333333 | sample_index=370 | velocity=(-0.161385, 0.0, -1.132615) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=1.067668 | projected_speed=1.067564 | sample_time=5.366667 | sample_index=161 | velocity=(0.014931, 0.0, -1.067564) | yaw_degrees=0.000000
+
+  [left] available_directional_samples=533 | unique_animation_count=8
+    rank=1 | animation_name=M Neutral Run Loop RR_fit_Armature_105 | family=run | total_speed=3.204978 | projected_speed=3.204978 | sample_time=1.033333 | sample_index=31 | velocity=(-3.204978, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Run Loop RL_fit_Armature_106 | family=run | total_speed=3.204961 | projected_speed=3.204961 | sample_time=1.466667 | sample_index=44 | velocity=(-3.204961, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Loop RR offset_fit_Armature_104 | family=run | total_speed=3.204980 | projected_speed=2.961015 | sample_time=1.033333 | sample_index=31 | velocity=(-2.961015, 0.0, -1.226492) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Walk Loop RL_fit_Armature_104 | family=walk | total_speed=1.648300 | projected_speed=1.648300 | sample_time=2.366667 | sample_index=71 | velocity=(-1.6483, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=5 | animation_name=M Neutral Walk Loop RR_fit_Armature_103 | family=walk | total_speed=1.648239 | projected_speed=1.648239 | sample_time=2.400000 | sample_index=72 | velocity=(-1.648239, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=6 | animation_name=M Neutral Walk Loop RR offset_fit_Armature_102 | family=walk | total_speed=1.648236 | projected_speed=1.522772 | sample_time=1.933333 | sample_index=58 | velocity=(-1.522772, 0.0, -0.630752) | yaw_degrees=0.000000
+    rank=7 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=1.043918 | projected_speed=1.035464 | sample_time=2.966667 | sample_index=89 | velocity=(-1.035464, 0.0, -0.132591) | yaw_degrees=0.000000
+    rank=8 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.028075 | projected_speed=1.007166 | sample_time=5.833333 | sample_index=175 | velocity=(-1.007166, 0.0, 0.206288) | yaw_degrees=0.000000
+
+  [right] available_directional_samples=558 | unique_animation_count=8
+    rank=1 | animation_name=M Neutral Run Loop LL_fit_Armature_109 | family=run | total_speed=3.204978 | projected_speed=3.204978 | sample_time=1.033333 | sample_index=31 | velocity=(3.204978, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Run Loop LR_fit_Armature_108 | family=run | total_speed=3.204978 | projected_speed=3.204978 | sample_time=1.033333 | sample_index=31 | velocity=(3.204978, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Loop LR offset_fit_Armature_107 | family=run | total_speed=3.204980 | projected_speed=2.961015 | sample_time=1.033333 | sample_index=31 | velocity=(2.961015, 0.0, 1.226492) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Walk Loop LR_fit_Armature_106 | family=walk | total_speed=1.648300 | projected_speed=1.648300 | sample_time=2.366667 | sample_index=71 | velocity=(1.6483, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=5 | animation_name=M Neutral Walk Loop LL_fit_Armature_107 | family=walk | total_speed=1.648239 | projected_speed=1.648239 | sample_time=2.400000 | sample_index=72 | velocity=(1.648239, 0.0, 0.0) | yaw_degrees=0.000000
+    rank=6 | animation_name=M Neutral Walk Loop LR offset_fit_Armature_105 | family=walk | total_speed=1.648299 | projected_speed=1.522829 | sample_time=2.366667 | sample_index=71 | velocity=(1.522829, 0.0, 0.630777) | yaw_degrees=0.000000
+    rank=7 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.263117 | projected_speed=1.252429 | sample_time=3.133333 | sample_index=94 | velocity=(1.252429, 0.0, 0.163965) | yaw_degrees=0.000000
+    rank=8 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=1.189201 | projected_speed=1.170717 | sample_time=2.433333 | sample_index=73 | velocity=(1.170717, 0.0, 0.208855) | yaw_degrees=0.000000
+
+  [forward_left] available_directional_samples=347 | unique_animation_count=8
+    rank=1 | animation_name=M Neutral Sprint Loop FR_fit_Armature_035 | family=sprint | total_speed=6.409949 | projected_speed=6.409949 | sample_time=0.266667 | sample_index=8 | velocity=(-4.532518, 0.0, 4.532518) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Sprint Loop F R 20_fit_Armature_037 | family=sprint | total_speed=6.409951 | projected_speed=5.809389 | sample_time=1.033333 | sample_index=31 | velocity=(-2.192334, 0.0, 6.023383) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Loop FR_fit_Armature_110 | family=run | total_speed=4.578543 | projected_speed=4.578543 | sample_time=1.300000 | sample_index=39 | velocity=(-3.237519, 0.0, 3.237519) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Run Loop F R 20_fit_Armature_112 | family=run | total_speed=4.578533 | projected_speed=4.149561 | sample_time=1.833333 | sample_index=55 | velocity=(-1.565952, 0.0, 4.302413) | yaw_degrees=0.000000
+    rank=5 | animation_name=M Neutral Walk Loop FR_fit_Armature_108 | family=walk | total_speed=1.831516 | projected_speed=1.831516 | sample_time=2.100000 | sample_index=63 | velocity=(-1.295078, 0.0, 1.295078) | yaw_degrees=0.000000
+    rank=6 | animation_name=M Neutral Walk Loop F R 20_fit_Armature_110 | family=walk | total_speed=1.831433 | projected_speed=1.659843 | sample_time=3.366667 | sample_index=101 | velocity=(-0.626389, 0.0, 1.720984) | yaw_degrees=0.000000
+    rank=7 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.227566 | projected_speed=1.214662 | sample_time=7.733333 | sample_index=232 | velocity=(-0.733367, 0.0, 0.984424) | yaw_degrees=0.000000
+    rank=8 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=0.886056 | projected_speed=0.884283 | sample_time=4.833333 | sample_index=145 | velocity=(-0.585671, 0.0, 0.664895) | yaw_degrees=0.000000
+
+  [forward_right] available_directional_samples=553 | unique_animation_count=11
+    rank=1 | animation_name=M Neutral Sprint Loop FL_fit_Armature_036 | family=sprint | total_speed=6.409949 | projected_speed=6.409949 | sample_time=0.266667 | sample_index=8 | velocity=(4.532518, 0.0, 4.532518) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Sprint Loop F L 20_fit_Armature_038 | family=sprint | total_speed=6.409951 | projected_speed=5.809389 | sample_time=1.033333 | sample_index=31 | velocity=(2.192334, 0.0, 6.023383) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Loop FL_fit_Armature_111 | family=run | total_speed=4.578543 | projected_speed=4.578543 | sample_time=1.300000 | sample_index=39 | velocity=(3.237519, 0.0, 3.237519) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Run Loop Strafe FL_fit_Armature_102 | family=run | total_speed=4.578543 | projected_speed=4.578543 | sample_time=1.200000 | sample_index=36 | velocity=(3.237519, 0.0, 3.237519) | yaw_degrees=0.000000
+    rank=5 | animation_name=M Neutral Run Loop F L 20_fit_Armature_113 | family=run | total_speed=4.578533 | projected_speed=4.149561 | sample_time=1.833333 | sample_index=55 | velocity=(1.565952, 0.0, 4.302413) | yaw_degrees=0.000000
+    rank=6 | animation_name=M Neutral Run Loop LR offset_fit_Armature_107 | family=run | total_speed=3.204980 | projected_speed=2.961016 | sample_time=1.466667 | sample_index=44 | velocity=(2.961015, 0.0, 1.226494) | yaw_degrees=0.000000
+    rank=7 | animation_name=M Neutral Walk Loop FL_fit_Armature_109 | family=walk | total_speed=1.831436 | projected_speed=1.831435 | sample_time=2.866667 | sample_index=86 | velocity=(1.29502, 0.0, 1.29502) | yaw_degrees=0.000000
+    rank=8 | animation_name=M Neutral Walk Loop F L 20_fit_Armature_111 | family=walk | total_speed=1.831433 | projected_speed=1.659843 | sample_time=3.366667 | sample_index=101 | velocity=(0.626389, 0.0, 1.720984) | yaw_degrees=0.000000
+    rank=9 | animation_name=M Neutral Walk Loop LR offset_fit_Armature_105 | family=walk | total_speed=1.648299 | projected_speed=1.522830 | sample_time=2.366667 | sample_index=71 | velocity=(1.522829, 0.0, 0.630777) | yaw_degrees=0.000000
+    rank=10 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.196257 | projected_speed=1.188514 | sample_time=13.466667 | sample_index=404 | velocity=(0.936492, 0.0, 0.74432) | yaw_degrees=0.000000
+    rank=11 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=1.189287 | projected_speed=1.163461 | sample_time=2.533333 | sample_index=76 | velocity=(0.996991, 0.0, 0.648391) | yaw_degrees=0.000000
+
+  [backward_left] available_directional_samples=469 | unique_animation_count=7
+    rank=1 | animation_name=M Neutral Run Loop RR offset_fit_Armature_104 | family=run | total_speed=3.204980 | projected_speed=2.961016 | sample_time=1.466667 | sample_index=44 | velocity=(-2.961015, 0.0, -1.226494) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Run Loop BR_fit_Armature_115 | family=run | total_speed=2.747123 | projected_speed=2.747123 | sample_time=0.500000 | sample_index=15 | velocity=(-1.942509, 0.0, -1.942509) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Loop Strafe BR_fit_Armature_103 | family=run | total_speed=2.747123 | projected_speed=2.747123 | sample_time=0.500000 | sample_index=15 | velocity=(-1.942509, 0.0, -1.942509) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Walk Loop RR offset_fit_Armature_102 | family=walk | total_speed=1.648237 | projected_speed=1.522773 | sample_time=3.100000 | sample_index=93 | velocity=(-1.522772, 0.0, -0.630754) | yaw_degrees=0.000000
+    rank=5 | animation_name=M Neutral Walk Loop BR_fit_Armature_113 | family=walk | total_speed=1.373615 | projected_speed=1.373615 | sample_time=2.100000 | sample_index=63 | velocity=(-0.971292, 0.0, -0.971292) | yaw_degrees=0.000000
+    rank=6 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=1.100861 | projected_speed=1.100853 | sample_time=3.100000 | sample_index=93 | velocity=(-0.781387, 0.0, -0.775453) | yaw_degrees=0.000000
+    rank=7 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.123180 | projected_speed=1.072032 | sample_time=12.500000 | sample_index=375 | velocity=(-0.521101, 0.0, -0.99498) | yaw_degrees=0.000000
+
+  [backward_right] available_directional_samples=237 | unique_animation_count=4
+    rank=1 | animation_name=M Neutral Run Loop BL_fit_Armature_116 | family=run | total_speed=2.747123 | projected_speed=2.747123 | sample_time=1.066667 | sample_index=32 | velocity=(1.942509, 0.0, -1.942509) | yaw_degrees=0.000000
+    rank=2 | animation_name=M Neutral Walk Loop BL_fit_Armature_114 | family=walk | total_speed=1.373615 | projected_speed=1.373615 | sample_time=2.100000 | sample_index=63 | velocity=(0.971292, 0.0, -0.971292) | yaw_degrees=0.000000
+    rank=3 | animation_name=M Neutral Run Circle Strafe L_fit_Armature_190 | family=run | total_speed=1.122323 | projected_speed=1.121995 | sample_time=6.800000 | sample_index=204 | velocity=(0.812562, 0.0, -0.774178) | yaw_degrees=0.000000
+    rank=4 | animation_name=M Neutral Run Circle Strafe R_fit_Armature_189 | family=run | total_speed=0.908658 | projected_speed=0.899025 | sample_time=1.233333 | sample_index=37 | velocity=(0.729015, 0.0, -0.542399) | yaw_degrees=0.000000
+
+--- Raw analyze_fastest_unique_animations(20) JSON ---
+{
+	"animations_per_direction": 20,
+	"direction_alignment_degrees": 25.0,
+	"directions": [
+		{
+			"available_directional_samples": 695,
+			"direction": "forward",
+			"fastest_animations": [
+				{
+					"animation_index": 453,
+					"animation_name": "M Neutral Sprint Loop F_fit_Armature_039",
+					"best_sample_index": 40,
+					"best_sample_time": 1.33333333333333,
+					"family": "sprint",
+					"projected_speed": 6.40996408462524,
+					"rank": 1,
+					"total_speed": 6.40996408462524,
+					"velocity": "(0.0, 0.0, 6.409964)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 449,
+					"animation_name": "M Neutral Sprint Loop F L 20_fit_Armature_038",
+					"best_sample_index": 32,
+					"best_sample_time": 1.06666666666667,
+					"family": "sprint",
+					"projected_speed": 6.02338981628418,
+					"rank": 2,
+					"total_speed": 6.40995597839355,
+					"velocity": "(2.19233, 0.0, 6.02339)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 450,
+					"animation_name": "M Neutral Sprint Loop F R 20_fit_Armature_037",
+					"best_sample_index": 32,
+					"best_sample_time": 1.06666666666667,
+					"family": "sprint",
+					"projected_speed": 6.02338981628418,
+					"rank": 3,
+					"total_speed": 6.40995597839355,
+					"velocity": "(-2.19233, 0.0, 6.02339)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 111,
+					"animation_name": "M Neutral Run Loop F_fit_Armature_114",
+					"best_sample_index": 54,
+					"best_sample_time": 1.8,
+					"family": "run",
+					"projected_speed": 4.57855176925659,
+					"rank": 4,
+					"total_speed": 4.57855176925659,
+					"velocity": "(0.0, 0.0, 4.578552)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 107,
+					"animation_name": "M Neutral Run Loop F L 20_fit_Armature_113",
+					"best_sample_index": 29,
+					"best_sample_time": 0.966666666666667,
+					"family": "run",
+					"projected_speed": 4.3024206161499,
+					"rank": 5,
+					"total_speed": 4.57853937149048,
+					"velocity": "(1.56595, 0.0, 4.302421)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 108,
+					"animation_name": "M Neutral Run Loop F R 20_fit_Armature_112",
+					"best_sample_index": 29,
+					"best_sample_time": 0.966666666666667,
+					"family": "run",
+					"projected_speed": 4.3024206161499,
+					"rank": 6,
+					"total_speed": 4.57853937149048,
+					"velocity": "(-1.56595, 0.0, 4.302421)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 336,
+					"animation_name": "M Neutral Walk Loop F_fit_Armature_112",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.83144080638886,
+					"rank": 7,
+					"total_speed": 1.83144080638886,
+					"velocity": "(0.0, 0.0, 1.831441)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 332,
+					"animation_name": "M Neutral Walk Loop F L 20_fit_Armature_111",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.72099101543427,
+					"rank": 8,
+					"total_speed": 1.83144009113312,
+					"velocity": "(0.626389, 0.0, 1.720991)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 333,
+					"animation_name": "M Neutral Walk Loop F R 20_fit_Armature_110",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.72099101543427,
+					"rank": 9,
+					"total_speed": 1.83144009113312,
+					"velocity": "(-0.626389, 0.0, 1.720991)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 342,
+					"best_sample_time": 11.4,
+					"family": "run",
+					"projected_speed": 1.22320234775543,
+					"rank": 10,
+					"total_speed": 1.24857318401337,
+					"velocity": "(-0.250422, 0.0, 1.223202)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 48,
+					"best_sample_time": 1.6,
+					"family": "run",
+					"projected_speed": 0.979771435260773,
+					"rank": 11,
+					"total_speed": 1.00111973285675,
+					"velocity": "(0.205642, 0.0, 0.979771)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 11
+		},
+		{
+			"available_directional_samples": 264,
+			"direction": "backward",
+			"fastest_animations": [
+				{
+					"animation_index": 106,
+					"animation_name": "M Neutral Run Loop B_fit_Armature_117",
+					"best_sample_index": 43,
+					"best_sample_time": 1.43333333333333,
+					"family": "run",
+					"projected_speed": 2.74712538719177,
+					"rank": 1,
+					"total_speed": 2.74712538719177,
+					"velocity": "(0.0, 0.0, -2.747125)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 331,
+					"animation_name": "M Neutral Walk Loop B_fit_Armature_115",
+					"best_sample_index": 87,
+					"best_sample_time": 2.9,
+					"family": "walk",
+					"projected_speed": 1.37356984615326,
+					"rank": 2,
+					"total_speed": 1.37356984615326,
+					"velocity": "(0.0, 0.0, -1.37357)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 370,
+					"best_sample_time": 12.3333333333333,
+					"family": "run",
+					"projected_speed": 1.13261532783508,
+					"rank": 3,
+					"total_speed": 1.14405536651611,
+					"velocity": "(-0.161385, 0.0, -1.132615)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 161,
+					"best_sample_time": 5.36666666666667,
+					"family": "run",
+					"projected_speed": 1.06756365299225,
+					"rank": 4,
+					"total_speed": 1.0676680803299,
+					"velocity": "(0.014931, 0.0, -1.067564)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 4
+		},
+		{
+			"available_directional_samples": 533,
+			"direction": "left",
+			"fastest_animations": [
+				{
+					"animation_index": 117,
+					"animation_name": "M Neutral Run Loop RR_fit_Armature_105",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "run",
+					"projected_speed": 3.20497846603394,
+					"rank": 1,
+					"total_speed": 3.20497846603394,
+					"velocity": "(-3.204978, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 115,
+					"animation_name": "M Neutral Run Loop RL_fit_Armature_106",
+					"best_sample_index": 44,
+					"best_sample_time": 1.46666666666667,
+					"family": "run",
+					"projected_speed": 3.2049605846405,
+					"rank": 2,
+					"total_speed": 3.2049605846405,
+					"velocity": "(-3.204961, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 116,
+					"animation_name": "M Neutral Run Loop RR offset_fit_Armature_104",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "run",
+					"projected_speed": 2.96101546287537,
+					"rank": 3,
+					"total_speed": 3.20497965812683,
+					"velocity": "(-2.961015, 0.0, -1.226492)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 340,
+					"animation_name": "M Neutral Walk Loop RL_fit_Armature_104",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.64829957485199,
+					"rank": 4,
+					"total_speed": 1.64829957485199,
+					"velocity": "(-1.6483, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 342,
+					"animation_name": "M Neutral Walk Loop RR_fit_Armature_103",
+					"best_sample_index": 72,
+					"best_sample_time": 2.4,
+					"family": "walk",
+					"projected_speed": 1.64823877811432,
+					"rank": 5,
+					"total_speed": 1.64823877811432,
+					"velocity": "(-1.648239, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 341,
+					"animation_name": "M Neutral Walk Loop RR offset_fit_Armature_102",
+					"best_sample_index": 58,
+					"best_sample_time": 1.93333333333333,
+					"family": "walk",
+					"projected_speed": 1.52277219295502,
+					"rank": 6,
+					"total_speed": 1.64823639392853,
+					"velocity": "(-1.522772, 0.0, -0.630752)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 89,
+					"best_sample_time": 2.96666666666667,
+					"family": "run",
+					"projected_speed": 1.03546380996704,
+					"rank": 7,
+					"total_speed": 1.04391849040985,
+					"velocity": "(-1.035464, 0.0, -0.132591)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 175,
+					"best_sample_time": 5.83333333333333,
+					"family": "run",
+					"projected_speed": 1.00716602802277,
+					"rank": 8,
+					"total_speed": 1.0280749797821,
+					"velocity": "(-1.007166, 0.0, 0.206288)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 8
+		},
+		{
+			"available_directional_samples": 558,
+			"direction": "right",
+			"fastest_animations": [
+				{
+					"animation_index": 112,
+					"animation_name": "M Neutral Run Loop LL_fit_Armature_109",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "run",
+					"projected_speed": 3.20497846603394,
+					"rank": 1,
+					"total_speed": 3.20497846603394,
+					"velocity": "(3.204978, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 114,
+					"animation_name": "M Neutral Run Loop LR_fit_Armature_108",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "run",
+					"projected_speed": 3.20497846603394,
+					"rank": 2,
+					"total_speed": 3.20497846603394,
+					"velocity": "(3.204978, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 113,
+					"animation_name": "M Neutral Run Loop LR offset_fit_Armature_107",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "run",
+					"projected_speed": 2.96101546287537,
+					"rank": 3,
+					"total_speed": 3.20497965812683,
+					"velocity": "(2.961015, 0.0, 1.226492)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 339,
+					"animation_name": "M Neutral Walk Loop LR_fit_Armature_106",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.64829957485199,
+					"rank": 4,
+					"total_speed": 1.64829957485199,
+					"velocity": "(1.6483, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 337,
+					"animation_name": "M Neutral Walk Loop LL_fit_Armature_107",
+					"best_sample_index": 72,
+					"best_sample_time": 2.4,
+					"family": "walk",
+					"projected_speed": 1.64823877811432,
+					"rank": 5,
+					"total_speed": 1.64823877811432,
+					"velocity": "(1.648239, 0.0, 0.0)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 338,
+					"animation_name": "M Neutral Walk Loop LR offset_fit_Armature_105",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.522829413414,
+					"rank": 6,
+					"total_speed": 1.64829874038696,
+					"velocity": "(1.522829, 0.0, 0.630777)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 94,
+					"best_sample_time": 3.13333333333333,
+					"family": "run",
+					"projected_speed": 1.25242924690247,
+					"rank": 7,
+					"total_speed": 1.26311659812927,
+					"velocity": "(1.252429, 0.0, 0.163965)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 73,
+					"best_sample_time": 2.43333333333333,
+					"family": "run",
+					"projected_speed": 1.17071735858917,
+					"rank": 8,
+					"total_speed": 1.18920111656189,
+					"velocity": "(1.170717, 0.0, 0.208855)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 8
+		},
+		{
+			"available_directional_samples": 347,
+			"direction": "forward_left",
+			"fastest_animations": [
+				{
+					"animation_index": 452,
+					"animation_name": "M Neutral Sprint Loop FR_fit_Armature_035",
+					"best_sample_index": 8,
+					"best_sample_time": 0.266666666666667,
+					"family": "sprint",
+					"projected_speed": 6.40994882583618,
+					"rank": 1,
+					"total_speed": 6.40994882583618,
+					"velocity": "(-4.532518, 0.0, 4.532518)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 450,
+					"animation_name": "M Neutral Sprint Loop F R 20_fit_Armature_037",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "sprint",
+					"projected_speed": 5.80938911437988,
+					"rank": 2,
+					"total_speed": 6.40995073318481,
+					"velocity": "(-2.192334, 0.0, 6.023383)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 110,
+					"animation_name": "M Neutral Run Loop FR_fit_Armature_110",
+					"best_sample_index": 39,
+					"best_sample_time": 1.3,
+					"family": "run",
+					"projected_speed": 4.57854318618774,
+					"rank": 3,
+					"total_speed": 4.57854318618774,
+					"velocity": "(-3.237519, 0.0, 3.237519)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 108,
+					"animation_name": "M Neutral Run Loop F R 20_fit_Armature_112",
+					"best_sample_index": 55,
+					"best_sample_time": 1.83333333333333,
+					"family": "run",
+					"projected_speed": 4.14956092834473,
+					"rank": 4,
+					"total_speed": 4.57853317260742,
+					"velocity": "(-1.565952, 0.0, 4.302413)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 335,
+					"animation_name": "M Neutral Walk Loop FR_fit_Armature_108",
+					"best_sample_index": 63,
+					"best_sample_time": 2.1,
+					"family": "walk",
+					"projected_speed": 1.83151638507843,
+					"rank": 5,
+					"total_speed": 1.83151638507843,
+					"velocity": "(-1.295078, 0.0, 1.295078)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 333,
+					"animation_name": "M Neutral Walk Loop F R 20_fit_Armature_110",
+					"best_sample_index": 101,
+					"best_sample_time": 3.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.65984296798706,
+					"rank": 6,
+					"total_speed": 1.8314334154129,
+					"velocity": "(-0.626389, 0.0, 1.720984)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 232,
+					"best_sample_time": 7.73333333333333,
+					"family": "run",
+					"projected_speed": 1.21466183662415,
+					"rank": 7,
+					"total_speed": 1.22756588459015,
+					"velocity": "(-0.733367, 0.0, 0.984424)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 145,
+					"best_sample_time": 4.83333333333333,
+					"family": "run",
+					"projected_speed": 0.884283304214478,
+					"rank": 8,
+					"total_speed": 0.886056005954742,
+					"velocity": "(-0.585671, 0.0, 0.664895)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 8
+		},
+		{
+			"available_directional_samples": 553,
+			"direction": "forward_right",
+			"fastest_animations": [
+				{
+					"animation_index": 451,
+					"animation_name": "M Neutral Sprint Loop FL_fit_Armature_036",
+					"best_sample_index": 8,
+					"best_sample_time": 0.266666666666667,
+					"family": "sprint",
+					"projected_speed": 6.40994882583618,
+					"rank": 1,
+					"total_speed": 6.40994882583618,
+					"velocity": "(4.532518, 0.0, 4.532518)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 449,
+					"animation_name": "M Neutral Sprint Loop F L 20_fit_Armature_038",
+					"best_sample_index": 31,
+					"best_sample_time": 1.03333333333333,
+					"family": "sprint",
+					"projected_speed": 5.80938911437988,
+					"rank": 2,
+					"total_speed": 6.40995073318481,
+					"velocity": "(2.192334, 0.0, 6.023383)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 109,
+					"animation_name": "M Neutral Run Loop FL_fit_Armature_111",
+					"best_sample_index": 39,
+					"best_sample_time": 1.3,
+					"family": "run",
+					"projected_speed": 4.57854318618774,
+					"rank": 3,
+					"total_speed": 4.57854318618774,
+					"velocity": "(3.237519, 0.0, 3.237519)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 119,
+					"animation_name": "M Neutral Run Loop Strafe FL_fit_Armature_102",
+					"best_sample_index": 36,
+					"best_sample_time": 1.2,
+					"family": "run",
+					"projected_speed": 4.57854318618774,
+					"rank": 4,
+					"total_speed": 4.57854318618774,
+					"velocity": "(3.237519, 0.0, 3.237519)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 107,
+					"animation_name": "M Neutral Run Loop F L 20_fit_Armature_113",
+					"best_sample_index": 55,
+					"best_sample_time": 1.83333333333333,
+					"family": "run",
+					"projected_speed": 4.14956092834473,
+					"rank": 5,
+					"total_speed": 4.57853317260742,
+					"velocity": "(1.565952, 0.0, 4.302413)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 113,
+					"animation_name": "M Neutral Run Loop LR offset_fit_Armature_107",
+					"best_sample_index": 44,
+					"best_sample_time": 1.46666666666667,
+					"family": "run",
+					"projected_speed": 2.96101593971252,
+					"rank": 6,
+					"total_speed": 3.20498037338257,
+					"velocity": "(2.961015, 0.0, 1.226494)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 334,
+					"animation_name": "M Neutral Walk Loop FL_fit_Armature_109",
+					"best_sample_index": 86,
+					"best_sample_time": 2.86666666666667,
+					"family": "walk",
+					"projected_speed": 1.83143544197083,
+					"rank": 7,
+					"total_speed": 1.83143556118011,
+					"velocity": "(1.29502, 0.0, 1.29502)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 332,
+					"animation_name": "M Neutral Walk Loop F L 20_fit_Armature_111",
+					"best_sample_index": 101,
+					"best_sample_time": 3.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.65984296798706,
+					"rank": 8,
+					"total_speed": 1.8314334154129,
+					"velocity": "(0.626389, 0.0, 1.720984)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 338,
+					"animation_name": "M Neutral Walk Loop LR offset_fit_Armature_105",
+					"best_sample_index": 71,
+					"best_sample_time": 2.36666666666667,
+					"family": "walk",
+					"projected_speed": 1.52282953262329,
+					"rank": 9,
+					"total_speed": 1.64829874038696,
+					"velocity": "(1.522829, 0.0, 0.630777)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 404,
+					"best_sample_time": 13.4666666666667,
+					"family": "run",
+					"projected_speed": 1.18851351737976,
+					"rank": 10,
+					"total_speed": 1.19625651836395,
+					"velocity": "(0.936492, 0.0, 0.74432)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 76,
+					"best_sample_time": 2.53333333333333,
+					"family": "run",
+					"projected_speed": 1.16346096992493,
+					"rank": 11,
+					"total_speed": 1.1892865896225,
+					"velocity": "(0.996991, 0.0, 0.648391)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 11
+		},
+		{
+			"available_directional_samples": 469,
+			"direction": "backward_left",
+			"fastest_animations": [
+				{
+					"animation_index": 116,
+					"animation_name": "M Neutral Run Loop RR offset_fit_Armature_104",
+					"best_sample_index": 44,
+					"best_sample_time": 1.46666666666667,
+					"family": "run",
+					"projected_speed": 2.96101593971252,
+					"rank": 1,
+					"total_speed": 3.20498037338257,
+					"velocity": "(-2.961015, 0.0, -1.226494)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 105,
+					"animation_name": "M Neutral Run Loop BR_fit_Armature_115",
+					"best_sample_index": 15,
+					"best_sample_time": 0.5,
+					"family": "run",
+					"projected_speed": 2.74712300300598,
+					"rank": 2,
+					"total_speed": 2.74712300300598,
+					"velocity": "(-1.942509, 0.0, -1.942509)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 118,
+					"animation_name": "M Neutral Run Loop Strafe BR_fit_Armature_103",
+					"best_sample_index": 15,
+					"best_sample_time": 0.5,
+					"family": "run",
+					"projected_speed": 2.74712300300598,
+					"rank": 3,
+					"total_speed": 2.74712300300598,
+					"velocity": "(-1.942509, 0.0, -1.942509)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 341,
+					"animation_name": "M Neutral Walk Loop RR offset_fit_Armature_102",
+					"best_sample_index": 93,
+					"best_sample_time": 3.1,
+					"family": "walk",
+					"projected_speed": 1.52277266979218,
+					"rank": 4,
+					"total_speed": 1.64823698997498,
+					"velocity": "(-1.522772, 0.0, -0.630754)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 330,
+					"animation_name": "M Neutral Walk Loop BR_fit_Armature_113",
+					"best_sample_index": 63,
+					"best_sample_time": 2.1,
+					"family": "walk",
+					"projected_speed": 1.37361454963684,
+					"rank": 5,
+					"total_speed": 1.37361466884613,
+					"velocity": "(-0.971292, 0.0, -0.971292)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 93,
+					"best_sample_time": 3.1,
+					"family": "run",
+					"projected_speed": 1.10085260868073,
+					"rank": 6,
+					"total_speed": 1.10086059570313,
+					"velocity": "(-0.781387, 0.0, -0.775453)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 375,
+					"best_sample_time": 12.5,
+					"family": "run",
+					"projected_speed": 1.07203161716461,
+					"rank": 7,
+					"total_speed": 1.12317955493927,
+					"velocity": "(-0.521101, 0.0, -0.99498)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 7
+		},
+		{
+			"available_directional_samples": 237,
+			"direction": "backward_right",
+			"fastest_animations": [
+				{
+					"animation_index": 104,
+					"animation_name": "M Neutral Run Loop BL_fit_Armature_116",
+					"best_sample_index": 32,
+					"best_sample_time": 1.06666666666667,
+					"family": "run",
+					"projected_speed": 2.74712300300598,
+					"rank": 1,
+					"total_speed": 2.74712300300598,
+					"velocity": "(1.942509, 0.0, -1.942509)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 329,
+					"animation_name": "M Neutral Walk Loop BL_fit_Armature_114",
+					"best_sample_index": 63,
+					"best_sample_time": 2.1,
+					"family": "walk",
+					"projected_speed": 1.37361454963684,
+					"rank": 2,
+					"total_speed": 1.37361466884613,
+					"velocity": "(0.971292, 0.0, -0.971292)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 38,
+					"animation_name": "M Neutral Run Circle Strafe L_fit_Armature_190",
+					"best_sample_index": 204,
+					"best_sample_time": 6.8,
+					"family": "run",
+					"projected_speed": 1.121994972229,
+					"rank": 3,
+					"total_speed": 1.12232327461243,
+					"velocity": "(0.812562, 0.0, -0.774178)",
+					"yaw_degrees": 0.0
+				},
+				{
+					"animation_index": 39,
+					"animation_name": "M Neutral Run Circle Strafe R_fit_Armature_189",
+					"best_sample_index": 37,
+					"best_sample_time": 1.23333333333333,
+					"family": "run",
+					"projected_speed": 0.899025440216064,
+					"rank": 4,
+					"total_speed": 0.908657968044281,
+					"velocity": "(0.729015, 0.0, -0.542399)",
+					"yaw_degrees": 0.0
+				}
+			],
+			"unique_animation_count": 4
+		}
+	],
+	"eligible_animations": 37,
+	"eligible_samples": 3191,
+	"success": true,
+	"total_directional_samples": 3656,
+	"total_unique_directional_animations": 61
+}
+
+================================================================
+   CIRCLE STRAFE FOCUS - LEFT / RIGHT DIRECTIONS
+================================================================
+
+Target: M Neutral Run Circle Strafe R_fit_Armature_189
+  UNIQUE[left]: PRESENT | rank=7 | family=run | total_speed=1.043918 | sample_time=2.966667
+  UNIQUE[right]: PRESENT | rank=8 | family=run | total_speed=1.189201 | sample_time=2.433333
+  Present in left/right unique results: true
+
+Target: M Neutral Run Circle Strafe L_fit_Armature_190
+  UNIQUE[left]: PRESENT | rank=8 | family=run | total_speed=1.028075 | sample_time=5.833333
+  UNIQUE[right]: PRESENT | rank=7 | family=run | total_speed=1.263117 | sample_time=3.133333
+  Present in left/right unique results: true
+
+================================================================
+              BASELINE COMPARISON
+================================================================
+Eligible animations: baseline=35 | current=37 | delta=+2
+Eligible samples: baseline=2547 | current=3191 | delta=+644
+
+Unique clip counts per direction:
+  forward: baseline=9 | current=11 | delta=+2
+  backward: baseline=2 | current=4 | delta=+2
+  left: baseline=6 | current=8 | delta=+2
+  right: baseline=6 | current=8 | delta=+2
+  forward_left: baseline=6 | current=8 | delta=+2
+  forward_right: baseline=9 | current=11 | delta=+2
+  backward_left: baseline=5 | current=7 | delta=+2
+  backward_right: baseline=2 | current=4 | delta=+2
