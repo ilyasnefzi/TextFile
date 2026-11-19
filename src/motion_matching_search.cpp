@@ -74,6 +74,13 @@ static bool is_steady_locomotion_eligible(
         return false;
     }
 
+    // Only use explicitly authored cyclic locomotion clips for steady-state
+    // motion matching. Starts, stops, turns and trajectory/path clips remain
+    // available to their dedicated systems.
+    if (!has_tag(tags, "loop")) {
+        return false;
+    }
+
     static const char *excluded_tags[] = {
         "start",
         "stop",
@@ -2117,7 +2124,7 @@ void MotionMatchingSearch::_bind_methods() {
     );
 
     ClassDB::bind_method(
-
+        D_METHOD("analyze_database_coverage"),
         &MotionMatchingSearch::analyze_database_coverage
     );
 
