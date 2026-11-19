@@ -1,1112 +1,832 @@
-No existing files were modified. I created only these new diagnostic files:
+Work State
+Completed
+Corrected trajectory diagnostic labels and validated 10/10 circular checks and 30/30 future-time checks.
+Confirmed R_189 measures LEFT and L_190 measures RIGHT under the required convention; names are inverted.
+Added diagnostic-only C++ API diagnostic_search_best_in_animations(...); production paths unchanged.
+Built extension successfully with scons platform=windows -j4.
+Compared unrestricted/R/L/both matches; legacy 4.5 m/s failures attributed to velocity and trajectory mismatch, not eligibility; facing and rotation costs were zero.
+Extended Circle Strafe diagnostic with between-sample interpolated queries; achieved 18/18 expected-clip selections.
+Extended Circle Strafe diagnostic with 66 independent mathematical circular queries; both clips win unrestricted from 0.5–1.5 m/s, never at 2.0–4.5 m/s.
+Proposed runtime architecture; user approved overall design but corrected orbit cross-product order.
+Created coordinate-space validation diagnostic using Godot Vector3/Basis operations; final run passed 42/42 checks with exit code 0 and no errors.
+Verified basis round-trip conversion at yaws 0°, 90°, -90°, 180° with zero error.
+Verified straight lateral movement curvature 0.000000 deg/s.
+Verified orbit sign for six target/movement scenarios; strafe-right around target gives LEFT, strafe-left gives RIGHT.
+Inspected current project structure and scripts for the input foundation milestone; no edits made yet for this milestone.
+Active
+Input and movement-intent foundation milestone:
+File plan has not yet been reported to the user.
+No files have been created or modified yet for this milestone.
+Need decide minimal file set, likely project.godot plus a new runtime script and possibly a validation scene/script.
+Blocked
+(none)
+Next Move
+Report the exact files to create/modify and why, per user requirement.
+Modify project.godot to add InputMap actions for forward/back/left/right, sprint, and combat mode.
+Create a diagnostic/runtime-ready movement-intent script that:
+Reads directional actions with Input.get_vector() or equivalent.
+Produces normalized planar movement intent in camera/aim-relative space.
+Exposes combat state and sprint state separately.
+Does not touch CharacterBody3D.velocity, root motion, animation playback, orbit prediction, or search.
+Optionally create a minimal standalone validation scene/script for input foundation checks without changing main scene.
+Run headless validation and provide complete modified/new files and results.
+Relevant Files
+D:\OpenCode\godot\MotionMatchingLab\project.godot: currently has no [input] actions; must be modified for movement/sprint/combat actions.
+D:\OpenCode\godot\MotionMatchingLab\MotionMatching\root_motion_test.gd: existing CharacterBody3D prototype with hard-coded velocity; useful reference but should not be modified for this milestone.
+D:\OpenCode\godot\MotionMatchingLab\MotionMatching\coordinate_space_validation.gd: completed coordinate validation; use as pattern for standalone diagnostics.
+D:\OpenCode\godot\MotionMatchingLab\coordinate_space_validation.tscn: standalone diagnostic scene pattern.
+D:\OpenCode\godot\MotionMatchingLab\MotionMatching\circle_strafe_diagnostic.gd: completed diagnostic with measured/mathematical query generation patterns.
+D:\OpenCode\godot\MotionMatchingLab\circle_strafe_diagnostic.tscn: standalone diagnostic scene pattern.
+D:\OpenCode\godot\MotionMatchingLab\Native\src\motion_matching_search.h: production and diagnostic-only API declarations; do not modify.
+D:\OpenCode\godot\MotionMatchingLab\Native\src\motion_matching_search.cpp: search implementation and diagnostic-only constrained search; do not modify.
+D:\OpenCode\godot\MotionMatchingLab\MotionMatching\animation_database_builder.gd: database builder; explicitly out of scope.
+C:\Users\Ilyas.NEFZI\AppData\Roaming\Godot\app_userdata\MotionMatchingLab\motion_database.json: loaded database used by diagnostics.
+C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\coordinate_space_validation_output_v4.txt: complete final coordinate validation output, 42/42 PASS.
+C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\circle_strafe_speed_range_output_v3.txt: complete final speed-range diagnostic output.
+C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\circle_strafe_diagnostic_generalization_output.txt: complete generalized interpolation diagnostic output.
+C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\circle_strafe_delivery\: delivery copies of replacement C++ files, diagnostics, and outputs.
+Important Context
+Search API:
+search_best_match(desired_velocity, desired_future_positions, desired_facing_yaw).
+search_best_match_continuous(desired_velocity, desired_future_positions, desired_facing_yaw, current_animation_index, current_animation_time, animation_switch_penalty, same_animation_time_weight).
+Future positions must be exactly 3 Vector3 values at +0.2, +0.4, +0.6 s.
+Desired velocity and future positions are in animation local-facing space.
+Normal search hard-codes desired future yaw deltas to zero; continuous search penalizes sample future yaw deltas directly.
+Cost formula: velocity + trajectory*2 + facing*2 + rotation*2.
+Database facts:
+DB load: load_database(user://motion_database.json): true.
+Animations 718; samples 82385; eligible animations 37; eligible samples 3191.
+Straight max sample speeds: walk 1.832, run 4.579, sprint 6.410 m/s.
+R_189: speed 0.528317 / 0.882511 / 1.216164 m/s, translation curvature -297.039 / -172.953 / -78.254 deg/s, root yaw rate 0.
+L_190: speed 0.753983 / 1.044567 / 1.278418 m/s, translation curvature 64.422 / 101.303 / 146.340 deg/s, root yaw rate 0.
+Rebuild command, only if C++ is ever changed: scons platform=windows -j4 in D:\OpenCode\godot\MotionMatchingLab\Native.
+Diagnostic run command pattern: & 'D:\Godot\Godot_v4.7.2-stable_win64_console.exe' --headless --path 'D:\OpenCode\godot\MotionMatchingLab' 'res://<scene>.tscn'.
+Current project has no input actions and no input-handling code; InputMap must be added before implementing the movement-intent script.
+Avoid modifying motion_matching_search.cpp, motion_matching_search.h, animation_database_builder.gd, existing tests, search weights, eligibility rules, or normal search behavior.
 
-MotionMatching/trajectory_diagnostic.gd
-trajectory_diagnostic.tscn
-MotionMatching/trajectory_diagnostic.gd.uid — auto-generated by Godot on first run
-I also ran the diagnostic headlessly. It completed successfully with exit code 0.
+Inspection is complete. Findings:
 
-Complete new GDScript file
-MotionMatching/trajectory_diagnostic.gd
+project.godot has no [input] section and no configured actions.
+No existing script uses Input, InputEvent, is_action_*, get_vector, sprint, or combat-mode actions.
+MotionMatching/root_motion_test.gd is still a hard-coded prototype (DESIRED_VELOCITY) and should remain untouched for this milestone.
+The existing diagnostic scenes/scripts are standalone and provide a good pattern for validation without changing the main scene.
+File plan before editing
+File	Action	Why
+project.godot	Modify	Add the required InputMap actions only: move_forward, move_backward, move_left, move_right, sprint, combat_mode. No other project settings will be changed intentionally.
+MotionMatching/movement_intent_controller.gd	Create	Runtime-ready, reusable node that reads directional input, produces normalized local and camera/aim-relative world movement intent, and exposes sprint/combat state. It will not touch CharacterBody3D.velocity, root motion, animation playback, orbit prediction, or search.
+MotionMatching/movement_intent_validation.gd	Create	Standalone headless diagnostic that verifies InputMap actions, normalization, 360-degree camera-relative conversion, aim-relative conversion, sprint/combat state, and separation from character velocity.
+movement_intent_validation.tscn	Create	Minimal standalone scene used only to run the diagnostic without modifying the main scene.
+Explicitly not modified: root_motion_test.gd, animation_database_builder.gd, all C++/extension files, all search weights/eligibility rules, and all existing diagnostic scripts.
 
+Proceeding with this exact file set.
+
+Implemented the input and movement-intent foundation. No production gameplay logic, search code, database builder, or C++ files were changed.
+
+Results
+InputMap actions added with deadzone 0.2:
+move_forward: W, Up
+move_backward: S, Down
+move_left: A, Left
+move_right: D, Right
+sprint: Shift
+combat_mode: Tab, Right Mouse Button
+Validation: 253/253 checks passed, exit code 0, no errors.
+Covered:
+All required InputMap actions exist.
+Zero input, cardinal directions, diagonals, and opposing keys.
+Normalized local and world intent.
+Sprint and combat state.
+360-degree camera-relative movement across 8 yaws × 8 directions.
+Aim-relative movement across 4 yaws × 4 directions.
+No physics-body property, no playback code, no search integration in the controller.
+Run command:
+
+& 'D:\Godot\Godot_v4.7.2-stable_win64_console.exe' --headless --path 'D:\OpenCode\godot\MotionMatchingLab' 'res://movement_intent_validation.tscn'
+Full output:
+
+C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\movement_intent_validation_output.txt
+Delivery copy: C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\circle_strafe_delivery\movement_intent_validation_output.txt
+Complete files
+project.godot
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="MotionMatchingLab"
+run/main_scene="uid://bhdb7cubonup7"
+config/features=PackedStringArray("4.7", "Mobile")
+config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[dotnet]
+
+project/assembly_name="MotionMatchingLab"
+
+[input]
+
+move_forward={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194320,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+move_backward={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194322,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+move_left={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194319,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+move_right={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194321,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+sprint={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+combat_mode={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":32,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"
+MotionMatching/movement_intent_controller.gd
 extends Node
+class_name MovementIntentController
 
-# ============================================================
-# TRAJECTORY / CURVATURE DIAGNOSTIC
-# ============================================================
-# Independent diagnostic for the existing MotionMatchingSearch GDExtension.
-# It does not change the search engine, weights, eligibility rules, database,
-# or any existing test/script.
+# Input and movement-intent foundation for the Motion Matching runtime.
 #
-# IMPORTANT API NOTE:
-# The current C++ search accepts:
-#   desired_velocity, desired_future_positions, desired_facing_yaw
-# and, for continuous search, continuity parameters.
+# This node only converts player input into normalized intent vectors:
+#   - movement_intent_local: relative to the camera/aim reference frame
+#   - movement_intent_world: flattened world-space direction
 #
-# It does NOT accept desired future yaw deltas. Therefore all circular and
-# direction-change queries below supply curved FUTURE POSITIONS only. The
-# returned future_yaw_deltas_degrees value is data FROM THE MATCHED SAMPLE,
-# not a requested yaw target.
+# It does not drive any physics body.
 
-const DATABASE_PATH: String = "user://motion_database.json"
+const ACTION_MOVE_FORWARD: StringName = &"move_forward"
+const ACTION_MOVE_BACKWARD: StringName = &"move_backward"
+const ACTION_MOVE_LEFT: StringName = &"move_left"
+const ACTION_MOVE_RIGHT: StringName = &"move_right"
+const ACTION_SPRINT: StringName = &"sprint"
+const ACTION_COMBAT_MODE: StringName = &"combat_mode"
 
-const TEST_SPEED: float = 4.5
-const FUTURE_TIMES: Array = [0.2, 0.4, 0.6]
-const DESIRED_FACING_YAW: float = 0.0
-const TOP_MATCHES_TO_PRINT: int = 10
-
-# Existing runtime continuity parameters from MotionMatching/root_motion_test.gd.
-const ANIMATION_SWITCH_PENALTY: float = 0.5
-const SAME_ANIMATION_TIME_WEIGHT: float = 0.5
-
-# Direction-change queries begin turning at this time.
-const TURN_BEGIN_TIME: float = 0.2
-
-const CIRCLE_STRAFE_R: String = "M Neutral Run Circle Strafe R_fit_Armature_189"
-const CIRCLE_STRAFE_L: String = "M Neutral Run Circle Strafe L_fit_Armature_190"
-const CIRCLE_STRAFE_NAMES: Array[String] = [
-	CIRCLE_STRAFE_R,
-	CIRCLE_STRAFE_L
+const REQUIRED_ACTIONS: Array[StringName] = [
+	ACTION_MOVE_FORWARD,
+	ACTION_MOVE_BACKWARD,
+	ACTION_MOVE_LEFT,
+	ACTION_MOVE_RIGHT,
+	ACTION_SPRINT,
+	ACTION_COMBAT_MODE,
 ]
 
-var _search: MotionMatchingSearch = null
-var _summary_rows: Array[Dictionary] = []
+# Project convention: forward is +Z, right is +X.
+const LOCAL_FORWARD: Vector3 = Vector3(0.0, 0.0, 1.0)
+const LOCAL_RIGHT: Vector3 = Vector3(1.0, 0.0, 0.0)
 
-# Captured contexts used to choose "current" animations for continuous tests.
-var _straight_context: Dictionary = {}
-var _circle_context: Dictionary = {}
+const AXIS_EPSILON: float = 0.000001
 
+enum ReferenceForwardAxis {
+	POSITIVE_Z, # Aim/character reference whose local +Z is forward.
+	NEGATIVE_Z, # Camera3D reference whose local -Z is forward.
+}
 
-# ============================================================
-# LIFECYCLE
-# ============================================================
+@export var reference_node: Node3D
+@export var reference_forward_axis: ReferenceForwardAxis = ReferenceForwardAxis.NEGATIVE_Z
+@export var input_deadzone: float = 0.2
+@export var update_in_process: bool = true
+
+var raw_input: Vector2 = Vector2.ZERO
+var movement_intent_local: Vector3 = Vector3.ZERO
+var movement_intent_world: Vector3 = Vector3.ZERO
+var reference_forward_world: Vector3 = LOCAL_FORWARD
+var reference_right_world: Vector3 = LOCAL_RIGHT
+var has_reference: bool = false
+var sprint_pressed: bool = false
+var combat_mode_active: bool = false
+
 
 func _ready() -> void:
-	_print_header()
+	set_process(update_in_process)
 
-	_search = MotionMatchingSearch.new()
 
-	var loaded: bool = _search.load_database(DATABASE_PATH)
+func _process(_delta: float) -> void:
+	update_movement_intent()
 
-	_line("---------- DATABASE INITIALIZATION ----------")
-	_line("load_database(" + DATABASE_PATH + "): " + str(loaded))
 
-	if not loaded:
-		_line("DATABASE LOAD FAILED")
-		_line("get_last_error(): " + str(_search.get_last_error()))
-		_line("Diagnostic aborted.")
-		get_tree().quit(1)
+func get_missing_actions() -> Array[StringName]:
+	var missing: Array[StringName] = []
+	for action: StringName in REQUIRED_ACTIONS:
+		if not InputMap.has_action(action):
+			missing.append(action)
+	return missing
+
+
+func has_required_actions() -> bool:
+	return get_missing_actions().is_empty()
+
+
+func set_reference(new_reference: Node3D, axis: int = -1) -> void:
+	reference_node = new_reference
+	if axis >= 0:
+		reference_forward_axis = axis
+	update_movement_intent()
+
+
+func clear_reference() -> void:
+	reference_node = null
+	has_reference = false
+	update_movement_intent()
+
+
+func update_movement_intent() -> void:
+	if not has_required_actions():
+		_clear_state()
 		return
 
-	_line("Animation count: " + str(_search.get_animation_count()))
-	_line("Sample count: " + str(_search.get_sample_count()))
-	_line("Eligible animation count: " + str(_search.get_eligible_animation_count()))
-	_line("Eligible sample count: " + str(_search.get_eligible_sample_count()))
+	_read_directional_input()
 
-	_run_straight_tests()
-	_run_circular_tests()
-	_run_direction_change_tests()
-	_run_continuous_tests()
-	_print_summary()
+	movement_intent_local = Vector3(raw_input.x, 0.0, raw_input.y)
+	if movement_intent_local.length() > 1.0:
+		movement_intent_local = movement_intent_local.normalized()
 
-	_line("")
-	_line("DIAGNOSTIC COMPLETE")
-	get_tree().quit(0)
+	_update_reference_axes()
 
+	movement_intent_world = (
+		reference_right_world * movement_intent_local.x
+		+ reference_forward_world * movement_intent_local.z
+	)
+	if movement_intent_world.length() > 1.0:
+		movement_intent_world = movement_intent_world.normalized()
 
-# ============================================================
-# TEST GROUPS
-# ============================================================
-
-func _run_straight_tests() -> void:
-	_line("")
-	_line("================================================================")
-	_line(" GROUP 1 - STRAIGHT LOCOMOTION")
-	_line("================================================================")
-
-	var tests: Array = [
-		_make_straight_query("STRAIGHT FORWARD", Vector3(0.0, 0.0, 1.0)),
-		_make_straight_query("STRAIGHT BACKWARD", Vector3(0.0, 0.0, -1.0)),
-		_make_straight_query("STRAIGHT LEFT", Vector3(-1.0, 0.0, 0.0)),
-		_make_straight_query("STRAIGHT RIGHT", Vector3(1.0, 0.0, 0.0)),
-		_make_straight_query("FORWARD LEFT DIAGONAL", Vector3(-1.0, 0.0, 1.0).normalized()),
-		_make_straight_query("FORWARD RIGHT DIAGONAL", Vector3(1.0, 0.0, 1.0).normalized())
-	]
-
-	for query in tests:
-		var result: Dictionary = _run_basic_query(query, "STRAIGHT")
-		if str(query.get("name", "")) == "STRAIGHT FORWARD":
-			_straight_context = _make_context_from_result(result, "STRAIGHT FORWARD")
+	sprint_pressed = Input.is_action_pressed(ACTION_SPRINT)
+	combat_mode_active = Input.is_action_pressed(ACTION_COMBAT_MODE)
 
 
-func _run_circular_tests() -> void:
-	_line("")
-	_line("================================================================")
-	_line(" GROUP 2 - CONTINUOUS CIRCULAR LOCOMOTION")
-	_line("================================================================")
-	_line("API LIMITATION: current search has NO desired-future-yaw-delta argument.")
-	_line("These tests use curved FUTURE POSITIONS ONLY.")
-	_line("Returned future yaw deltas describe the matched sample; they are not requested values.")
-
-	var angular_velocities: Array = [90.0, -90.0, 180.0, -180.0]
-
-	for omega_deg in angular_velocities:
-		var query: Dictionary = _make_circular_query("CIRCLE " + _signed_deg(omega_deg), float(omega_deg))
-		var result: Dictionary = _run_basic_query(query, "CIRCULAR")
-
-		if _circle_context.is_empty() and _result_has_tracked_circle(result):
-			_circle_context = _make_context_from_result(result, "CIRCLE " + _signed_deg(omega_deg))
-
-
-func _run_direction_change_tests() -> void:
-	_line("")
-	_line("================================================================")
-	_line(" GROUP 3 - DIRECTION CHANGES WHILE MAINTAINING SPEED")
-	_line("================================================================")
-	_line("Turn begins after " + _f(TURN_BEGIN_TIME) + " seconds.")
-	_line("API LIMITATION: curved FUTURE POSITIONS ONLY; no yaw-rate query is available.")
-	_line("Sharper +/-180 deg/s variants are included because the API accepts arbitrary future positions.")
-
-	var tests: Array = [
-		_make_direction_change_query("CHANGE FORWARD TO FORWARD LEFT +90", 90.0),
-		_make_direction_change_query("CHANGE FORWARD TO FORWARD RIGHT -90", -90.0),
-		_make_direction_change_query("SHARP CHANGE FORWARD TO FORWARD LEFT +180", 180.0),
-		_make_direction_change_query("SHARP CHANGE FORWARD TO FORWARD RIGHT -180", -180.0)
-	]
-
-	for query in tests:
-		_run_basic_query(query, "DIRECTION_CHANGE")
-
-
-func _run_continuous_tests() -> void:
-	_line("")
-	_line("================================================================")
-	_line(" GROUP 4 - CONTINUITY-AWARE SEARCH")
-	_line("================================================================")
-	_line("Continuity parameters (unchanged from existing runtime):")
-	_line("  animation_switch_penalty = " + _f(ANIMATION_SWITCH_PENALTY))
-	_line("  same_animation_time_weight = " + _f(SAME_ANIMATION_TIME_WEIGHT))
-
-	var straight_state: Dictionary = _resolve_straight_current_state()
-	var circle_state: Dictionary = _resolve_circle_current_state()
-
-	var current_states: Array = [
-		{
-			"label": "NO_CURRENT_ANIMATION",
-			"index": -1,
-			"time": 0.0,
-			"name": "N/A"
-		},
-		straight_state,
-		circle_state
-	]
-
-	var queries: Array = [
-		_make_straight_query("CONTINUOUS STRAIGHT FORWARD", Vector3(0.0, 0.0, 1.0)),
-		_make_circular_query("CONTINUOUS CIRCLE +90", 90.0),
-		_make_circular_query("CONTINUOUS CIRCLE -90", -90.0),
-		_make_direction_change_query("CONTINUOUS CHANGE LEFT +90", 90.0),
-		_make_direction_change_query("CONTINUOUS CHANGE RIGHT -90", -90.0)
-	]
-
-	for state in current_states:
-		if int(state.get("index", -1)) < 0 and str(state.get("label", "")) != "NO_CURRENT_ANIMATION":
-			_line("")
-			_line("SKIPPING current state " + str(state.get("label", "?")) + ": no usable animation index found.")
-			continue
-
-		for query in queries:
-			_run_continuous_query(query, "CONTINUOUS", state)
-
-
-# ============================================================
-# QUERY BUILDERS
-# ============================================================
-
-func _make_straight_query(test_name: String, direction: Vector3) -> Dictionary:
-	var unit: Vector3 = direction.normalized()
-	var future: Array = []
-
-	for t in FUTURE_TIMES:
-		future.append(unit * TEST_SPEED * float(t))
-
+func get_state() -> Dictionary:
 	return {
-		"name": test_name,
-		"velocity": unit * TEST_SPEED,
-		"future": future,
-		"api_note": "Straight query: velocity + future positions are directly supported."
+		"raw_input": raw_input,
+		"movement_intent_local": movement_intent_local,
+		"movement_intent_world": movement_intent_world,
+		"reference_forward_world": reference_forward_world,
+		"reference_right_world": reference_right_world,
+		"has_reference": has_reference,
+		"sprint_pressed": sprint_pressed,
+		"combat_mode_active": combat_mode_active,
 	}
 
 
-func _make_circular_query(test_name: String, omega_deg: float) -> Dictionary:
-	var omega: float = deg_to_rad(omega_deg)
-	var v_over_omega: float = TEST_SPEED / omega
-	var future: Array = []
+func _read_directional_input() -> void:
+	raw_input = Input.get_vector(
+		ACTION_MOVE_LEFT,
+		ACTION_MOVE_RIGHT,
+		ACTION_MOVE_BACKWARD,
+		ACTION_MOVE_FORWARD
+	)
 
-	for t in FUTURE_TIMES:
-		var time: float = float(t)
-		future.append(
-			Vector3(
-				v_over_omega * (1.0 - cos(omega * time)),
-				0.0,
-				v_over_omega * sin(omega * time)
-			)
+	var length: float = raw_input.length()
+	if length <= input_deadzone:
+		raw_input = Vector2.ZERO
+	elif length > 1.0:
+		raw_input /= length
+
+
+func _update_reference_axes() -> void:
+	if reference_node == null or not is_instance_valid(reference_node):
+		has_reference = false
+		reference_forward_world = LOCAL_FORWARD
+		reference_right_world = LOCAL_RIGHT
+		return
+
+	var basis: Basis = reference_node.global_transform.basis
+
+	var forward: Vector3 = basis.z
+	if reference_forward_axis == ReferenceForwardAxis.NEGATIVE_Z:
+		forward = -forward
+	forward.y = 0.0
+
+	var right: Vector3 = basis.x
+	right.y = 0.0
+
+	if forward.length_squared() <= AXIS_EPSILON:
+		if right.length_squared() <= AXIS_EPSILON:
+			forward = LOCAL_FORWARD
+			right = LOCAL_RIGHT
+		else:
+			right = right.normalized()
+			if reference_forward_axis == ReferenceForwardAxis.POSITIVE_Z:
+				forward = Vector3(-right.z, 0.0, right.x)
+			else:
+				forward = Vector3(right.z, 0.0, -right.x)
+	else:
+		forward = forward.normalized()
+		if reference_forward_axis == ReferenceForwardAxis.POSITIVE_Z:
+			right = Vector3(forward.z, 0.0, -forward.x)
+		else:
+			right = Vector3(-forward.z, 0.0, forward.x)
+
+	reference_forward_world = forward.normalized()
+	reference_right_world = right.normalized()
+	has_reference = true
+
+
+func _clear_state() -> void:
+	raw_input = Vector2.ZERO
+	movement_intent_local = Vector3.ZERO
+	movement_intent_world = Vector3.ZERO
+	sprint_pressed = false
+	combat_mode_active = false
+MotionMatching/movement_intent_validation.gd
+extends Node
+
+# Standalone headless validation for the input/movement-intent foundation.
+# Creates the controller directly and simulates InputMap actions.
+
+const CONTROLLER_SCRIPT: Script = preload("res://MotionMatching/movement_intent_controller.gd")
+
+const ACTION_MOVE_FORWARD: StringName = &"move_forward"
+const ACTION_MOVE_BACKWARD: StringName = &"move_backward"
+const ACTION_MOVE_LEFT: StringName = &"move_left"
+const ACTION_MOVE_RIGHT: StringName = &"move_right"
+const ACTION_SPRINT: StringName = &"sprint"
+const ACTION_COMBAT_MODE: StringName = &"combat_mode"
+
+const REQUIRED_ACTIONS: Array[StringName] = [
+	ACTION_MOVE_FORWARD,
+	ACTION_MOVE_BACKWARD,
+	ACTION_MOVE_LEFT,
+	ACTION_MOVE_RIGHT,
+	ACTION_SPRINT,
+	ACTION_COMBAT_MODE,
+]
+
+const AIM_POSITIVE_Z: int = 0
+const CAMERA_NEGATIVE_Z: int = 1
+
+const EPSILON: float = 0.000001
+
+var _lines: PackedStringArray = PackedStringArray()
+var _checks_passed: int = 0
+var _checks_failed: int = 0
+var _controller = null
+var _reference: Node3D = null
+
+
+func _ready() -> void:
+	_line("Godot version: " + str(Engine.get_version_info().get("string", "unknown")))
+	_line("================================================================")
+	_line("       INPUT / MOVEMENT-INTENT FOUNDATION VALIDATION")
+	_line("================================================================")
+	_line("Convention: local forward=+Z, backward=-Z, left=-X, right=+X")
+	_line("Camera reference uses local -Z forward; aim reference uses local +Z forward.")
+	_line("")
+
+	_controller = CONTROLLER_SCRIPT.new()
+	_controller.update_in_process = false
+	add_child(_controller)
+	_controller.set_process(false)
+
+	_reference = Node3D.new()
+	add_child(_reference)
+
+	_run_input_map_validation()
+	_run_basic_input_validation()
+	_run_modifier_validation()
+	_run_camera_relative_validation()
+	_run_aim_relative_validation()
+	_run_separation_validation()
+
+	_release_all_actions()
+	_print_summary()
+	_flush()
+	get_tree().quit()
+
+
+func _run_input_map_validation() -> void:
+	_line("================================================================")
+	_line("INPUT MAP ACTIONS")
+	_line("================================================================")
+
+	var missing: Array[StringName] = _controller.get_missing_actions()
+	_check("all required InputMap actions exist", missing.is_empty(), "missing=" + str(missing))
+
+	for action: StringName in REQUIRED_ACTIONS:
+		_check("InputMap has " + str(action), InputMap.has_action(action))
+
+	_line("")
+
+
+func _run_basic_input_validation() -> void:
+	_line("================================================================")
+	_line("DIRECTIONAL INPUT AND NORMALIZATION (NO REFERENCE)")
+	_line("================================================================")
+
+	_controller.clear_reference()
+
+	_press([])
+	_check(
+		"no input produces zero local intent",
+		_vec_close(_controller.movement_intent_local, Vector3.ZERO),
+		"actual=" + _v3(_controller.movement_intent_local)
+	)
+	_check(
+		"no input produces zero world intent",
+		_vec_close(_controller.movement_intent_world, Vector3.ZERO),
+		"actual=" + _v3(_controller.movement_intent_world)
+	)
+
+	var cases: Array = [
+		{
+			"name": "forward",
+			"actions": [ACTION_MOVE_FORWARD],
+			"expected": Vector3(0.0, 0.0, 1.0),
+		},
+		{
+			"name": "backward",
+			"actions": [ACTION_MOVE_BACKWARD],
+			"expected": Vector3(0.0, 0.0, -1.0),
+		},
+		{
+			"name": "left",
+			"actions": [ACTION_MOVE_LEFT],
+			"expected": Vector3(-1.0, 0.0, 0.0),
+		},
+		{
+			"name": "right",
+			"actions": [ACTION_MOVE_RIGHT],
+			"expected": Vector3(1.0, 0.0, 0.0),
+		},
+		{
+			"name": "forward-right diagonal",
+			"actions": [ACTION_MOVE_FORWARD, ACTION_MOVE_RIGHT],
+			"expected": Vector3(1.0, 0.0, 1.0).normalized(),
+		},
+		{
+			"name": "backward-left diagonal",
+			"actions": [ACTION_MOVE_BACKWARD, ACTION_MOVE_LEFT],
+			"expected": Vector3(-1.0, 0.0, -1.0).normalized(),
+		},
+		{
+			"name": "opposite forward+backward",
+			"actions": [ACTION_MOVE_FORWARD, ACTION_MOVE_BACKWARD],
+			"expected": Vector3.ZERO,
+		},
+		{
+			"name": "opposite left+right",
+			"actions": [ACTION_MOVE_LEFT, ACTION_MOVE_RIGHT],
+			"expected": Vector3.ZERO,
+		},
+	]
+
+	for item in cases:
+		var case: Dictionary = item
+		var name: String = str(case.get("name", "case"))
+		var expected: Vector3 = case.get("expected", Vector3.ZERO)
+
+		_press(case.get("actions", []))
+
+		var local_actual: Vector3 = _controller.movement_intent_local
+		var world_actual: Vector3 = _controller.movement_intent_world
+
+		_line(
+			"  " + name
+			+ " | local=" + _v3(local_actual)
+			+ " | world=" + _v3(world_actual)
+			+ " | length=" + _f(local_actual.length())
 		)
 
-	return {
-		"name": test_name,
-		"velocity": Vector3(0.0, 0.0, TEST_SPEED),
-		"future": future,
-		"omega_deg": omega_deg,
-		"api_note": "Circular query: FUTURE POSITIONS ONLY; no desired future yaw deltas are accepted."
-	}
+		_check(name + " local intent", _vec_close(local_actual, expected), "expected=" + _v3(expected))
+		_check(name + " world intent without reference", _vec_close(world_actual, expected))
 
-
-func _make_direction_change_query(test_name: String, omega_deg: float) -> Dictionary:
-	var omega: float = deg_to_rad(omega_deg)
-	var v_over_omega: float = TEST_SPEED / omega
-	var future: Array = []
-
-	for t in FUTURE_TIMES:
-		var time: float = float(t)
-		var elapsed: float = time - TURN_BEGIN_TIME
-		var point: Vector3
-
-		if elapsed <= 0.0:
-			point = Vector3(0.0, 0.0, TEST_SPEED * time)
+		if expected.length() > EPSILON:
+			_check(name + " normalized", abs(local_actual.length() - 1.0) <= EPSILON)
 		else:
-			point = Vector3(
-				v_over_omega * (1.0 - cos(omega * elapsed)),
-				0.0,
-				TEST_SPEED * TURN_BEGIN_TIME + v_over_omega * sin(omega * elapsed)
+			_check(name + " zero length", local_actual.length() <= EPSILON)
+
+	_line("")
+
+
+func _run_modifier_validation() -> void:
+	_line("================================================================")
+	_line("SPRINT AND COMBAT MODE STATE")
+	_line("================================================================")
+
+	_press([ACTION_SPRINT])
+	_check("sprint action sets sprint state", _controller.sprint_pressed)
+	_check("sprint action does not set combat state", not _controller.combat_mode_active)
+
+	_press([ACTION_COMBAT_MODE])
+	_check("combat action sets combat state", _controller.combat_mode_active)
+	_check("combat action does not set sprint state", not _controller.sprint_pressed)
+
+	_press([ACTION_MOVE_FORWARD, ACTION_SPRINT, ACTION_COMBAT_MODE])
+	_check("combined input sets sprint state", _controller.sprint_pressed)
+	_check("combined input sets combat state", _controller.combat_mode_active)
+	_check(
+		"combined input preserves movement intent",
+		_vec_close(_controller.movement_intent_local, Vector3(0.0, 0.0, 1.0))
+	)
+
+	_line(
+		"  state=" + str(_controller.get_state())
+	)
+	_line("")
+
+
+func _run_camera_relative_validation() -> void:
+	_line("================================================================")
+	_line("360-DEGREE CAMERA-RELATIVE MOVEMENT (REFERENCE LOCAL -Z FORWARD)")
+	_line("================================================================")
+
+	var yaws: Array = [0.0, 45.0, 90.0, 135.0, 180.0, -135.0, -90.0, -45.0]
+	var directions: Array = _eight_directions()
+
+	for yaw_value in yaws:
+		var yaw: float = float(yaw_value)
+		_set_reference(yaw, CAMERA_NEGATIVE_Z)
+		_line("  CAMERA YAW = " + _f(yaw) + " deg")
+
+		for item in directions:
+			var direction: Dictionary = item
+			var local_expected: Vector3 = direction.get("local", Vector3.ZERO)
+			_press(direction.get("actions", []))
+
+			var world_expected: Vector3 = _expected_world_from_reference(local_expected, true)
+			var local_actual: Vector3 = _controller.movement_intent_local
+			var world_actual: Vector3 = _controller.movement_intent_world
+
+			_line(
+				"    " + str(direction.get("name", "direction"))
+				+ " | local=" + _v3(local_actual)
+				+ " | world=" + _v3(world_actual)
+				+ " | expected_world=" + _v3(world_expected)
 			)
 
-		future.append(point)
-
-	return {
-		"name": test_name,
-		"velocity": Vector3(0.0, 0.0, TEST_SPEED),
-		"future": future,
-		"omega_deg": omega_deg,
-		"turn_begin_time": TURN_BEGIN_TIME,
-		"api_note": "Direction-change query: piecewise future positions only; initial velocity is straight forward."
-	}
-
-
-# ============================================================
-# SEARCH EXECUTION
-# ============================================================
-
-func _run_basic_query(query: Dictionary, category: String) -> Dictionary:
-	_print_query_header(query, category, false, {})
-
-	var result: Dictionary = _search.search_best_match(
-		query.get("velocity", Vector3.ZERO),
-		query.get("future", []),
-		DESIRED_FACING_YAW
-	)
-
-	_print_result(result, false, {})
-	_add_summary_row(query, category, result, {}, false)
-	return result
-
-
-func _run_continuous_query(query: Dictionary, category: String, state: Dictionary) -> Dictionary:
-	_print_query_header(query, category, true, state)
-
-	var result: Dictionary = _search.search_best_match_continuous(
-		query.get("velocity", Vector3.ZERO),
-		query.get("future", []),
-		DESIRED_FACING_YAW,
-		int(state.get("index", -1)),
-		float(state.get("time", 0.0)),
-		ANIMATION_SWITCH_PENALTY,
-		SAME_ANIMATION_TIME_WEIGHT
-	)
-
-	var context: Dictionary = {
-		"current_label": str(state.get("label", "N/A")),
-		"current_name": str(state.get("name", "N/A")),
-		"current_index": int(state.get("index", -1)),
-		"changed": _changed_text(result, int(state.get("index", -1)))
-	}
-
-	_print_result(result, true, context)
-	_add_summary_row(query, category, result, context, true)
-	return result
-
-
-# ============================================================
-# PRINTING
-# ============================================================
-
-func _print_header() -> void:
-	_line("================================================================")
-	_line("        TRAJECTORY / CURVATURE DIAGNOSTIC")
-	_line("================================================================")
-	_line("Generated: " + Time.get_datetime_string_from_system())
-	_line("Project database: " + DATABASE_PATH)
-	_line("Speed: " + _f(TEST_SPEED) + " m/s")
-	_line("Future times: " + _float_array(FUTURE_TIMES) + " s")
-	_line("Desired facing yaw: " + _f(DESIRED_FACING_YAW) + " rad")
-	_line("Top candidates printed: " + str(TOP_MATCHES_TO_PRINT))
-	_line("")
-	_line("Method names checked before use:")
-	_line("  load_database(String) -> bool")
-	_line("  get_animation_count() -> int")
-	_line("  get_sample_count() -> int")
-	_line("  get_eligible_animation_count() -> int")
-	_line("  get_eligible_sample_count() -> int")
-	_line("  search_best_match(Vector3, Array, float) -> Dictionary")
-	_line("  search_best_match_continuous(Vector3, Array, float, int, float, float, float) -> Dictionary")
-	_line("  get_last_error() -> String")
-
-
-func _print_query_header(
-	query: Dictionary,
-	category: String,
-	continuous: bool,
-	state: Dictionary
-) -> void:
-	_line("")
-	_line("================================================================")
-	_line("TEST: " + str(query.get("name", "UNNAMED")))
-	_line("Category: " + category + (" | continuous" if continuous else " | basic"))
-	_line("Desired velocity: " + _v3(query.get("velocity", Vector3.ZERO)))
-	_line("Desired future positions:")
-
-	var future: Array = query.get("future", [])
-	for i in range(FUTURE_TIMES.size()):
-		var time: float = float(FUTURE_TIMES[i])
-		var point: Variant = future[i] if i < future.size() else null
-		_line("  t=" + _f(time) + " s -> " + _v3(point))
-
-	if query.has("omega_deg"):
-		_line("Angular velocity: " + _signed_deg(float(query.get("omega_deg", 0.0))) + " deg/s")
-
-	if query.has("turn_begin_time"):
-		_line("Turn begins at t=" + _f(float(query.get("turn_begin_time", 0.0))) + " s")
-
-	if query.has("api_note"):
-		_line("API NOTE: " + str(query.get("api_note", "")))
-
-	if continuous:
-		_line("Current state: " + str(state.get("label", "N/A")))
-		_line("Current animation: " + str(state.get("name", "N/A")))
-		_line("Current animation index: " + str(state.get("index", -1)))
-		_line("Current animation time: " + _f(float(state.get("time", 0.0))))
-
-
-func _print_result(result: Dictionary, continuous: bool, context: Dictionary) -> void:
-	_line("")
-	_line("---------- RESULT ----------")
-
-	if not bool(result.get("success", false)):
-		_line("SEARCH FAILED")
-		_line("error: " + str(result.get("error", "Unknown error")))
-		_line("eligible_animations: " + str(result.get("eligible_animations", "N/A")))
-		_line("eligible_samples: " + str(result.get("eligible_samples", "N/A")))
-		return
-
-	_line("BEST MATCH")
-	_line("  Animation: " + str(result.get("animation_name", "N/A")))
-	_line("  Animation index: " + str(result.get("animation_index", -1)))
-	_line("  Sample time: " + _f(result.get("time", -1.0)))
-	_line("  Yaw degrees: " + _f(result.get("yaw_degrees", 0.0)))
-	_line("  Local velocity: " + _v3(result.get("velocity", Vector3.ZERO)))
-	_line("  Raw velocity: " + _v3(result.get("raw_velocity", Vector3.ZERO)))
-	_line("  Future yaw deltas (deg): " + _float_array(result.get("future_yaw_deltas_degrees", [])))
-
-	# The best-match Dictionary does NOT expose future_positions. Only top_matches do.
-	var top: Array = result.get("top_matches", [])
-	if typeof(top) == TYPE_ARRAY and not top.is_empty() and typeof(top[0]) == TYPE_DICTIONARY:
-		var first: Dictionary = top[0]
-		_line("  Future positions (from top_matches[0]): " + _v3_array(first.get("future_positions", [])))
-	else:
-		_line("  Future positions: NOT EXPOSED in best-match result Dictionary")
-
-	_line("")
-	_line("BEST COST COMPONENTS")
-	_line("  velocity_cost:   " + _f(result.get("velocity_cost", -1.0)))
-	_line("  trajectory_cost: " + _f(result.get("trajectory_cost", -1.0)))
-	_line("  facing_cost:     " + _f(result.get("facing_cost", -1.0)))
-	_line("  rotation_cost:   " + _f(result.get("rotation_cost", -1.0)))
-
-	if continuous:
-		_line("  base_cost:       " + _f(result.get("base_cost", -1.0)))
-		_line("  continuity_cost: " + _f(result.get("continuity_cost", -1.0)))
-		_line("  selection_score: " + _f(result.get("selection_score", -1.0)))
-		_line("  cost:            " + _f(result.get("cost", -1.0)))
-		_line("  Animation changed: " + str(context.get("changed", "N/A")))
-	else:
-		_line("  cost (total):    " + _f(result.get("cost", -1.0)))
-
-	_line("  samples_evaluated: " + str(result.get("samples_evaluated", 0)))
-	_line("  valid_database_samples: " + str(result.get("valid_database_samples", 0)))
-	_line("  eligible_animations: " + str(result.get("eligible_animations", 0)))
-	_line("  eligible_samples: " + str(result.get("eligible_samples", 0)))
-
-	_print_top_matches(result, continuous)
-	_print_tracked_ranks(result)
-
-
-func _print_top_matches(result: Dictionary, continuous: bool) -> void:
-	_line("")
-	_line("TOP " + str(TOP_MATCHES_TO_PRINT) + " CANDIDATES")
-
-	var top: Variant = result.get("top_matches", [])
-	if typeof(top) != TYPE_ARRAY:
-		_line("top_matches field missing or not an Array.")
-		return
-
-	var top_array: Array = top
-	if top_array.is_empty():
-		_line("No top matches returned.")
-		return
-
-	var count: int = mini(TOP_MATCHES_TO_PRINT, top_array.size())
-
-	for i in range(count):
-		if typeof(top_array[i]) != TYPE_DICTIONARY:
-			continue
-
-		var candidate: Dictionary = top_array[i]
+			_check(
+				"camera yaw " + _f(yaw) + " " + str(direction.get("name", "direction")) + " local intent",
+				_vec_close(local_actual, local_expected)
+			)
+			_check(
+				"camera yaw " + _f(yaw) + " " + str(direction.get("name", "direction")) + " world intent",
+				_vec_close(world_actual, world_expected)
+			)
+			_check(
+				"camera yaw " + _f(yaw) + " " + str(direction.get("name", "direction")) + " unit length",
+				abs(world_actual.length() - 1.0) <= EPSILON
+			)
 
 		_line("")
-		_line(
-			"#" + str(candidate.get("rank", i + 1))
-			+ " | " + str(candidate.get("animation_name", "N/A"))
-			+ " | class=" + _classify(str(candidate.get("animation_name", "")))
-		)
-		_line("  animation_index: " + str(candidate.get("animation_index", -1)))
-		_line("  sample_index: " + str(candidate.get("sample_index", -1)))
-		_line("  sample time: " + _f(candidate.get("time", -1.0)))
-		_line("  duration: " + _f(candidate.get("duration", -1.0)))
-		_line("  local velocity: " + _v3(candidate.get("velocity", Vector3.ZERO)))
-		_line("  raw velocity: " + _v3(candidate.get("raw_velocity", Vector3.ZERO)))
-		_line("  velocity_cost:   " + _f(candidate.get("velocity_cost", -1.0)))
-		_line("  trajectory_cost: " + _f(candidate.get("trajectory_cost", -1.0)))
-		_line("  facing_cost:     " + _f(candidate.get("facing_cost", -1.0)))
-		_line("  rotation_cost:   " + _f(candidate.get("rotation_cost", -1.0)))
-
-		if continuous:
-			_line("  base_cost:       " + _f(candidate.get("base_cost", -1.0)))
-			_line("  continuity_cost: " + _f(candidate.get("continuity_cost", -1.0)))
-			_line("  selection_score: " + _f(candidate.get("selection_score", -1.0)))
-
-		_line("  cost:            " + _f(candidate.get("cost", -1.0)))
-		_line("  future positions: " + _v3_array(candidate.get("future_positions", [])))
-		_line("  future yaw deltas (deg): " + _float_array(candidate.get("future_yaw_deltas_degrees", [])))
 
 
-func _print_tracked_ranks(result: Dictionary) -> void:
-	var ranks: Dictionary = _tracked_ranks(result)
-	_line("")
-	_line(
-		"Tracked circle ranks in top 10: "
-		+ "R_189=" + _rank_text(int(ranks.get("R_189", -1)))
-		+ " | L_190=" + _rank_text(int(ranks.get("L_190", -1)))
+func _run_aim_relative_validation() -> void:
+	_line("================================================================")
+	_line("AIM-RELATIVE MOVEMENT (REFERENCE LOCAL +Z FORWARD)")
+	_line("================================================================")
+
+	var yaws: Array = [0.0, 90.0, 180.0, -90.0]
+	var directions: Array = [
+		{
+			"name": "forward",
+			"actions": [ACTION_MOVE_FORWARD],
+			"local": Vector3(0.0, 0.0, 1.0),
+		},
+		{
+			"name": "right",
+			"actions": [ACTION_MOVE_RIGHT],
+			"local": Vector3(1.0, 0.0, 0.0),
+		},
+		{
+			"name": "backward",
+			"actions": [ACTION_MOVE_BACKWARD],
+			"local": Vector3(0.0, 0.0, -1.0),
+		},
+		{
+			"name": "left",
+			"actions": [ACTION_MOVE_LEFT],
+			"local": Vector3(-1.0, 0.0, 0.0),
+		},
+	]
+
+	for yaw_value in yaws:
+		var yaw: float = float(yaw_value)
+		_set_reference(yaw, AIM_POSITIVE_Z)
+		_line("  AIM YAW = " + _f(yaw) + " deg")
+
+		for item in directions:
+			var direction: Dictionary = item
+			var local_expected: Vector3 = direction.get("local", Vector3.ZERO)
+			_press(direction.get("actions", []))
+
+			var world_expected: Vector3 = _expected_world_from_reference(local_expected, false)
+			var world_actual: Vector3 = _controller.movement_intent_world
+
+			_line(
+				"    " + str(direction.get("name", "direction"))
+				+ " | world=" + _v3(world_actual)
+				+ " | expected_world=" + _v3(world_expected)
+			)
+
+			_check(
+				"aim yaw " + _f(yaw) + " " + str(direction.get("name", "direction")) + " world intent",
+				_vec_close(world_actual, world_expected)
+			)
+
+		_line("")
+
+
+func _run_separation_validation() -> void:
+	_line("================================================================")
+	_line("SEPARATION FROM PHYSICS, PLAYBACK, AND SEARCH")
+	_line("================================================================")
+
+	var source: String = str(_controller.get_script().get_source_code())
+
+	var has_forbidden_property: bool = false
+	for property_item in _controller.get_property_list():
+		var property: Dictionary = property_item
+		if str(property.get("name", "")) == "velocity":
+			has_forbidden_property = true
+
+	_check("controller is not a CharacterBody3D", not (_controller is CharacterBody3D))
+	_check("controller has no velocity property", not has_forbidden_property)
+	_check(
+		"controller source has no physics body type",
+		not source.contains("CharacterBody3D")
 	)
+	_check(
+		"controller source has no search integration",
+		not source.contains("MotionMatchingSearch") and not source.contains("search_best")
+	)
+	_check(
+		"controller source has no playback integration",
+		not source.contains("AnimationPlayer")
+		and not source.contains("AnimationTree")
+		and not source.contains("root_motion")
+	)
+	_line("")
 
 
-# ============================================================
-# CONTEXT RESOLUTION FOR CONTINUOUS TESTS
-# ============================================================
-
-func _resolve_straight_current_state() -> Dictionary:
-	var result: Dictionary = _straight_context.get("result", {})
-	var index: int = _first_non_circle_index(result)
-
-	if index >= 0:
-		var name: String = str(_straight_context.get("name", "STRAIGHT LOOP"))
-		var time: float = _context_time_for_index(result, index)
-		return {
-			"label": "CURRENT_STRAIGHT_LOOP",
-			"index": index,
-			"time": time,
-			"name": name
-		}
-
-	for candidate_name in ["M Neutral Run Loop F_fit_Armature_114", "M Neutral Run Loop B_fit_Armature_117"]:
-		var parsed_index: int = _find_animation_index_by_name(candidate_name)
-		if parsed_index >= 0:
-			return {
-				"label": "CURRENT_STRAIGHT_LOOP",
-				"index": parsed_index,
-				"time": 0.0,
-				"name": candidate_name
-			}
-
-	return {
-		"label": "CURRENT_STRAIGHT_LOOP",
-		"index": -1,
-		"time": 0.0,
-		"name": "NOT FOUND"
-	}
-
-
-func _resolve_circle_current_state() -> Dictionary:
-	var result: Dictionary = _circle_context.get("result", {})
-	var index: int = _first_tracked_circle_index(result)
-
-	if index >= 0:
-		return {
-			"label": "CURRENT_CIRCULAR_LOOP",
-			"index": index,
-			"time": _context_time_for_index(result, index),
-			"name": _name_for_index(result, index)
-		}
-
-	for candidate_name in CIRCLE_STRAFE_NAMES:
-		var parsed_index: int = _find_animation_index_by_name(candidate_name)
-		if parsed_index >= 0:
-			return {
-				"label": "CURRENT_CIRCULAR_LOOP",
-				"index": parsed_index,
-				"time": 0.0,
-				"name": candidate_name
-			}
-
-	return {
-		"label": "CURRENT_CIRCULAR_LOOP",
-		"index": -1,
-		"time": 0.0,
-		"name": "NOT FOUND"
-	}
+func _eight_directions() -> Array:
+	return [
+		{
+			"name": "forward",
+			"actions": [ACTION_MOVE_FORWARD],
+			"local": Vector3(0.0, 0.0, 1.0),
+		},
+		{
+			"name": "forward-right",
+			"actions": [ACTION_MOVE_FORWARD, ACTION_MOVE_RIGHT],
+			"local": Vector3(1.0, 0.0, 1.0).normalized(),
+		},
+		{
+			"name": "right",
+			"actions": [ACTION_MOVE_RIGHT],
+			"local": Vector3(1.0, 0.0, 0.0),
+		},
+		{
+			"name": "backward-right",
+			"actions": [ACTION_MOVE_BACKWARD, ACTION_MOVE_RIGHT],
+			"local": Vector3(1.0, 0.0, -1.0).normalized(),
+		},
+		{
+			"name": "backward",
+			"actions": [ACTION_MOVE_BACKWARD],
+			"local": Vector3(0.0, 0.0, -1.0),
+		},
+		{
+			"name": "backward-left",
+			"actions": [ACTION_MOVE_BACKWARD, ACTION_MOVE_LEFT],
+			"local": Vector3(-1.0, 0.0, -1.0).normalized(),
+		},
+		{
+			"name": "left",
+			"actions": [ACTION_MOVE_LEFT],
+			"local": Vector3(-1.0, 0.0, 0.0),
+		},
+		{
+			"name": "forward-left",
+			"actions": [ACTION_MOVE_FORWARD, ACTION_MOVE_LEFT],
+			"local": Vector3(-1.0, 0.0, 1.0).normalized(),
+		},
+	]
 
 
-func _make_context_from_result(result: Dictionary, label: String) -> Dictionary:
-	return {
-		"name": label,
-		"result": result
-	}
+func _set_reference(yaw_degrees: float, axis: int) -> void:
+	_reference.rotation.y = deg_to_rad(yaw_degrees)
+	_reference.force_update_transform()
+	_controller.set_reference(_reference, axis)
 
 
-func _first_non_circle_index(result: Dictionary) -> int:
-	var top: Variant = result.get("top_matches", [])
-	if typeof(top) != TYPE_ARRAY:
-		return -1
+func _expected_world_from_reference(local: Vector3, camera_axis: bool) -> Vector3:
+	var basis: Basis = _reference.global_transform.basis
 
-	for i in range(top.size()):
-		if typeof(top[i]) != TYPE_DICTIONARY:
-			continue
-		var name: String = str(top[i].get("animation_name", ""))
-		if not _is_circle_strafe_name(name):
-			return int(top[i].get("animation_index", -1))
+	var forward: Vector3 = basis.z
+	if camera_axis:
+		forward = -forward
+	forward.y = 0.0
+	forward = forward.normalized()
 
-	return int(result.get("animation_index", -1))
+	var right: Vector3 = basis.x
+	right.y = 0.0
+	right = right.normalized()
 
-
-func _first_tracked_circle_index(result: Dictionary) -> int:
-	var top: Variant = result.get("top_matches", [])
-	if typeof(top) != TYPE_ARRAY:
-		return -1
-
-	for i in range(top.size()):
-		if typeof(top[i]) != TYPE_DICTIONARY:
-			continue
-		var name: String = str(top[i].get("animation_name", ""))
-		if _is_circle_strafe_name(name):
-			return int(top[i].get("animation_index", -1))
-
-	return -1
+	return right * local.x + forward * local.z
 
 
-func _context_time_for_index(result: Dictionary, index: int) -> float:
-	if int(result.get("animation_index", -1)) == index:
-		return float(result.get("time", 0.0))
-
-	var top: Variant = result.get("top_matches", [])
-	if typeof(top) == TYPE_ARRAY:
-		for i in range(top.size()):
-			if typeof(top[i]) == TYPE_DICTIONARY and int(top[i].get("animation_index", -1)) == index:
-				return float(top[i].get("time", 0.0))
-
-	return 0.0
+func _press(actions: Array) -> void:
+	_release_all_actions()
+	for action in actions:
+		Input.action_press(action)
+	_controller.update_movement_intent()
 
 
-func _name_for_index(result: Dictionary, index: int) -> String:
-	if int(result.get("animation_index", -1)) == index:
-		return str(result.get("animation_name", "N/A"))
-
-	var top: Variant = result.get("top_matches", [])
-	if typeof(top) == TYPE_ARRAY:
-		for i in range(top.size()):
-			if typeof(top[i]) == TYPE_DICTIONARY and int(top[i].get("animation_index", -1)) == index:
-				return str(top[i].get("animation_name", "N/A"))
-
-	return "N/A"
+func _release_all_actions() -> void:
+	for action: StringName in REQUIRED_ACTIONS:
+		Input.action_release(action)
 
 
-# Mirrors the loader's animation indexing rules so names from the JSON map to
-# the animation_index values returned by search_best_match().
-func _find_animation_index_by_name(target_name: String) -> int:
-	if not FileAccess.file_exists(DATABASE_PATH):
-		return -1
-
-	var file: FileAccess = FileAccess.open(DATABASE_PATH, FileAccess.READ)
-	if file == null:
-		return -1
-
-	var text: String = file.get_as_text()
-	file.close()
-
-	var json := JSON.new()
-	if json.parse(text) != OK:
-		return -1
-
-	if typeof(json.data) != TYPE_ARRAY:
-		return -1
-
-	var database_index: int = 0
-	var animations: Array = json.data
-
-	for i in range(animations.size()):
-		if typeof(animations[i]) != TYPE_DICTIONARY:
-			continue
-
-		var animation: Dictionary = animations[i]
-		var samples_variant: Variant = animation.get("trajectory_samples", [])
-		if typeof(samples_variant) != TYPE_ARRAY:
-			continue
-
-		var samples: Array = samples_variant
-		var has_sample: bool = false
-		for j in range(samples.size()):
-			if typeof(samples[j]) == TYPE_DICTIONARY:
-				has_sample = true
-				break
-
-		if not has_sample:
-			continue
-
-		if str(animation.get("name", "")) == target_name:
-			return database_index
-
-		database_index += 1
-
-	return -1
+func _vec_close(a: Vector3, b: Vector3) -> bool:
+	return a.distance_to(b) <= EPSILON
 
 
-# ============================================================
-# SUMMARY
-# ============================================================
+func _check(name: String, passed: bool, detail: String = "") -> void:
+	if passed:
+		_checks_passed += 1
+	else:
+		_checks_failed += 1
 
-func _add_summary_row(
-	query: Dictionary,
-	category: String,
-	result: Dictionary,
-	context: Dictionary,
-	continuous: bool
-) -> void:
-	if not bool(result.get("success", false)):
-		return
-
-	var ranks: Dictionary = _tracked_ranks(result)
-	var row: Dictionary = {
-		"category": category,
-		"test": str(query.get("name", "UNNAMED")),
-		"best": str(result.get("animation_name", "N/A")),
-		"class": _classify(str(result.get("animation_name", ""))),
-		"r189": int(ranks.get("R_189", -1)),
-		"l190": int(ranks.get("L_190", -1)),
-		"yaw": _float_array(result.get("future_yaw_deltas_degrees", [])),
-		"rotation": _f(result.get("rotation_cost", -1.0)),
-		"total": _f(result.get("cost", -1.0))
-	}
-
-	if continuous:
-		row["current"] = str(context.get("current_label", "N/A"))
-		row["changed"] = str(context.get("changed", "N/A"))
-		row["base"] = _f(result.get("base_cost", -1.0))
-		row["continuity"] = _f(result.get("continuity_cost", -1.0))
-		row["selection"] = _f(result.get("selection_score", -1.0))
-
-	_summary_rows.append(row)
+	var line: String = "  CHECK " + name + ": " + ("PASS" if passed else "FAIL")
+	if detail != "":
+		line += " | " + detail
+	_line(line)
 
 
 func _print_summary() -> void:
-	_line("")
 	_line("================================================================")
-	_line(" SUMMARY TABLE")
+	_line("VALIDATION SUMMARY")
 	_line("================================================================")
-	_line("Class is a name-based heuristic: CIRCLE_STRAFE / STRAIGHT_LOOP / OTHER.")
-	_line("R_189 and L_190 ranks are within the returned top 10 only.")
-	_line("")
-
-	var header: String = (
-		_pad("CATEGORY", 17) + "|"
-		+ _pad("TEST", 38) + "|"
-		+ _pad("CLASS", 15) + "|"
-		+ _pad("BEST ANIMATION", 54) + "|"
-		+ _pad("R189", 10) + "|"
-		+ _pad("L190", 10) + "|"
-		+ _pad("ROT", 10) + "|"
-		+ _pad("TOTAL", 10) + "|"
-		+ "BEST FUTURE YAW DEGREES"
-	)
-
-	_line(header)
-	_line("-".repeat(header.length()))
-
-	for row in _summary_rows:
-		_line(
-			_pad(str(row.get("category", "")), 17) + "|"
-			+ _pad(str(row.get("test", "")), 38) + "|"
-			+ _pad(str(row.get("class", "")), 15) + "|"
-			+ _pad(str(row.get("best", "")), 54) + "|"
-			+ _pad(str(row.get("r189", -1)), 10) + "|"
-			+ _pad(str(row.get("l190", -1)), 10) + "|"
-			+ _pad(str(row.get("rotation", "N/A")), 10) + "|"
-			+ _pad(str(row.get("total", "N/A")), 10) + "|"
-			+ str(row.get("yaw", "[]"))
-		)
-
-	_line("")
-	_line("---------- CONTINUOUS SEARCH DETAIL ----------")
-	var continuous_header: String = (
-		_pad("TEST", 38) + "|"
-		+ _pad("CURRENT STATE", 25) + "|"
-		+ _pad("CHANGED", 10) + "|"
-		+ _pad("BEST ANIMATION", 54) + "|"
-		+ _pad("BASE", 10) + "|"
-		+ _pad("CONTINUITY", 11) + "|"
-		+ _pad("SELECTION", 11) + "|"
-		+ _pad("R189", 10) + "|"
-		+ "L190"
-	)
-
-	_line(continuous_header)
-	_line("-".repeat(continuous_header.length()))
-
-	for row in _summary_rows:
-		if str(row.get("category", "")) != "CONTINUOUS":
-			continue
-
-		_line(
-			_pad(str(row.get("test", "")), 38) + "|"
-			+ _pad(str(row.get("current", "")), 25) + "|"
-			+ _pad(str(row.get("changed", "")), 10) + "|"
-			+ _pad(str(row.get("best", "")), 54) + "|"
-			+ _pad(str(row.get("base", "N/A")), 10) + "|"
-			+ _pad(str(row.get("continuity", "N/A")), 11) + "|"
-			+ _pad(str(row.get("selection", "N/A")), 11) + "|"
-			+ _pad(str(row.get("r189", -1)), 10) + "|"
-			+ str(row.get("l190", -1))
-		)
-
-	_line("")
-	_line("---------- SELECTION COUNTS BY CATEGORY ----------")
-	_print_selection_counts("STRAIGHT")
-	_print_selection_counts("CIRCULAR")
-	_print_selection_counts("DIRECTION_CHANGE")
-	_print_selection_counts("CONTINUOUS")
-
-	_line("")
-	_line("NOTE: Circular and direction-change queries used future positions only.")
-	_line("The current API does not accept desired future yaw deltas or yaw rate.")
+	_line("  checks passed=" + str(_checks_passed))
+	_line("  checks failed=" + str(_checks_failed))
+	_line("  result=" + ("PASS" if _checks_failed == 0 else "FAIL"))
 
 
-func _print_selection_counts(category: String) -> void:
-	var total: int = 0
-	var straight: int = 0
-	var circle: int = 0
-	var other: int = 0
+func _f(value: float) -> String:
+	return "%0.6f" % value
 
-	for row in _summary_rows:
-		if str(row.get("category", "")) != category:
-			continue
 
-		total += 1
-		match str(row.get("class", "")):
-			"STRAIGHT_LOOP":
-				straight += 1
-			"CIRCLE_STRAFE":
-				circle += 1
-			_:
-				other += 1
-
-	_line(
-		category + ": queries=" + str(total)
-		+ " | straight_loop=" + str(straight)
-		+ " | circle_strafe=" + str(circle)
-		+ " | other=" + str(other)
+func _v3(value: Vector3) -> String:
+	return (
+		"(" + _f(value.x) + ", " + _f(value.y) + ", " + _f(value.z) + ")"
 	)
 
 
-# ============================================================
-# SMALL HELPERS
-# ============================================================
-
-func _line(text: String = "") -> void:
-	print(text)
-
-
-func _f(value: Variant) -> String:
-	return "%.6f" % float(value)
-
-
-func _v3(value: Variant) -> String:
-	if typeof(value) != TYPE_VECTOR3:
-		return str(value)
-
-	var vector: Vector3 = value
-	return "(%.6f, %.6f, %.6f)" % [vector.x, vector.y, vector.z]
-
-
-func _v3_array(values: Variant) -> String:
-	if typeof(values) != TYPE_ARRAY:
-		return str(values)
-
-	var array: Array = values
-	var parts: Array[String] = []
-	for i in range(array.size()):
-		parts.append(_v3(array[i]))
-	return "[" + ", ".join(parts) + "]"
-
-
-func _float_array(values: Variant) -> String:
-	if typeof(values) != TYPE_ARRAY:
-		return str(values)
-
-	var array: Array = values
-	var parts: Array[String] = []
-	for i in range(array.size()):
-		parts.append(_f(array[i]))
-	return "[" + ", ".join(parts) + "]"
-
-
-func _signed_deg(value: float) -> String:
-	if value > 0.0:
-		return "+" + _f(value)
-	return _f(value)
-
-
-func _pad(text: String, width: int) -> String:
-	if text.length() >= width:
-		return text
-	return text + " ".repeat(width - text.length())
-
-
-func _rank_text(rank: int) -> String:
-	if rank <= 0:
-		return "NOT_TOP_10"
-	return "#" + str(rank)
-
-
-func _is_circle_strafe_name(name: String) -> bool:
-	for tracked_name in CIRCLE_STRAFE_NAMES:
-		if name == tracked_name:
-			return true
-	return false
-
-
-func _classify(name: String) -> String:
-	if _is_circle_strafe_name(name) or name.contains("Circle Strafe"):
-		return "CIRCLE_STRAFE"
-
-	if name.contains("Loop") and not name.contains("Circle"):
-		return "STRAIGHT_LOOP"
-
-	return "OTHER"
-
-
-func _tracked_ranks(result: Dictionary) -> Dictionary:
-	var ranks: Dictionary = {
-		"R_189": -1,
-		"L_190": -1
-	}
-
-	var top: Variant = result.get("top_matches", [])
-	if typeof(top) != TYPE_ARRAY:
-		return ranks
-
-	var array: Array = top
-	for i in range(array.size()):
-		if typeof(array[i]) != TYPE_DICTIONARY:
-			continue
-
-		var candidate: Dictionary = array[i]
-		var name: String = str(candidate.get("animation_name", ""))
-		var rank: int = int(candidate.get("rank", i + 1))
-
-		if name == CIRCLE_STRAFE_R:
-			ranks["R_189"] = rank
-		elif name == CIRCLE_STRAFE_L:
-			ranks["L_190"] = rank
-
-	return ranks
-
-
-func _result_has_tracked_circle(result: Dictionary) -> bool:
-	var ranks: Dictionary = _tracked_ranks(result)
-	return int(ranks.get("R_189", -1)) > 0 or int(ranks.get("L_190", -1)) > 0
-
-
-func _changed_text(result: Dictionary, current_index: int) -> String:
-	if current_index < 0:
-		return "N/A"
-	if not bool(result.get("success", false)):
-		return "UNKNOWN"
-	return "YES" if int(result.get("animation_index", -1)) != current_index else "NO"
-Complete new test scene
-trajectory_diagnostic.tscn
-
-[gd_scene format=3]
-
-[ext_resource type="Script" path="res://MotionMatching/trajectory_diagnostic.gd" id="1_trajectory_diagnostic"]
-
-[node name="TrajectoryDiagnostic" type="Node"]
-script = ExtResource("1_trajectory_diagnostic")
-Auto-generated UID file:
-
-MotionMatching/trajectory_diagnostic.gd.uid
-
-uid://c17g4edxr0vca
-How to run
-The diagnostic requires the existing database at:
-
-user://motion_database.json
-Run from Godot editor
-Open the project.
-Open res://trajectory_diagnostic.tscn.
-Press F6 to run the current scene.
-Read the output in the Godot Output panel.
-Run headless from PowerShell
-& "D:\Godot\Godot_v4.7.2-stable_win64_console.exe" `
-  --headless `
-  --path "D:\OpenCode\godot\MotionMatchingLab" `
-  "res://trajectory_diagnostic.tscn"
-To capture the full output:
-
-& "D:\Godot\Godot_v4.7.2-stable_win64_console.exe" `
-  --headless `
-  --path "D:\OpenCode\godot\MotionMatchingLab" `
-  "res://trajectory_diagnostic.tscn" *> "C:\Users\Ilyas.NEFZI\AppData\Local\Temp\opencode\trajectory_diagnostic_output.txt"
-Expected output format
-The script prints these sections:
-
-TRAJECTORY / CURVATURE DIAGNOSTIC
----------- DATABASE INITIALIZATION ----------
-Animation count: ...
-Sample count: ...
-Eligible animation count: ...
-Eligible sample count: ...
-
-GROUP 1 - STRAIGHT LOCOMOTION
-GROUP 2 - CONTINUOUS CIRCULAR LOCOMOTION
-GROUP 3 - DIRECTION CHANGES WHILE MAINTAINING SPEED
-GROUP 4 - CONTINUITY-AWARE SEARCH
-SUMMARY TABLE
-CONTINUOUS SEARCH DETAIL
-SELECTION COUNTS BY CATEGORY
-DIAGNOSTIC COMPLETE
-Each test follows this structure:
-
-================================================================
-TEST: ...
-Category: ...
-Desired velocity: ...
-Desired future positions:
-  t=0.200000 s -> ...
-  t=0.400000 s -> ...
-  t=0.600000 s -> ...
-API NOTE: ...
-
----------- RESULT ----------
-BEST MATCH
-  Animation: ...
-  Sample time: ...
-  Future yaw deltas (deg): ...
-  Future positions (from top_matches[0]): ...
-
-BEST COST COMPONENTS
-  velocity_cost:   ...
-  trajectory_cost: ...
-  facing_cost:     ...
-  rotation_cost:   ...
-  cost:            ...
-
-TOP 10 CANDIDATES
-#1 | ...
-  sample time: ...
-  velocity_cost: ...
-  trajectory_cost: ...
-  facing_cost: ...
-  rotation_cost: ...
-  future positions: ...
-  future yaw deltas (deg): ...
-
-Tracked circle ranks in top 10:
-R_189=... | L_190=...
-Observed run results
-The headless run completed successfully.
-
-Database initialization:
-
-load_database(user://motion_database.json): true
-Animation count: 718
-Sample count: 82385
-Eligible animation count: 37
-Eligible sample count: 3191
-Summary counts:
-
-STRAIGHT: queries=6  | straight_loop=6  | circle_strafe=0 | other=0
-CIRCULAR: queries=4  | straight_loop=4  | circle_strafe=0 | other=0
-DIRECTION_CHANGE: queries=4  | straight_loop=4  | circle_strafe=0 | other=0
-CONTINUOUS: queries=15 | straight_loop=15 | circle_strafe=0 | other=0
-Key observed selections:
-
-Test group	Best matches
-Straight forward	M Neutral Run Loop F_fit_Armature_114
-Straight backward	M Neutral Run Loop B_fit_Armature_117
-Straight left	M Neutral Run Loop RR_fit_Armature_105
-Straight right	M Neutral Run Loop LL_fit_Armature_109
-Forward-left diagonal	M Neutral Run Loop FR_fit_Armature_110
-Forward-right diagonal	M Neutral Run Loop FL_fit_Armature_111
-Circle +90	M Neutral Run Loop F L 20_fit_Armature_113
-Circle -90	M Neutral Run Loop F R 20_fit_Armature_112
-Direction change left/right	M Neutral Run Loop F_fit_Armature_114
-Both tracked Circle Strafe clips were:
-
-R_189 = NOT_TOP_10
-L_190 = NOT_TOP_10
-for every basic, circular, direction-change, and continuous query.
-
-Final analysis
-1. Does the current search distinguish straight and curved trajectories?
-Not reliably.
-
-It clearly distinguishes straight directions: forward, backward, left, right, and diagonals all selected appropriate straight loop animations.
-
-But for curved trajectory queries, it approximated curvature with straight diagonal loops:
-
-+90 and +180 arc queries selected Loop F L 20.
--90 and -180 arc queries selected Loop F R 20.
-These are still straight loops with a lateral facing/velocity bias, not true circular locomotion.
-
-2. Does it distinguish positive and negative turning directions?
-Only spatially, not as turning.
-
-Positive curvature queries selected the left-biased straight loop; negative curvature queries selected the right-biased straight loop. However all selected samples reported:
-
-future_yaw_deltas_degrees = [0.000000, 0.000000, 0.000000]
-rotation_cost = 0.000000
-So the search distinguished lateral future-position offset, not yaw direction or angular velocity.
-
-3. Do the two Circle Strafe clips rank appropriately?
-No.
-
-Neither M Neutral Run Circle Strafe R_fit_Armature_189 nor M Neutral Run Circle Strafe L_fit_Armature_190 appeared in the top 10 for any test.
-
-This is especially clear for circular queries, where straight diagonal loops won instead.
-
-4. Does continuity scoring prevent necessary animation switching?
-Not in these tests.
-
-Continuous search did switch animations when the query changed, for example from a straight-loop current state to a different loop for circular queries. However, it consistently switched to straight loops, not Circle Strafe clips.
-
-Continuity cost added the expected 0.5 penalty for animation switches, but it was not the main blocker. The larger issues are that the query cannot express desired yaw dynamics and straight diagonal loops currently fit the supplied future positions better.
-
-With a current straight loop, direction-change queries reported CHANGED = NO, which may look like continuity suppression. But the base cost of staying on the straight loop was already lower, so continuity was not the decisive cause.
-
-5. Which limitations are caused by the search API?
-Main API limitations:
-
-No desired future yaw deltas.
-No yaw-rate or curvature input.
-No desired future facing trajectory.
-Rotation cost treats future turning as error because there is no target turn to match.
-future_positions are exposed in top_matches, but not in the best-match result dictionary.
-Continuous search exposes useful costs, but its switch penalty is a scalar penalty, not a curvature-aware transition model.
-The script explicitly works around the best-match future_positions gap by reading them from top_matches[0].
-
-6. Which limitations are caused by the eligible animation database?
-Database-side limitations:
-
-Only 37 eligible animations and 3191 eligible samples are searched.
-The eligible pool is dominated by straight locomotion loops.
-The only two verified circular strafe clips are available but do not rank near the top.
-Existing eligibility rules exclude many potentially useful turning/arcing families such as turn, pivot, arc, transition, and spin.
-So even if future-position queries partially capture curvature, the candidate set gives the search very little curved motion to choose from.
-
-Overall: the current search handles straight directional locomotion, but it does not reliably select or distinguish true circular locomotion or direction changes. The behavior is dominated by straight-loop samples, and the API cannot express the desired yaw trajectory needed for curvature-specific matching.
+func _line(text: String) -> void:
+	_lines.append(text)
+
+
+func _flush() -> void:
+	var output_file: FileAccess = FileAccess.open(
+		"user://movement_intent_validation_output.txt", FileAccess.WRITE
+	)
+	if output_file != null:
+		for line in _lines:
+			output_file.store_line(line)
+		output_file.close()
+
+	for line in _lines:
+		print(line)
+movement_intent_validation.tscn
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://MotionMatching/movement_intent_validation.gd" id="1_movement_intent_validation"]
+
+[node name="MovementIntentValidation" type="Node"]
+script = ExtResource("1_movement_intent_validation"
