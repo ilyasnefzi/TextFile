@@ -165,7 +165,7 @@ Database exported to: user://motion_database.json
 ========================================
 
 
-========== C++ MOTION MATCHING TEST ==========
+========== C++ MOTION DATABASE TEST ==========
 Loading database: user://motion_database.json
 
 DATABASE LOADED SUCCESSFULLY
@@ -252,108 +252,214 @@ BACKWARD_RIGHT
 
 ========== COVERAGE ANALYSIS COMPLETE ==========
 
-
-========== EIGHT-DIRECTION MOTION SEARCH ==========
-Facing yaw: 0.0 radians
-Future trajectory samples: 0.2s, 0.4s, 0.6s
-
-
-========================================
-DIRECTION: FORWARD
-========================================
-Requested speed: 4.5
-Desired velocity: (0.0, 0.0, 4.5)
-Desired future trajectory:
-  +0.2s: (0.0, 0.0, 0.9)
-  +0.4s: (0.0, 0.0, 1.8)
-  +0.6s: (0.0, 0.0, 2.7)
-
-========== SEARCH RESULT ==========
-{ "success": true, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 13, "time": 0.43333333333333, "duration": 4.5, "position": (0.0, -0.0, 1.986277), "raw_velocity": (0.000001, -0.0, 4.49825), "velocity": (0.000001, -0.0, 4.49825), "yaw": 0.0, "yaw_degrees": 0.0, "desired_facing_yaw_degrees": 0.0, "velocity_cost": 0.00000306080506, "trajectory_cost": 0.00296562284348, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00593430649201, "samples_evaluated": 25164, "valid_database_samples": 69461, "eligible_animations": 251, "eligible_samples": 25164, "top_matches": [{ "rank": 1, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 13, "time": 0.43333333333333, "duration": 4.5, "position": (0.0, -0.0, 1.986277), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.49825), "velocity": (0.000001, -0.0, 4.49825), "future_positions": [(0.0, -0.0, 0.916065), (0.0, -0.0, 1.825022), (0.0, -0.0, 2.745623)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00000306080506, "trajectory_cost": 0.00296562284348, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00593430649201 }, { "rank": 2, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 28, "time": 0.93333333333333, "duration": 4.5, "position": (0.000001, -0.0, 4.275509), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.498272), "velocity": (0.000001, -0.0, 4.498272), "future_positions": [(0.0, -0.0, 0.916063), (0.0, -0.0, 1.825022), (-0.000161, -0.0, 2.746047)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00000298618443, "trajectory_cost": 0.00300450640498, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00601199899438 }, { "rank": 3, "animation_name": "M Neutral Run Box RL F Rfoot_fit_Armature_195", "animation_index": 33, "sample_index": 41, "time": 1.36666666666667, "duration": 3.0, "position": (-2.637629, -0.0, 2.378104), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.017306, -0.0, 4.528838), "velocity": (-0.017306, -0.0, 4.528838), "future_positions": [(-0.002176, -0.0, 0.912217), (-0.002836, -0.0, 1.828403), (-0.002928, -0.0, 2.743023)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00113112363033, "trajectory_cost": 0.0028282556741, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00678763497854 }, { "rank": 4, "animation_name": "M Neutral Run Diamond BL F Lfoot_fit_Armature_182", "animation_index": 46, "sample_index": 46, "time": 1.53333333333333, "duration": 3.125, "position": (1.953773, 0.0, -0.204682), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.019172, -0.0, 4.484269), "velocity": (0.019172, -0.0, 4.484269), "future_positions": [(0.000809, -0.0, 0.913856), (0.001083, -0.0, 1.829607), (0.001357, -0.0, 2.745357)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00061505689519, "trajectory_cost": 0.0031294857763, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00687402844778 }, { "rank": 5, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 8, "time": 0.26666666666667, "duration": 4.5, "position": (0.0, -0.0, 1.223938), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.503264), "velocity": (0.000001, -0.0, 4.503264), "future_positions": [(0.0, -0.0, 0.912281), (0.0, -0.0, 1.831628), (0.0, -0.0, 2.747835)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00001065648485, "trajectory_cost": 0.00343927960785, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00688921570054 }, { "rank": 6, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 23, "time": 0.76666666666667, "duration": 4.5, "position": (0.0, -0.0, 3.51317), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.503286), "velocity": (0.000001, -0.0, 4.503286), "future_positions": [(0.0, -0.0, 0.912281), (0.0, -0.0, 1.831627), (0.0, -0.0, 2.747835)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00001079703907, "trajectory_cost": 0.00343924455228, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00688928614363 }, { "rank": 7, "animation_name": "M Neutral Run Box RR F Rfoot_fit_Armature_191", "animation_index": 37, "sample_index": 72, "time": 2.4, "duration": 3.66666674613953, "position": (-2.481842, -0.0, 7.338494), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.53505), "velocity": (0.0, -0.0, 4.53505), "future_positions": [(0.0, -0.0, 0.911656), (0.0, -0.0, 1.827959), (0.0, -0.0, 2.744262)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00122852995992, "trajectory_cost": 0.00287667301018, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00698187598027 }, { "rank": 8, "animation_name": "M Neutral Run Box RR F Lfoot_fit_Armature_192", "animation_index": 36, "sample_index": 43, "time": 1.43333333333333, "duration": 2.91666674613953, "position": (-2.852414, -0.0, 2.377769), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.01791, -0.0, 4.532633), "velocity": (-0.01791, -0.0, 4.532633), "future_positions": [(-0.001883, -0.0, 0.911361), (-0.002065, -0.0, 1.827557), (-0.002249, -0.0, 2.743753)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00138566968963, "trajectory_cost": 0.00281565077603, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00701697124168 }, { "rank": 9, "animation_name": "M Neutral Run Box RL F Rfoot_fit_Armature_195", "animation_index": 33, "sample_index": 42, "time": 1.4, "duration": 3.0, "position": (-2.638206, -0.0, 2.529065), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.017306, -0.0, 4.528838), "velocity": (-0.017306, -0.0, 4.528838), "future_positions": [(-0.001748, -0.0, 0.914366), (-0.002293, -0.0, 1.829312), (-0.002357, -0.0, 2.743828)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00113112363033, "trajectory_cost": 0.00300038860587, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.00713190084207 }, { "rank": 10, "animation_name": "M Neutral Run Box RL F Lfoot_fit_Armature_196", "animation_index": 32, "sample_index": 43, "time": 1.43333333333333, "duration": 3.04166674613953, "position": (-2.853814, -0.0, 2.377819), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.017906, -0.0, 4.531728), "velocity": (-0.017906, -0.0, 4.531728), "future_positions": [(-0.00228, -0.0, 0.912643), (-0.002844, -0.0, 1.828605), (-0.002872, -0.0, 2.744613)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00132729276083, "trajectory_cost": 0.00298995662888, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.0073072060186 }], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0] }
-
-Search execution time: 17.017 ms
-========================================
-
+========== FASTEST DIRECTIONAL SAMPLES ==========
+Eligible animations: 251
+Eligible samples: 25164
+Directional alignment: 25.0 degrees
+Total directional candidates: 25875
 
 ========================================
-DIRECTION: BACKWARD
+FORWARD
+Available candidates: 3986
 ========================================
-Requested speed: 2.5
-Desired velocity: (0.0, 0.0, -2.5)
-Desired future trajectory:
-  +0.2s: (0.0, 0.0, -0.5)
-  +0.4s: (0.0, 0.0, -1.0)
-  +0.6s: (0.0, 0.0, -1.5)
-
-========== SEARCH RESULT ==========
-{ "success": true, "animation_name": "M Neutral Run Diamond FR B Lfoot_fit_Armature_162", "animation_index": 66, "sample_index": 92, "time": 3.06666666666667, "duration": 3.95833325386047, "position": (-6.209355, -0.0, 2.853053), "raw_velocity": (-0.00005, 0.0, -2.66515), "velocity": (-0.00005, 0.0, -2.66515), "yaw": 0.0, "yaw_degrees": 0.0, "desired_facing_yaw_degrees": 0.0, "velocity_cost": 0.02727450057864, "trajectory_cost": 0.02712399163283, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08152248384431, "samples_evaluated": 25164, "valid_database_samples": 69461, "eligible_animations": 251, "eligible_samples": 25164, "top_matches": [{ "rank": 1, "animation_name": "M Neutral Run Diamond FR B Lfoot_fit_Armature_162", "animation_index": 66, "sample_index": 92, "time": 3.06666666666667, "duration": 3.95833325386047, "position": (-6.209355, -0.0, 2.853053), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.00005, 0.0, -2.66515), "velocity": (-0.00005, 0.0, -2.66515), "future_positions": [(-0.000005, 0.0, -0.54491), (-0.000005, 0.0, -1.086983), (-0.000008, 0.0, -1.632442)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.02727450057864, "trajectory_cost": 0.02712399163283, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08152248384431 }, { "rank": 2, "animation_name": "M Neutral Run Diamond FR B Lfoot_fit_Armature_162", "animation_index": 66, "sample_index": 77, "time": 2.56666666666667, "duration": 3.95833325386047, "position": (-6.208749, -0.0, 4.215146), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.005436, 0.0, -2.665157), "velocity": (-0.005436, 0.0, -2.665157), "future_positions": [(-0.000504, 0.0, -0.54491), (-0.000596, 0.0, -1.086983), (-0.000609, 0.0, -1.632441)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.02730640955269, "trajectory_cost": 0.02712465496734, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08155571948737 }, { "rank": 3, "animation_name": "M Neutral Run Box B RR Lfoot_fit_Armature_216", "animation_index": 12, "sample_index": 3, "time": 0.1, "duration": 4.16666650772095, "position": (0.0, 0.0, -0.271518), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.681887), "velocity": (0.0, 0.0, -2.681887), "future_positions": [(0.0, 0.0, -0.543427), (0.0, 0.0, -1.09038), (0.0, 0.0, -1.632051)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03308285027742, "trajectory_cost": 0.02749182004482, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08806649036705 }, { "rank": 4, "animation_name": "M Neutral Run Box B RR Lfoot_fit_Armature_216", "animation_index": 12, "sample_index": 18, "time": 0.6, "duration": 4.16666650772095, "position": (0.0, 0.0, -1.633612), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.68189), "velocity": (0.0, 0.0, -2.68189), "future_positions": [(0.0, 0.0, -0.54345), (0.0, 0.0, -1.090435), (0.0, 0.0, -1.634006)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03308415040374, "trajectory_cost": 0.02802387182601, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08913189405575 }, { "rank": 5, "animation_name": "M Neutral Run Diamond B FL Lfoot_fit_Armature_188", "animation_index": 40, "sample_index": 12, "time": 0.4, "duration": 3.70833325386047, "position": (0.0, 0.0, -1.098848), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.747118), "velocity": (0.0, 0.0, -2.747118), "future_positions": [(0.0, 0.0, -0.549424), (-0.000001, 0.0, -1.090438), (0.048604, 0.0, -1.535454)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.06106742098927, "trajectory_cost": 0.01424103300087, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08954948699102 }, { "rank": 6, "animation_name": "M Neutral Run Box B RR Lfoot_fit_Armature_216", "animation_index": 12, "sample_index": 4, "time": 0.13333333333333, "duration": 4.16666650772095, "position": (0.0, 0.0, -0.360914), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.681887), "velocity": (0.0, 0.0, -2.681887), "future_positions": [(0.0, 0.0, -0.54519), (0.0, 0.0, -1.092143), (0.0, 0.0, -1.633819)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03308285027742, "trajectory_cost": 0.02843995532021, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.08996276091784 }, { "rank": 7, "animation_name": "M Neutral Run Box B LL Lfoot_fit_Armature_222", "animation_index": 6, "sample_index": 26, "time": 0.86666666666667, "duration": 3.91666674613953, "position": (0.0, 0.0, -2.378928), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.685925), "velocity": (0.0, 0.0, -2.685925), "future_positions": [(0.0, 0.0, -0.543355), (0.0, 0.0, -1.089795), (0.000183, 0.0, -1.633499)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03456792980433, "trajectory_cost": 0.02776466042269, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.09009725064971 }, { "rank": 8, "animation_name": "M Neutral Run Box B LL Rfoot_fit_Armature_221", "animation_index": 7, "sample_index": 21, "time": 0.7, "duration": 3.75, "position": (0.0, 0.0, -1.921074), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.685925), "velocity": (0.0, 0.0, -2.685925), "future_positions": [(0.0, 0.0, -0.543355), (0.0, 0.0, -1.089795), (0.000183, 0.0, -1.633499)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03456792980433, "trajectory_cost": 0.02776470326353, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.09009733633138 }, { "rank": 9, "animation_name": "M Neutral Run Box B RR Rfoot_fit_Armature_215", "animation_index": 13, "sample_index": 2, "time": 0.06666666666667, "duration": 4.0, "position": (0.0, 0.0, -0.179658), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.685992), "velocity": (0.0, 0.0, -2.685992), "future_positions": [(0.0, 0.0, -0.543929), (0.0, 0.0, -1.091222), (0.0, 0.0, -1.632344)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03459320217371, "trajectory_cost": 0.02776629221626, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.09012578660622 }, { "rank": 10, "animation_name": "M Neutral Run Box B RR Rfoot_fit_Armature_215", "animation_index": 13, "sample_index": 17, "time": 0.56666666666667, "duration": 4.0, "position": (0.0, 0.0, -1.541751), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, 0.0, -2.685996), "velocity": (0.0, 0.0, -2.685996), "future_positions": [(0.0, 0.0, -0.543806), (0.0, 0.0, -1.090914), (0.0, 0.0, -1.633511)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.03459453210235, "trajectory_cost": 0.02800947241485, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.09061347693205 }], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0] }
-
-Search execution time: 15.97 ms
-========================================
-
-
-========================================
-DIRECTION: LEFT
-========================================
-Requested speed: 3.0
-Desired velocity: (-3.0, 0.0, 0.0)
-Desired future trajectory:
-  +0.2s: (-0.6, 0.0, 0.0)
-  +0.4s: (-1.2, 0.0, 0.0)
-  +0.6s: (-1.8, 0.0, 0.0)
-
-========== SEARCH RESULT ==========
-{ "success": true, "animation_name": "M Neutral Run Hourglass BL RL Rfoot_fit_Armature_155", "animation_index": 73, "sample_index": 38, "time": 1.26666666666667, "duration": 3.25, "position": (0.98193, 0.0, -1.861007), "raw_velocity": (-2.987671, 0.0, -0.104384), "velocity": (-2.987671, 0.0, -0.104384), "yaw": 0.0, "yaw_degrees": 0.0, "desired_facing_yaw_degrees": 0.0, "velocity_cost": 0.01104810088873, "trajectory_cost": 0.02063143695705, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05231097480282, "samples_evaluated": 25164, "valid_database_samples": 69461, "eligible_animations": 251, "eligible_samples": 25164, "top_matches": [{ "rank": 1, "animation_name": "M Neutral Run Hourglass BL RL Rfoot_fit_Armature_155", "animation_index": 73, "sample_index": 38, "time": 1.26666666666667, "duration": 3.25, "position": (0.98193, 0.0, -1.861007), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-2.987671, 0.0, -0.104384), "velocity": (-2.987671, 0.0, -0.104384), "future_positions": [(-0.634086, 0.0, -0.005971), (-1.275448, 0.0, -0.006626), (-1.91681, 0.0, -0.007282)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.01104810088873, "trajectory_cost": 0.02063143695705, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05231097480282 }, { "rank": 2, "animation_name": "M Neutral Run Hourglass BL RL Lfoot_fit_Armature_156", "animation_index": 72, "sample_index": 39, "time": 1.3, "duration": 3.29166674613953, "position": (1.047132, 0.0, -1.925844), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-2.97872, 0.0, -0.10657), "velocity": (-2.97872, 0.0, -0.10657), "future_positions": [(-0.635869, 0.0, -0.003919), (-1.277067, 0.0, -0.004814), (-1.918264, 0.0, -0.00571)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.01180990319699, "trajectory_cost": 0.02128344378434, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05437679076567 }, { "rank": 3, "animation_name": "M Neutral Run Hourglass BL RR Rfoot_fit_Armature_153", "animation_index": 75, "sample_index": 38, "time": 1.26666666666667, "duration": 3.0, "position": (0.899034, 0.0, -1.830251), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-3.050443, 0.0, -0.092429), "velocity": (-3.050443, 0.0, -0.092429), "future_positions": [(-0.636942, 0.0, -0.005248), (-1.278323, 0.0, -0.005887), (-1.919704, 0.0, -0.006526)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.01108761783689, "trajectory_cost": 0.02193304791581, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05495371366851 }, { "rank": 4, "animation_name": "M Neutral Run Hourglass BL RR Rfoot_fit_Armature_153", "animation_index": 75, "sample_index": 37, "time": 1.23333333333333, "duration": 3.0, "position": (0.998949, 0.0, -1.826818), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-2.929707, 0.0, -0.114412), "velocity": (-2.929707, 0.0, -0.114412), "future_positions": [(-0.629961, 0.0, -0.008574), (-1.271342, 0.0, -0.009213), (-1.912723, 0.0, -0.009852)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.0180312730372, "trajectory_cost": 0.01894928637194, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05592984578107 }, { "rank": 5, "animation_name": "M Neutral Run Hourglass BL RR Lfoot_fit_Armature_154", "animation_index": 74, "sample_index": 41, "time": 1.36666666666667, "duration": 3.20833325386047, "position": (1.095397, 0.0, -2.025142), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-3.077463, 0.0, -0.087562), "velocity": (-3.077463, 0.0, -0.087562), "future_positions": [(-0.638422, 0.0, -0.003278), (-1.279674, 0.0, -0.004112), (-1.920925, 0.0, -0.004945)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.01366749964654, "trajectory_cost": 0.02249901322648, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.0586655260995 }, { "rank": 6, "animation_name": "M Neutral Run Box F RL Rfoot_fit_Armature_209", "animation_index": 19, "sample_index": 77, "time": 2.56666666666667, "duration": 3.16666674613953, "position": (-5.367953, -0.0, 4.275708), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-3.204295, 0.0, 0.0), "velocity": (-3.204295, 0.0, 0.0), "future_positions": [(-0.640859, 0.0, 0.0), (-1.281719, 0.0, 0.0), (-1.81579, 0.0, 0.0)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.04173661023378, "trajectory_cost": 0.00859672189108, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05893005401595 }, { "rank": 7, "animation_name": "M Neutral Run Hourglass BL RR Lfoot_fit_Armature_154", "animation_index": 74, "sample_index": 40, "time": 1.33333333333333, "duration": 3.20833325386047, "position": (1.196515, 0.0, -2.021888), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-2.924039, 0.0, -0.115578), "velocity": (-2.924039, 0.0, -0.115578), "future_positions": [(-0.632665, 0.0, -0.006393), (-1.273916, 0.0, -0.007226), (-1.915167, 0.0, -0.00806)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.01912843994796, "trajectory_cost": 0.01995206135325, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.05903256265447 }, { "rank": 8, "animation_name": "M Neutral Run Hourglass BL RL Rfoot_fit_Armature_155", "animation_index": 73, "sample_index": 39, "time": 1.3, "duration": 3.25, "position": (0.88025, 0.0, -1.864116), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-3.097681, 0.0, -0.083004), "velocity": (-3.097681, 0.0, -0.083004), "future_positions": [(-0.6393, 0.0, -0.002971), (-1.280662, 0.0, -0.003627), (-1.922024, 0.0, -0.004283)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.01643123663962, "trajectory_cost": 0.02298087952659, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.06239299569279 }, { "rank": 9, "animation_name": "M Neutral Run Hourglass RL FL Rfoot_fit_Armature_129", "animation_index": 99, "sample_index": 8, "time": 0.26666666666667, "duration": 3.25, "position": (-0.854654, 0.0, 0.0), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-3.204953, 0.0, 0.0), "velocity": (-3.204953, 0.0, 0.0), "future_positions": [(-0.64099, 0.0, 0.0), (-1.281981, 0.0, 0.0), (-1.813796, 0.0, 0.044637)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.04200590774417, "trajectory_cost": 0.0105837759329, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.06317345960997 }, { "rank": 10, "animation_name": "M Neutral Run Hourglass RR FL Rfoot_fit_Armature_125", "animation_index": 103, "sample_index": 9, "time": 0.3, "duration": 3.29166674613953, "position": (-0.961517, 0.0, 0.000133), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-3.205057, 0.0, 0.000442), "velocity": (-3.205057, 0.0, 0.000442), "future_positions": [(-0.641012, 0.0, 0.000088), (-1.282023, 0.0, 0.000177), (-1.811213, -0.0, 0.0452)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.04204862564802, "trajectory_cost": 0.01057859195862, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.06320580956526 }], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0] }
-
-Search execution time: 16.231 ms
-========================================
-
+#1 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.33 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409964) | M Neutral Sprint Loop F_fit_Armature_039
+#2 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.07 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409957) | M Neutral Sprint Loop F_fit_Armature_039
+#3 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.2 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#4 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.3 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#5 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.03 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#6 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.93 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#7 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.17 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#8 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.77 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#9 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.73 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#10 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.9 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.40995) | M Neutral Sprint Loop F_fit_Armature_039
+#11 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.47 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#12 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.1 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#13 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.13 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#14 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.17 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#15 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.43 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#16 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.2 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#17 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.37 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#18 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.5 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#19 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.53 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
+#20 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.57 | Yaw: 0.0 | Velocity: (0.0, 0.0, 6.409946) | M Neutral Sprint Loop F_fit_Armature_039
 
 ========================================
-DIRECTION: RIGHT
+BACKWARD
+Available candidates: 2857
 ========================================
-Requested speed: 3.5
-Desired velocity: (3.5, 0.0, 0.0)
-Desired future trajectory:
-  +0.2s: (0.7, 0.0, 0.0)
-  +0.4s: (1.4, 0.0, 0.0)
-  +0.6s: (2.1, 0.0, 0.0)
-
-========== SEARCH RESULT ==========
-{ "success": true, "animation_name": "M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144", "animation_index": 84, "sample_index": 47, "time": 1.56666666666667, "duration": 3.66666674613953, "position": (-3.182458, -0.0, 4.158713), "raw_velocity": (3.422316, -0.0, 0.232244), "velocity": (3.422316, -0.0, 0.232244), "yaw": 0.0, "yaw_degrees": 0.0, "desired_facing_yaw_degrees": 0.0, "velocity_cost": 0.05997184664011, "trajectory_cost": 0.0354743914213, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.13092062948272, "samples_evaluated": 25164, "valid_database_samples": 69461, "eligible_animations": 251, "eligible_samples": 25164, "top_matches": [{ "rank": 1, "animation_name": "M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144", "animation_index": 84, "sample_index": 47, "time": 1.56666666666667, "duration": 3.66666674613953, "position": (-3.182458, -0.0, 4.158713), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (3.422316, -0.0, 0.232244), "velocity": (3.422316, -0.0, 0.232244), "future_positions": [(0.745533, 0.0, 0.022118), (1.370349, 0.0, 0.022033), (1.9239, 0.0, 0.023156)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.05997184664011, "trajectory_cost": 0.0354743914213, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.13092062948272 }, { "rank": 2, "animation_name": "M Neutral Run Box F LL Lfoot_fit_Armature_214", "animation_index": 14, "sample_index": 46, "time": 1.53333333333333, "duration": 3.0, "position": (2.14209, -0.0, 4.171342), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (3.267621, 0.0, 0.008183), "velocity": (3.267621, 0.0, 0.008183), "future_positions": [(0.645447, 0.0, 0.000828), (1.286035, 0.0, 0.000878), (1.926623, 0.0, 0.000929)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.05406715720892, "trajectory_cost": 0.04602600447834, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.14611916616559 }, { "rank": 3, "animation_name": "M Neutral Run Box F LL Rfoot_fit_Armature_213", "animation_index": 15, "sample_index": 46, "time": 1.53333333333333, "duration": 3.0, "position": (2.087925, -0.0, 4.247438), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (3.258923, 0.0, 0.00824), "velocity": (3.258923, 0.0, 0.00824), "future_positions": [(0.646405, 0.0, 0.000865), (1.287429, 0.0, 0.000945), (1.928454, 0.0, 0.001026)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.05818598717451, "trajectory_cost": 0.04497539857402, "facing_cost": 0.0, "rotation_cost": 0.0, "cost": 0.14813678432256 }, { "rank": 4, "animation_name": "M Neutral Run Box F LL Lfoot_fit_Armature_214", "animation_index": 14, "sample_index": 47, "time": 1.56666666666667, "duration": 3.0, "[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-[...]
-Facing cost: 0.0
-Rotation cost: 0.0
-TOTAL COST: 0.0073072060186
-Future yaw changes: [0.0, 0.0, 0.0]
-
-Samples evaluated: 25164
-Search time: 12.756 ms
+#1 | RUN | Projected speed: 2.8 | Total speed: 2.8 | Time: 3.0 | Yaw: 0.0 | Velocity: (-0.000129, 0.0, -2.802393) | M Neutral Run Diamond FR B Lfoot_fit_Armature_162
+#2 | RUN | Projected speed: 2.8 | Total speed: 2.8 | Time: 2.5 | Yaw: 0.0 | Velocity: (-0.010622, 0.0, -2.802365) | M Neutral Run Diamond FR B Lfoot_fit_Armature_162
+#3 | RUN | Projected speed: 2.78 | Total speed: 2.78 | Time: 0.63 | Yaw: 0.0 | Velocity: (-0.0, 0.0, -2.775185) | M Neutral Run Diamond B FL Rfoot_fit_Armature_187
+#4 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 0.87 | Yaw: 0.0 | Velocity: (0.002526, 0.0, -2.774534) | M Neutral Run Diamond B FL Lfoot_fit_Armature_188
+#5 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.37 | Yaw: 0.0 | Velocity: (0.001233, 0.0, -2.772288) | M Neutral Run Box B LR Lfoot_fit_Armature_220
+#6 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.37 | Yaw: 0.0 | Velocity: (0.001233, 0.0, -2.772285) | M Neutral Run Box B LR Rfoot_fit_Armature_219
+#7 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 2.57 | Yaw: 0.0 | Velocity: (-0.000011, 0.0, -2.772113) | M Neutral Run Box RL B Lfoot_fit_Armature_198
+#8 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 2.57 | Yaw: 0.0 | Velocity: (-0.000011, 0.0, -2.772106) | M Neutral Run Box RR B Lfoot_fit_Armature_194
+#9 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 2.57 | Yaw: 0.0 | Velocity: (-0.000011, 0.0, -2.772106) | M Neutral Run Box RL B Rfoot_fit_Armature_197
+#10 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.2 | Yaw: 0.0 | Velocity: (0.0, 0.0, -2.771827) | M Neutral Run Box B RR Rfoot_fit_Armature_215
+#11 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 0.67 | Yaw: 0.0 | Velocity: (0.000104, 0.0, -2.771258) | M Neutral Run Diamond B FL Rfoot_fit_Armature_187
+#12 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 3.03 | Yaw: 0.0 | Velocity: (0.000043, 0.0, -2.770668) | M Neutral Run Diamond FL B Lfoot_fit_Armature_168
+#13 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 2.53 | Yaw: 0.0 | Velocity: (0.004048, 0.0, -2.770632) | M Neutral Run Diamond FL B Lfoot_fit_Armature_168
+#14 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 0.7 | Yaw: 0.0 | Velocity: (0.019134, 0.0, -2.767065) | M Neutral Run Diamond B FR Lfoot_fit_Armature_186
+#15 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.43 | Yaw: 0.0 | Velocity: (0.002739, 0.0, -2.766859) | M Neutral Run Box B LL Lfoot_fit_Armature_222
+#16 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.47 | Yaw: 0.0 | Velocity: (0.002739, 0.0, -2.766859) | M Neutral Run Box B LL Lfoot_fit_Armature_222
+#17 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.27 | Yaw: 0.0 | Velocity: (0.002739, 0.0, -2.766856) | M Neutral Run Box B LL Rfoot_fit_Armature_221
+#18 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 1.3 | Yaw: 0.0 | Velocity: (0.002739, 0.0, -2.766856) | M Neutral Run Box B LL Rfoot_fit_Armature_221
+#19 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 2.97 | Yaw: 0.0 | Velocity: (-0.000165, 0.0, -2.766824) | M Neutral Run Diamond FR B Lfoot_fit_Armature_162
+#20 | RUN | Projected speed: 2.77 | Total speed: 2.77 | Time: 2.47 | Yaw: 0.0 | Velocity: (-0.016057, 0.0, -2.766752) | M Neutral Run Diamond FR B Lfoot_fit_Armature_162
 
 ========================================
-TEST: BACKWARD
+LEFT
+Available candidates: 3729
 ========================================
-Desired velocity: (0.0, 0.0, -4.5)
-Desired facing yaw: 0.0 degrees
+#1 | RUN | Projected speed: 3.33 | Total speed: 3.33 | Time: 1.3 | Yaw: 0.0 | Velocity: (-3.331911, 0.0, 0.01756) | M Neutral Run Box F RL Lfoot_fit_Armature_210
+#2 | RUN | Projected speed: 3.33 | Total speed: 3.33 | Time: 1.27 | Yaw: 0.0 | Velocity: (-3.331911, 0.0, 0.01756) | M Neutral Run Box F RL Lfoot_fit_Armature_210
+#3 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.2 | Yaw: 0.0 | Velocity: (-3.321089, 0.0, 0.057943) | M Neutral Run Box F RL Rfoot_fit_Armature_209
+#4 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.23 | Yaw: 0.0 | Velocity: (-3.321088, 0.0, 0.057943) | M Neutral Run Box F RL Rfoot_fit_Armature_209
+#5 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.3 | Yaw: 0.0 | Velocity: (-3.321088, 0.0, 0.057943) | M Neutral Run Box F RL Rfoot_fit_Armature_209
+#6 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.27 | Yaw: 0.0 | Velocity: (-3.321086, 0.0, 0.057936) | M Neutral Run Box F RL Rfoot_fit_Armature_209
+#7 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.2 | Yaw: 0.0 | Velocity: (-3.321085, 0.0, 0.057936) | M Neutral Run Box F RR Rfoot_fit_Armature_207
+#8 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.23 | Yaw: 0.0 | Velocity: (-3.321084, 0.0, 0.057943) | M Neutral Run Box F RR Rfoot_fit_Armature_207
+#9 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.3 | Yaw: 0.0 | Velocity: (-3.321084, 0.0, 0.057943) | M Neutral Run Box F RR Rfoot_fit_Armature_207
+#10 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.27 | Yaw: 0.0 | Velocity: (-3.321082, 0.0, 0.057943) | M Neutral Run Box F RR Rfoot_fit_Armature_207
+#11 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 1.9 | Yaw: 0.0 | Velocity: (-3.311988, 0.0, 0.054209) | M Neutral Run Box F RR Lfoot_fit_Armature_208
+#12 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 1.8 | Yaw: 0.0 | Velocity: (-3.311987, 0.0, 0.054202) | M Neutral Run Box F RR Lfoot_fit_Armature_208
+#13 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 1.87 | Yaw: 0.0 | Velocity: (-3.311986, 0.0, 0.054202) | M Neutral Run Box F RR Lfoot_fit_Armature_208
+#14 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 1.83 | Yaw: 0.0 | Velocity: (-3.311986, 0.0, 0.054202) | M Neutral Run Box F RR Lfoot_fit_Armature_208
+#15 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 1.77 | Yaw: 0.0 | Velocity: (-3.311986, 0.0, 0.054209) | M Neutral Run Box F RR Lfoot_fit_Armature_208
+#16 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 0.07 | Yaw: 0.0 | Velocity: (-3.311698, 0.0, -0.000166) | M Neutral Run Box RL B Lfoot_fit_Armature_198
+#17 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 0.07 | Yaw: 0.0 | Velocity: (-3.311698, 0.0, -0.000166) | M Neutral Run Box RR B Lfoot_fit_Armature_194
+#18 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 0.07 | Yaw: 0.0 | Velocity: (-3.311698, 0.0, -0.000166) | M Neutral Run Box RL B Rfoot_fit_Armature_197
+#19 | RUN | Projected speed: 3.31 | Total speed: 3.31 | Time: 1.23 | Yaw: 0.0 | Velocity: (-3.311115, 0.0, 0.109277) | M Neutral Run Box F RL Lfoot_fit_Armature_210
+#20 | RUN | Projected speed: 3.3 | Total speed: 3.3 | Time: 1.33 | Yaw: 0.0 | Velocity: (-3.295932, 0.0, 0.008783) | M Neutral Run Box F RL Lfoot_fit_Armature_210
 
-BEST MATCH
-----------------------------------------
-Animation: M Neutral Run Diamond FR B Lfoot_fit_Armature_162
+========================================
+RIGHT
+Available candidates: 3807
+========================================
+#1 | RUN | Projected speed: 3.88 | Total speed: 3.89 | Time: 1.67 | Yaw: 0.0 | Velocity: (3.883946, 0.0, 0.098205) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#2 | RUN | Projected speed: 3.87 | Total speed: 3.87 | Time: 1.63 | Yaw: 0.0 | Velocity: (3.865989, 0.0, 0.133209) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#3 | RUN | Projected speed: 3.76 | Total speed: 3.76 | Time: 1.7 | Yaw: 0.0 | Velocity: (3.760797, 0.0, 0.074472) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#4 | RUN | Projected speed: 3.69 | Total speed: 3.7 | Time: 1.6 | Yaw: 0.0 | Velocity: (3.69195, 0.0, 0.1792) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#5 | RUN | Projected speed: 3.61 | Total speed: 3.61 | Time: 1.73 | Yaw: 0.0 | Velocity: (3.607099, 0.0, 0.054359) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#6 | RUN | Projected speed: 3.46 | Total speed: 3.46 | Time: 1.77 | Yaw: 0.0 | Velocity: (3.464527, 0.0, 0.030627) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#7 | RUN | Projected speed: 3.42 | Total speed: 3.43 | Time: 1.57 | Yaw: 0.0 | Velocity: (3.422316, 0.0, 0.232244) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#8 | RUN | Projected speed: 3.34 | Total speed: 3.34 | Time: 0.8 | Yaw: 0.0 | Velocity: (3.335838, 0.0, 0.031673) | M Neutral Run Hourglass LL BR Lfoot_fit_Armature_140
+#9 | RUN | Projected speed: 3.34 | Total speed: 3.34 | Time: 1.03 | Yaw: 0.0 | Velocity: (3.335041, 0.0, 0.012384) | M Neutral Run Hourglass LR FR Rfoot_fit_Armature_133
+#10 | RUN | Projected speed: 3.33 | Total speed: 3.33 | Time: 1.8 | Yaw: 0.0 | Velocity: (3.33479, 0.0, 0.007646) | M Neutral Run Hourglass FR LL Lfoot_fit_Armature_144
+#11 | RUN | Projected speed: 3.32 | Total speed: 3.32 | Time: 1.07 | Yaw: 0.0 | Velocity: (3.317367, 0.0, 0.025164) | M Neutral Run Hourglass LR FR Rfoot_fit_Armature_133
+#12 | RUN | Projected speed: 3.29 | Total speed: 3.29 | Time: 0.7 | Yaw: 0.0 | Velocity: (3.287823, 0.0, -0.02123) | M Neutral Run Hourglass LL FR Lfoot_fit_Armature_138
+#13 | RUN | Projected speed: 3.28 | Total speed: 3.28 | Time: 1.17 | Yaw: 0.0 | Velocity: (3.280563, 0.0, 0.027903) | M Neutral Run Hourglass LR BR Rfoot_fit_Armature_135
+#14 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 0.8 | Yaw: 0.0 | Velocity: (3.272277, 0.0, 0.03635) | M Neutral Run Hourglass LR BR Lfoot_fit_Armature_136
+#15 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 0.83 | Yaw: 0.0 | Velocity: (3.271866, 0.0, 0.024676) | M Neutral Run Hourglass LR BR Lfoot_fit_Armature_136
+#16 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 1.07 | Yaw: 0.0 | Velocity: (3.268733, 0.0, 0.028474) | M Neutral Run Hourglass LL BR Rfoot_fit_Armature_139
+#17 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 1.57 | Yaw: 0.0 | Velocity: (3.267621, 0.0, 0.008183) | M Neutral Run Box F LL Lfoot_fit_Armature_214
+#18 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 1.53 | Yaw: 0.0 | Velocity: (3.267621, 0.0, 0.008183) | M Neutral Run Box F LL Lfoot_fit_Armature_214
+#19 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 1.53 | Yaw: 0.0 | Velocity: (3.267617, 0.0, 0.008183) | M Neutral Run Box F LR Lfoot_fit_Armature_212
+#20 | RUN | Projected speed: 3.27 | Total speed: 3.27 | Time: 1.57 | Yaw: 0.0 | Velocity: (3.267617, 0.0, 0.008183) | M Neutral Run Box F LR Lfoot_fit_Armature_212
+
+========================================
+FORWARD_LEFT
+Available candidates: 3106
+========================================
+#1 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.1 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FR FL Rfoot_fit_Armature_040
+#2 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.57 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#3 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.23 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FR FL Lfoot_fit_Armature_041
+#4 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.1 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#5 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.07 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#6 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.03 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#7 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.0 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#8 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.97 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#9 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.7 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#10 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.5 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#11 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.5 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FR FL Rfoot_fit_Armature_040
+#12 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.8 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#13 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.37 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#14 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.0 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FR FL Lfoot_fit_Armature_041
+#15 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.5 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FR FL Lfoot_fit_Armature_041
+#16 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.0 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FR FL Rfoot_fit_Armature_040
+#17 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.17 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#18 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.27 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#19 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.2 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+#20 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.93 | Yaw: 0.0 | Velocity: (-4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FR_fit_Armature_035
+
+========================================
+FORWARD_RIGHT
+Available candidates: 3268
+========================================
+#1 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.23 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532522) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#2 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.5 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532522) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#3 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.27 | Yaw: 0.0 | Velocity: (4.532516, 0.0, 4.532522) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#4 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.5 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Lfoot_fit_Armature_043
+#5 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.53 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#6 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.2 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#7 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.1 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Lfoot_fit_Armature_043
+#8 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.37 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#9 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.0 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Lfoot_fit_Armature_043
+#10 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.0 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#11 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.03 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#12 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.07 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Diamond FL FR Rfoot_fit_Armature_042
+#13 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.33 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#14 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.3 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#15 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.27 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#16 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 0.27 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#17 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.2 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#18 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.17 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#19 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.1 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+#20 | SPRINT | Projected speed: 6.41 | Total speed: 6.41 | Time: 1.07 | Yaw: 0.0 | Velocity: (4.532518, 0.0, 4.532518) | M Neutral Sprint Loop FL_fit_Armature_036
+
+========================================
+BACKWARD_LEFT
+Available candidates: 2591
+========================================
+#1 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.47 | Yaw: 0.0 | Velocity: (-2.961015, 0.0, -1.226494) | M Neutral Run Loop RR offset_fit_Armature_104
+#2 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.03 | Yaw: 0.0 | Velocity: (-2.961015, 0.0, -1.226492) | M Neutral Run Loop RR offset_fit_Armature_104
+#3 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.53 | Yaw: 0.0 | Velocity: (-2.961015, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#4 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.5 | Yaw: 0.0 | Velocity: (-2.961015, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#5 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.17 | Yaw: 0.0 | Velocity: (-2.961012, 0.0, -1.226492) | M Neutral Run Loop RR offset_fit_Armature_104
+#6 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.07 | Yaw: 0.0 | Velocity: (-2.961012, 0.0, -1.226492) | M Neutral Run Loop RR offset_fit_Armature_104
+#7 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.77 | Yaw: 0.0 | Velocity: (-2.961012, 0.0, -1.226491) | M Neutral Run Loop RR offset_fit_Armature_104
+#8 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.5 | Yaw: 0.0 | Velocity: (-2.961012, 0.0, -1.226491) | M Neutral Run Loop RR offset_fit_Armature_104
+#9 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.73 | Yaw: 0.0 | Velocity: (-2.961012, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#10 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.0 | Yaw: 0.0 | Velocity: (-2.961012, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#11 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.6 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.226491) | M Neutral Run Loop RR offset_fit_Armature_104
+#12 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.27 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#13 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.37 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#14 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.23 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#15 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.4 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#16 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.53 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+#17 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.77 | Yaw: 0.0 | Velocity: (-2.961008, 0.0, -1.226492) | M Neutral Run Loop RR offset_fit_Armature_104
+#18 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.57 | Yaw: 0.0 | Velocity: (-2.961008, 0.0, -1.226492) | M Neutral Run Loop RR offset_fit_Armature_104
+#19 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 1.67 | Yaw: 0.0 | Velocity: (-2.961008, 0.0, -1.226492) | M Neutral Run Loop RR offset_fit_Armature_104
+#20 | RUN | Projected speed: 2.96 | Total speed: 3.2 | Time: 0.0 | Yaw: 0.0 | Velocity: (-2.96101, 0.0, -1.22649) | M Neutral Run Loop RR offset_fit_Armature_104
+
+========================================
+BACKWARD_RIGHT
+Available candidates: 2531
+========================================
+#1 | RUN | Projected speed: 3.28 | Total speed: 3.28 | Time: 2.1 | Yaw: 0.0 | Velocity: (2.344933, 0.0, -2.296865) | M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+#2 | RUN | Projected speed: 3.26 | Total speed: 3.26 | Time: 2.2 | Yaw: 0.0 | Velocity: (2.305089, 0.0, -2.311814) | M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+#3 | RUN | Projected speed: 3.26 | Total speed: 3.26 | Time: 2.07 | Yaw: 0.0 | Velocity: (2.34076, 0.0, -2.267268) | M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+#4 | RUN | Projected speed: 3[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
+[...]
 Animation index: 66
 Sample index: 90
 Timestamp: 3.0
@@ -465,7 +571,7 @@ TOTAL COST: 6.47182264924049
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.727 ms
+Search time: 11.779 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -587,7 +693,7 @@ TOTAL COST: 3.17230535298586
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.381 ms
+Search time: 11.999 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -709,7 +815,7 @@ TOTAL COST: 3.39603653550148
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.91 ms
+Search time: 10.653 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -831,7 +937,7 @@ TOTAL COST: 0.0074778572889
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.4 ms
+Search time: 10.811 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -953,7 +1059,7 @@ TOTAL COST: 0.00718434622831
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.415 ms
+Search time: 10.701 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1075,7 +1181,7 @@ TOTAL COST: 6.50248402357101
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.836 ms
+Search time: 12.384 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1197,7 +1303,7 @@ TOTAL COST: 6.07472166419029
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 15.327 ms
+Search time: 13.243 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
@@ -1224,3 +1330,5 @@ Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 4.425915)
 Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 6.791491)
 Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 9.080758)
 Root Motion: (0.0, -0.0, 0.076308) | Character Position: (0.0, -0.0, 11.37002)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (0.0, -0.0, 11.44633)
+--- Debugging process stopped ---
