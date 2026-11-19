@@ -1,10 +1,5 @@
 extends CharacterBody3D
 
-
-# ============================================================
-# CONFIGURATION
-# ============================================================
-
 const DATABASE_PATH: String = "user://motion_database.json"
 
 const ANIMATION_FILES: Array[String] = [
@@ -15,49 +10,28 @@ const ANIMATION_FILES: Array[String] = [
 	"res://Assets/Animations/Idle.glb"
 ]
 
-# Temporary fixed query used to validate continuous forward locomotion.
 const DESIRED_VELOCITY: Vector3 = Vector3(0.0, 0.0, 4.5)
-
 const DESIRED_FUTURE_POSITIONS: Array[Vector3] = [
 	Vector3(0.0, 0.0, 0.9),
 	Vector3(0.0, 0.0, 1.8),
 	Vector3(0.0, 0.0, 2.7)
 ]
-
 const DESIRED_FACING_YAW: float = 0.0
 
 const MATCH_INTERVAL: float = 0.20
 const DEBUG_INTERVAL: float = 1.0
-
-# The C++ continuous search evaluates every eligible sample.
-# A larger switch penalty makes it prefer staying in the current clip.
 const ANIMATION_SWITCH_PENALTY: float = 0.5
 const SAME_ANIMATION_TIME_WEIGHT: float = 0.5
 
-
-# ============================================================
-# NODES
-# ============================================================
-
-@onready var character_player: AnimationPlayer = \
-	$Visual/Character_01/AnimationPlayer
-
-@onready var animation_tree: AnimationTree = \
-	$Visual/AnimationTree
-
-
-# ============================================================
-# RUNTIME DATA
-# ============================================================
+@onready var character_player: AnimationPlayer = $Visual/Character_01/AnimationPlayer
+@onready var animation_tree: AnimationTree = $Visual/AnimationTree
 
 var motion_matching: MotionMatchingSearch
-
 var database_data: Dictionary = {}
 var animation_lookup: Array[String] = []
 var database_animations: Array = []
 
 var motion_matching_started: bool = false
-
 var match_timer: float = 0.0
 var debug_timer: float = 0.0
 
@@ -68,50 +42,32 @@ var switch_count: int = 0
 var current_animation_path: String = ""
 var current_animation_index: int = -1
 var current_animation_duration: float = 0.0
-
-# Track the actual clip timestamp ourselves.
-# AnimationNodeStateMachinePlayback's play position is elapsed state time,
-# not necessarily the absolute source-animation timestamp after start_offset.
 var current_animation_start_timestamp: float = 0.0
 var elapsed_since_animation_selection: float = 0.0
 
-# Physical movement diagnostics.
 var debug_previous_position: Vector3 = Vector3.ZERO
 var last_root_motion: Vector3 = Vector3.ZERO
 
 
-# ============================================================
-# INITIALIZATION
-# ============================================================
-
 func _ready() -> void:
-	print("\n")
-	print("==================================================")
-	print("       C++ CONTINUOUS MOTION MATCHING TEST")
+	print("\n==================================================")
+	print(" C++ CONTINUOUS MOTION MATCHING TEST - LOOP FIX")
 	print("==================================================")
 
 	if not _load_animation_libraries():
 		return
-
 	if not _configure_animation_tree():
 		return
-
 	if not _load_database_json():
 		return
-
 	if not _build_animation_lookup():
 		return
-
 	if not _initialize_motion_matching():
 		return
 
 	debug_previous_position = global_position
 	_start_motion_matching()
 
-
-# ============================================================
-# LOAD ANIMATION LIBRARIES
-# ============================================================
 
 func _load_animation_libraries() -> bool:
 	print("\n----------------------------------------")
@@ -126,19 +82,16 @@ func _load_animation_libraries() -> bool:
 			return false
 
 		var packed_scene := load(animation_file) as PackedScene
-
 		if packed_scene == null:
 			push_error("Could not load PackedScene: " + animation_file)
 			return false
 
 		var instance := packed_scene.instantiate()
-
 		if instance == null:
 			push_error("Could not instantiate: " + animation_file)
 			return false
 
 		var source_player := _find_animation_player(instance)
-
 		if source_player == null:
 			push_error("No AnimationPlayer found in: " + animation_file)
 			instance.free()
@@ -152,7 +105,6 @@ func _load_animation_libraries() -> bool:
 			return false
 
 		var source_library := source_player.get_animation_library("")
-
 		if source_library == null:
 			push_error("Could not retrieve AnimationLibrary: " + animation_file)
 			instance.free()
@@ -161,11 +113,7 @@ func _load_animation_libraries() -> bool:
 		if character_player.has_animation_library(library_name):
 			character_player.remove_animation_library(library_name)
 
-		var error := character_player.add_animation_library(
-			library_name,
-			source_library
-		)
-
+		var error := character_player.add_animation_library(library_name, source_library)
 		if error != OK:
 			push_error(
 				"Could not add animation library: " +
@@ -182,16 +130,11 @@ func _load_animation_libraries() -> bool:
 			" | Animations: ",
 			source_library.get_animation_list().size()
 		)
-
 		instance.free()
 
 	print("\nAll animation libraries loaded successfully.")
 	return true
 
-
-# ============================================================
-# FIND ANIMATION PLAYER
-# ============================================================
 
 func _find_animation_player(node: Node) -> AnimationPlayer:
 	if node is AnimationPlayer:
@@ -199,16 +142,11 @@ func _find_animation_player(node: Node) -> AnimationPlayer:
 
 	for child in node.get_children():
 		var result := _find_animation_player(child)
-
 		if result != null:
 			return result
 
 	return null
 
-
-# ============================================================
-# CONFIGURE ANIMATION TREE
-# ============================================================
 
 func _configure_animation_tree() -> bool:
 	print("\n----------------------------------------")
@@ -227,13 +165,11 @@ func _configure_animation_tree() -> bool:
 	print("Root motion track: ", animation_tree.root_motion_track)
 
 	var state_machine := animation_tree.tree_root as AnimationNodeStateMachine
-
 	if state_machine == null:
 		push_error("AnimationTree root is not an AnimationNodeStateMachine.")
 		return false
 
 	var run_state := state_machine.get_node("Run") as AnimationNodeAnimation
-
 	if run_state == null:
 		push_error("AnimationTree does not contain a Run state.")
 		return false
@@ -241,10 +177,6 @@ func _configure_animation_tree() -> bool:
 	print("Run state found successfully.")
 	return true
 
-
-# ============================================================
-# LOAD JSON DATABASE
-# ============================================================
 
 func _load_database_json() -> bool:
 	print("\n----------------------------------------")
@@ -256,7 +188,6 @@ func _load_database_json() -> bool:
 		return false
 
 	var file := FileAccess.open(DATABASE_PATH, FileAccess.READ)
-
 	if file == null:
 		push_error("Could not open motion database JSON.")
 		return false
@@ -265,7 +196,6 @@ func _load_database_json() -> bool:
 	file.close()
 
 	var parsed: Variant = JSON.parse_string(json_text)
-
 	if parsed == null:
 		push_error("Could not parse motion database JSON.")
 		return false
@@ -288,17 +218,12 @@ func _load_database_json() -> bool:
 	return true
 
 
-# ============================================================
-# BUILD ANIMATION LOOKUP
-# ============================================================
-
 func _build_animation_lookup() -> bool:
 	print("\n----------------------------------------")
 	print("BUILDING ANIMATION LOOKUP")
 	print("----------------------------------------")
 
 	animation_lookup.clear()
-
 	var mapped_count := 0
 	var missing_count := 0
 
@@ -339,24 +264,17 @@ func _build_animation_lookup() -> bool:
 	return true
 
 
-# ============================================================
-# INITIALIZE C++ MOTION MATCHING
-# ============================================================
-
 func _initialize_motion_matching() -> bool:
 	print("\n----------------------------------------")
 	print("INITIALIZING C++ MOTION MATCHING")
 	print("----------------------------------------")
 
 	motion_matching = MotionMatchingSearch.new()
-
 	if motion_matching == null:
 		push_error("Could not create MotionMatchingSearch.")
 		return false
 
-	var loaded: bool = motion_matching.load_database(DATABASE_PATH)
-
-	if not loaded:
+	if not motion_matching.load_database(DATABASE_PATH):
 		push_error(
 			"C++ database loading failed: " +
 			motion_matching.get_last_error()
@@ -368,13 +286,8 @@ func _initialize_motion_matching() -> bool:
 	print("Total samples: ", motion_matching.get_sample_count())
 	print("Eligible animations: ", motion_matching.get_eligible_animation_count())
 	print("Eligible samples: ", motion_matching.get_eligible_sample_count())
-
 	return true
 
-
-# ============================================================
-# START MOTION MATCHING
-# ============================================================
 
 func _start_motion_matching() -> void:
 	print("\n----------------------------------------")
@@ -384,19 +297,12 @@ func _start_motion_matching() -> void:
 	motion_matching_started = true
 	_update_motion_match()
 
-	if not motion_matching_started:
-		return
+	if motion_matching_started:
+		print("\nMotion Matching is running.")
+		print("Search interval: ", MATCH_INTERVAL, " seconds")
+		print("C++ continuous search: enabled")
+		print("AnimationNodeAnimation loop mode: LOOP_LINEAR")
 
-	print("\nMotion Matching is running.")
-	print("Search interval: ", MATCH_INTERVAL, " seconds")
-	print("C++ continuous search: enabled")
-	print("Absolute animation timestamp tracking: enabled")
-	print("Physical displacement diagnostics: enabled")
-
-
-# ============================================================
-# GET CURRENT ABSOLUTE SOURCE-ANIMATION TIME
-# ============================================================
 
 func _get_current_animation_time() -> float:
 	if current_animation_index < 0 or current_animation_duration <= 0.0:
@@ -406,40 +312,24 @@ func _get_current_animation_time() -> float:
 		current_animation_start_timestamp +
 		elapsed_since_animation_selection
 	)
-
-	# All clips currently admitted by the steady-locomotion filter are
-	# treated as looping locomotion clips.
 	return fposmod(absolute_time, current_animation_duration)
 
-
-# ============================================================
-# SEARCH USING THE C++ CONTINUITY-AWARE METHOD
-# ============================================================
 
 func _update_motion_match() -> void:
 	var current_time := _get_current_animation_time()
 
-	var search_result: Dictionary = \
-		motion_matching.search_best_match_continuous(
-			DESIRED_VELOCITY,
-			DESIRED_FUTURE_POSITIONS,
-			DESIRED_FACING_YAW,
-			current_animation_index,
-			current_time,
-			ANIMATION_SWITCH_PENALTY,
-			SAME_ANIMATION_TIME_WEIGHT
-		)
+	var search_result: Dictionary = motion_matching.search_best_match_continuous(
+		DESIRED_VELOCITY,
+		DESIRED_FUTURE_POSITIONS,
+		DESIRED_FACING_YAW,
+		current_animation_index,
+		current_time,
+		ANIMATION_SWITCH_PENALTY,
+		SAME_ANIMATION_TIME_WEIGHT
+	)
 
-	if search_result.is_empty():
-		push_error("Continuous motion matching search returned no result.")
-		motion_matching_started = false
-		return
-
-	if not bool(search_result.get("success", false)):
-		push_error(
-			"Continuous motion matching search failed: " +
-			str(search_result.get("error", "Unknown error"))
-		)
+	if search_result.is_empty() or not bool(search_result.get("success", false)):
+		push_error("Continuous motion matching search failed: " + str(search_result))
 		motion_matching_started = false
 		return
 
@@ -458,7 +348,6 @@ func _update_motion_match() -> void:
 		return
 
 	var runtime_animation_path: String = animation_lookup[animation_index]
-
 	if runtime_animation_path.is_empty():
 		push_error("Selected animation has no runtime mapping.")
 		motion_matching_started = false
@@ -472,25 +361,17 @@ func _update_motion_match() -> void:
 		motion_matching_started = false
 		return
 
-	if animation_duration <= 0.0:
-		push_error("Selected animation has an invalid duration.")
+	if animation_duration <= 0.0 or sample_time < 0.0 or sample_time >= animation_duration:
+		push_error("Selected animation timestamp/duration is invalid.")
 		motion_matching_started = false
 		return
 
-	if sample_time < 0.0 or sample_time >= animation_duration:
-		push_error("Selected timestamp is outside animation duration.")
-		motion_matching_started = false
-		return
-
-	# If C++ selected the same clip, let it continue playing.
-	# The C++ method already included temporal continuity when choosing
-	# the best sample, so restarting here would destroy that continuity.
+	# Do not restart a clip that is already playing. The C++ search accounts
+	# for temporal continuity and picks the best phase in the current clip.
 	if animation_index == current_animation_index:
 		skipped_restart_count += 1
 		return
 
-	# A genuinely different clip was selected. Start that clip at the
-	# chosen absolute source-animation timestamp.
 	var state_machine := animation_tree.tree_root as AnimationNodeStateMachine
 	var run_state := state_machine.get_node("Run") as AnimationNodeAnimation
 
@@ -498,12 +379,14 @@ func _update_motion_match() -> void:
 	run_state.use_custom_timeline = true
 	run_state.timeline_length = animation_duration
 	run_state.stretch_time_scale = false
+
+	# IMPORTANT: custom timeline playback uses this node-level loop setting.
+	# Without it, the state can stop at the clip end while our own clock wraps.
+	run_state.loop_mode = Animation.LOOP_LINEAR
+
 	run_state.start_offset = sample_time
 
-	var playback := animation_tree.get(
-		"parameters/playback"
-	) as AnimationNodeStateMachinePlayback
-
+	var playback := animation_tree.get("parameters/playback") as AnimationNodeStateMachinePlayback
 	if playback == null:
 		push_error("AnimationTree playback not found.")
 		motion_matching_started = false
@@ -511,9 +394,7 @@ func _update_motion_match() -> void:
 
 	playback.start("Run", true)
 	animation_tree.advance(0.0)
-
-	# Discard the initial root-motion delta generated by the seek.
-	animation_tree.get_root_motion_position()
+	animation_tree.get_root_motion_position() # Discard seek delta.
 
 	var previous_animation_index := current_animation_index
 
@@ -524,7 +405,6 @@ func _update_motion_match() -> void:
 	elapsed_since_animation_selection = 0.0
 
 	match_count += 1
-
 	if previous_animation_index >= 0:
 		switch_count += 1
 
@@ -535,8 +415,8 @@ func _update_motion_match() -> void:
 	print("Selected source timestamp: ", sample_time)
 	print("Duration: ", animation_duration)
 	print("Runtime path: ", runtime_animation_path)
+	print("Node loop mode: ", run_state.loop_mode, " (1 = LOOP_LINEAR)")
 	print("Matched velocity: ", search_result.get("velocity", "N/A"))
-	print("Matching yaw: ", search_result.get("yaw_degrees", "N/A"))
 	print("Base cost: ", search_result.get("base_cost", "N/A"))
 	print("Continuity cost: ", search_result.get("continuity_cost", "N/A"))
 	print("Selection score: ", search_result.get("selection_score", "N/A"))
@@ -546,21 +426,12 @@ func _update_motion_match() -> void:
 	print("========================================")
 
 
-# ============================================================
-# APPLY ROOT MOTION, TRACK CLIP TIME, AND SEARCH
-# ============================================================
-
 func _physics_process(delta: float) -> void:
 	if not motion_matching_started or delta <= 0.0:
 		return
 
-	# Advance our own absolute source-animation clock.
 	if current_animation_index >= 0:
 		elapsed_since_animation_selection += delta
-
-	# --------------------------------------------------------
-	# APPLY ROOT MOTION
-	# --------------------------------------------------------
 
 	var position_before: Vector3 = global_position
 	var root_motion: Vector3 = animation_tree.get_root_motion_position()
@@ -573,29 +444,15 @@ func _physics_process(delta: float) -> void:
 	var position_after: Vector3 = global_position
 	var actual_displacement: Vector3 = position_after - position_before
 
-	# --------------------------------------------------------
-	# UPDATE TIMERS
-	# --------------------------------------------------------
-
 	match_timer += delta
 	debug_timer += delta
-
-	# --------------------------------------------------------
-	# PHYSICAL MOVEMENT DIAGNOSTICS
-	# --------------------------------------------------------
 
 	if debug_timer >= DEBUG_INTERVAL:
 		var diagnostic_interval := debug_timer
 		debug_timer = 0.0
 
-		var interval_displacement: Vector3 = (
-			global_position - debug_previous_position
-		)
-
-		var actual_world_velocity: Vector3 = (
-			interval_displacement / diagnostic_interval
-		)
-
+		var interval_displacement: Vector3 = global_position - debug_previous_position
+		var actual_world_velocity: Vector3 = interval_displacement / diagnostic_interval
 		debug_previous_position = global_position
 
 		print("\n========== PHYSICAL MOVEMENT DIAGNOSTICS ==========")
@@ -608,11 +465,9 @@ func _physics_process(delta: float) -> void:
 		print("Animation: ", current_animation_path)
 		print("Animation switches: ", switch_count)
 		print("Same-clip decisions (no restart): ", skipped_restart_count)
-
-		print(
-			"Colliding: ",
-			is_on_wall() or is_on_floor() or is_on_ceiling()
-		)
+		print("On floor: ", is_on_floor())
+		print("On wall: ", is_on_wall())
+		print("On ceiling: ", is_on_ceiling())
 
 		if get_slide_collision_count() > 0:
 			var collision := get_slide_collision(0)
@@ -621,10 +476,6 @@ func _physics_process(delta: float) -> void:
 			print("No slide collisions detected.")
 
 		print("====================================================")
-
-	# --------------------------------------------------------
-	# CONTINUOUS MOTION SEARCH
-	# --------------------------------------------------------
 
 	if match_timer >= MATCH_INTERVAL:
 		match_timer = 0.0
