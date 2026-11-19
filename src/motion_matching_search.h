@@ -84,6 +84,16 @@ public:
         double desired_facing_yaw
     );
 
+    Dictionary search_best_match_continuous(
+        Vector3 desired_velocity,
+        Array desired_future_positions,
+        double desired_facing_yaw,
+        int current_animation_index,
+        double current_animation_time,
+        double animation_switch_penalty,
+        double same_animation_time_weight
+    );
+
     Dictionary analyze_database_coverage() const;
 
     Dictionary analyze_fastest_directional_samples(
