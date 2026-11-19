@@ -37,7 +37,6 @@ static const Vector3 UP_AXIS(0.0, 1.0, 0.0);
 // ==================================================
 
 struct QuaternionData {
-
     double x = 0.0;
     double y = 0.0;
     double z = 0.0;
@@ -53,9 +52,7 @@ static bool has_tag(
     const std::vector<String> &tags,
     const String &target
 ) {
-
     for (const String &tag : tags) {
-
         if (tag == target) {
             return true;
         }
@@ -68,7 +65,6 @@ static bool has_tag(
 static bool is_steady_locomotion_eligible(
     const std::vector<String> &tags
 ) {
-
     bool supported_family =
         has_tag(tags, "locomotion_walk") ||
         has_tag(tags, "locomotion_run") ||
@@ -79,7 +75,6 @@ static bool is_steady_locomotion_eligible(
     }
 
     static const char *excluded_tags[] = {
-
         "start",
         "stop",
         "pivot",
@@ -92,7 +87,6 @@ static bool is_steady_locomotion_eligible(
     };
 
     for (const char *excluded_tag : excluded_tags) {
-
         if (has_tag(tags, String(excluded_tag))) {
             return false;
         }
@@ -118,7 +112,6 @@ double MotionMatchingSearch::calculate_cost(
     Vector3 current_velocity,
     Vector3 desired_velocity
 ) {
-
     return current_velocity.distance_squared_to(
         desired_velocity
     );
@@ -130,7 +123,6 @@ double MotionMatchingSearch::calculate_cost(
 // ==================================================
 
 static double wrap_angle(double angle) {
-
     return std::atan2(
         std::sin(angle),
         std::cos(angle)
@@ -143,7 +135,6 @@ static double interpolate_angle(
     double to,
     double alpha
 ) {
-
     double difference = wrap_angle(to - from);
 
     return wrap_angle(
@@ -159,7 +150,6 @@ static double interpolate_angle(
 static QuaternionData normalize_quaternion(
     const QuaternionData &q
 ) {
-
     double length_squared =
         q.x * q.x +
         q.y * q.y +
@@ -191,7 +181,6 @@ static QuaternionData multiply_quaternions(
     const QuaternionData &a,
     const QuaternionData &b
 ) {
-
     QuaternionData result;
 
     result.x =
@@ -229,7 +218,6 @@ static QuaternionData multiply_quaternions(
 static QuaternionData inverse_quaternion(
     const QuaternionData &q
 ) {
-
     QuaternionData result;
 
     result.x = -q.x;
@@ -249,7 +237,6 @@ static QuaternionData inverse_quaternion(
 static QuaternionData parse_quaternion(
     const Variant &value
 ) {
-
     if (value.get_type() != Variant::ARRAY) {
         return QuaternionData();
     }
@@ -279,7 +266,6 @@ static QuaternionData convert_rotation_to_parent_space(
     const QuaternionData &initial_rotation,
     const QuaternionData &relative_rotation
 ) {
-
     QuaternionData first = multiply_quaternions(
         initial_rotation,
         relative_rotation
@@ -305,7 +291,6 @@ static QuaternionData convert_rotation_to_parent_space(
 static double extract_parent_yaw(
     const QuaternionData &q
 ) {
-
     double sin_yaw =
         2.0 * (q.w * q.y + q.x * q.z);
 
@@ -324,7 +309,6 @@ static double extract_parent_yaw(
 // ==================================================
 
 static Vector3 parse_vector3(const Variant &value) {
-
     if (value.get_type() != Variant::ARRAY) {
         return Vector3();
     }
@@ -351,7 +335,6 @@ static Vector3 to_local_facing(
     const Vector3 &vector,
     double yaw
 ) {
-
     return vector.rotated(
         UP_AXIS,
         -yaw
@@ -368,7 +351,6 @@ bool MotionMatchingSearch::interpolate_position(
     double time,
     Vector3 &result
 ) const {
-
     if (samples.empty()) {
         return false;
     }
@@ -390,23 +372,17 @@ bool MotionMatchingSearch::interpolate_position(
     );
 
     if (it == samples.end()) {
-
         result = samples.back().position;
-
         return true;
     }
 
     if (it == samples.begin()) {
-
         result = it->position;
-
         return true;
     }
 
     if (std::abs(it->time - time) < 0.000001) {
-
         result = it->position;
-
         return true;
     }
 
@@ -440,7 +416,6 @@ static bool interpolate_yaw(
     double time,
     double &result
 ) {
-
     if (samples.empty()) {
         return false;
     }
@@ -456,7 +431,6 @@ static bool interpolate_yaw(
     size_t high = samples.size();
 
     while (low < high) {
-
         size_t middle = low + (high - low) / 2;
 
         if (samples[middle].time < time) {
@@ -468,16 +442,12 @@ static bool interpolate_yaw(
     }
 
     if (low >= samples.size()) {
-
         result = samples.back().yaw;
-
         return true;
     }
 
     if (low == 0) {
-
         result = samples.front().yaw;
-
         return true;
     }
 
@@ -485,9 +455,7 @@ static bool interpolate_yaw(
     const auto &previous = samples[low - 1];
 
     if (std::abs(next.time - time) < 0.000001) {
-
         result = next.yaw;
-
         return true;
     }
 
@@ -526,32 +494,25 @@ bool MotionMatchingSearch::load_database(String file_path) {
     last_error = "";
 
     if (!FileAccess::file_exists(file_path)) {
-
         last_error = "Database file does not exist: " + file_path;
-
         return false;
     }
 
     String json_text = FileAccess::get_file_as_string(file_path);
 
     if (json_text.is_empty()) {
-
         last_error = "Database file is empty.";
-
         return false;
     }
 
     Variant parsed_data = JSON::parse_string(json_text);
 
     if (parsed_data.get_type() != Variant::ARRAY) {
-
         last_error = "Invalid database format. Expected a JSON array.";
-
         return false;
     }
 
     Array animations = parsed_data;
-
 
     // ----------------------------------------------
     // LOAD ANIMATIONS
@@ -579,7 +540,6 @@ bool MotionMatchingSearch::load_database(String file_path) {
             0.0
         );
 
-        // Load animation tags.
         Variant tags_value = animation_data.get(
             "tags",
             Array()
@@ -592,7 +552,6 @@ bool MotionMatchingSearch::load_database(String file_path) {
             for (int tag_index = 0; tag_index < tags_array.size(); tag_index++) {
 
                 if (tags_array[tag_index].get_type() == Variant::STRING) {
-
                     animation.tags.push_back(
                         (String)tags_array[tag_index]
                     );
@@ -600,8 +559,6 @@ bool MotionMatchingSearch::load_database(String file_path) {
             }
         }
 
-        // Determine whether this animation can be used
-        // for continuous locomotion searches.
         animation.eligible_steady_locomotion =
             is_steady_locomotion_eligible(animation.tags);
 
@@ -676,14 +633,10 @@ bool MotionMatchingSearch::load_database(String file_path) {
         }
     }
 
-
     if (database.empty()) {
-
         last_error = "No valid animations were loaded.";
-
         return false;
     }
-
 
     // ----------------------------------------------
     // PRECOMPUTE LOCAL-FACING FEATURES
@@ -716,7 +669,6 @@ bool MotionMatchingSearch::load_database(String file_path) {
                     future_time,
                     future_position
                 )) {
-
                     valid_trajectory = false;
                 }
                 else {
@@ -738,7 +690,6 @@ bool MotionMatchingSearch::load_database(String file_path) {
                     future_time,
                     future_yaw
                 )) {
-
                     valid_rotation = false;
                 }
                 else {
@@ -781,20 +732,14 @@ Dictionary MotionMatchingSearch::search_best_match(
     Dictionary result;
 
     if (database.empty()) {
-
         result["success"] = false;
         result["error"] = "Database has not been loaded.";
-
         return result;
     }
 
     if (desired_future_positions.size() != 3) {
-
         result["success"] = false;
-
-        result["error"] =
-            "Expected exactly 3 future trajectory positions.";
-
+        result["error"] = "Expected exactly 3 future trajectory positions.";
         return result;
     }
 
@@ -805,33 +750,19 @@ Dictionary MotionMatchingSearch::search_best_match(
         Variant value = desired_future_positions[i];
 
         if (value.get_type() != Variant::VECTOR3) {
-
             result["success"] = false;
-
-            result["error"] =
-                "Future trajectory positions must be Vector3 values.";
-
+            result["error"] = "Future trajectory positions must be Vector3 values.";
             return result;
         }
 
         desired_positions[i] = value;
     }
 
-
-    // ----------------------------------------------
-    // COMBAT MODE FUTURE ROTATION
-    // ----------------------------------------------
-
     const std::array<double, 3> desired_yaw_deltas = {
         0.0,
         0.0,
         0.0
     };
-
-
-    // ----------------------------------------------
-    // CANDIDATE STRUCTURE
-    // ----------------------------------------------
 
     struct Candidate {
 
@@ -855,11 +786,9 @@ Dictionary MotionMatchingSearch::search_best_match(
         std::array<double, 3> future_yaw_deltas;
     };
 
-
     std::vector<Candidate> candidates;
 
     int evaluated_samples = 0;
-
 
     // ----------------------------------------------
     // SEARCH DATABASE
@@ -874,7 +803,6 @@ Dictionary MotionMatchingSearch::search_best_match(
         const MotionAnimation &animation =
             database[animation_index];
 
-        // Skip animations not eligible for continuous locomotion.
         if (!animation.eligible_steady_locomotion) {
             continue;
         }
@@ -897,24 +825,20 @@ Dictionary MotionMatchingSearch::search_best_match(
 
             evaluated_samples++;
 
-            // Velocity.
             double velocity_cost = calculate_cost(
                 sample.matching_velocity,
                 desired_velocity
             );
 
-            // Future trajectory.
             double trajectory_cost = 0.0;
 
             for (int i = 0; i < 3; i++) {
-
                 trajectory_cost +=
                     sample.future_positions[i].distance_squared_to(
                         desired_positions[i]
                     );
             }
 
-            // Current facing.
             double facing_difference = wrap_angle(
                 sample.yaw - desired_facing_yaw
             );
@@ -922,7 +846,6 @@ Dictionary MotionMatchingSearch::search_best_match(
             double facing_cost =
                 facing_difference * facing_difference;
 
-            // Future rotation.
             double rotation_cost = 0.0;
 
             for (int i = 0; i < 3; i++) {
@@ -936,13 +859,11 @@ Dictionary MotionMatchingSearch::search_best_match(
                     yaw_difference * yaw_difference;
             }
 
-            // Combined cost.
             double total_cost =
                 velocity_cost +
                 trajectory_cost * TRAJECTORY_WEIGHT +
                 facing_cost * FACING_WEIGHT +
                 rotation_cost * ROTATION_WEIGHT;
-
 
             Candidate candidate;
 
@@ -969,11 +890,6 @@ Dictionary MotionMatchingSearch::search_best_match(
         }
     }
 
-
-    // ----------------------------------------------
-    // SORT BY TOTAL COST
-    // ----------------------------------------------
-
     std::sort(
         candidates.begin(),
         candidates.end(),
@@ -982,21 +898,13 @@ Dictionary MotionMatchingSearch::search_best_match(
         }
     );
 
-
     if (candidates.empty()) {
-
         result["success"] = false;
-
-        result["error"] =
-            "No eligible steady locomotion samples found.";
-
+        result["error"] = "No eligible steady locomotion samples found.";
         result["eligible_animations"] = eligible_animation_count;
-
         result["eligible_samples"] = eligible_search_samples;
-
         return result;
     }
-
 
     // ----------------------------------------------
     // BUILD TOP 10 RESULTS
@@ -1019,26 +927,15 @@ Dictionary MotionMatchingSearch::search_best_match(
         Dictionary match;
 
         match["rank"] = i + 1;
-
         match["animation_name"] = animation.name;
-
         match["animation_index"] = candidate.animation_index;
-
         match["sample_index"] = candidate.sample_index;
-
         match["time"] = candidate.time;
-
         match["duration"] = animation.duration;
-
         match["position"] = candidate.position;
-
         match["yaw"] = candidate.yaw;
-
-        match["yaw_degrees"] =
-            Math::rad_to_deg(candidate.yaw);
-
+        match["yaw_degrees"] = Math::rad_to_deg(candidate.yaw);
         match["raw_velocity"] = candidate.raw_velocity;
-
         match["velocity"] = candidate.matching_velocity;
 
         Array future_positions;
@@ -1058,22 +955,16 @@ Dictionary MotionMatchingSearch::search_best_match(
         }
 
         match["future_positions"] = future_positions;
-
         match["future_yaw_deltas_degrees"] = future_yaw_deltas;
 
         match["velocity_cost"] = candidate.velocity_cost;
-
         match["trajectory_cost"] = candidate.trajectory_cost;
-
         match["facing_cost"] = candidate.facing_cost;
-
         match["rotation_cost"] = candidate.rotation_cost;
-
         match["cost"] = candidate.total_cost;
 
         top_matches.push_back(match);
     }
-
 
     // ----------------------------------------------
     // BEST MATCH
@@ -1085,55 +976,35 @@ Dictionary MotionMatchingSearch::search_best_match(
         database[best.animation_index];
 
     result["success"] = true;
-
     result["animation_name"] = best_animation.name;
-
     result["animation_index"] = best.animation_index;
-
     result["sample_index"] = best.sample_index;
-
     result["time"] = best.time;
-
     result["duration"] = best_animation.duration;
-
     result["position"] = best.position;
-
     result["raw_velocity"] = best.raw_velocity;
-
     result["velocity"] = best.matching_velocity;
-
     result["yaw"] = best.yaw;
-
-    result["yaw_degrees"] =
-        Math::rad_to_deg(best.yaw);
+    result["yaw_degrees"] = Math::rad_to_deg(best.yaw);
 
     result["desired_facing_yaw_degrees"] =
         Math::rad_to_deg(desired_facing_yaw);
 
     result["velocity_cost"] = best.velocity_cost;
-
     result["trajectory_cost"] = best.trajectory_cost;
-
     result["facing_cost"] = best.facing_cost;
-
     result["rotation_cost"] = best.rotation_cost;
-
     result["cost"] = best.total_cost;
 
     result["samples_evaluated"] = evaluated_samples;
-
     result["valid_database_samples"] = valid_search_samples;
-
     result["eligible_animations"] = eligible_animation_count;
-
     result["eligible_samples"] = eligible_search_samples;
-
     result["top_matches"] = top_matches;
 
     Array best_future_yaw_deltas;
 
     for (int i = 0; i < 3; i++) {
-
         best_future_yaw_deltas.push_back(
             Math::rad_to_deg(
                 best.future_yaw_deltas[i]
@@ -1157,15 +1028,12 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
     Dictionary result;
 
     if (database.empty()) {
-
         result["success"] = false;
         result["error"] = "Database has not been loaded.";
-
         return result;
     }
 
     struct Direction {
-
         String name;
         Vector3 vector;
     };
@@ -1176,13 +1044,11 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
 
         {"forward", Vector3(0.0, 0.0, 1.0)},
         {"backward", Vector3(0.0, 0.0, -1.0)},
-
         {"left", Vector3(-1.0, 0.0, 0.0)},
         {"right", Vector3(1.0, 0.0, 0.0)},
 
         {"forward_left", Vector3(-diagonal, 0.0, diagonal)},
         {"forward_right", Vector3(diagonal, 0.0, diagonal)},
-
         {"backward_left", Vector3(-diagonal, 0.0, -diagonal)},
         {"backward_right", Vector3(diagonal, 0.0, -diagonal)}
 
@@ -1192,23 +1058,18 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
         Math::deg_to_rad(25.0)
     );
 
-
     struct FamilyStats {
-
         int animation_count = 0;
         int valid_sample_count = 0;
     };
 
     const std::array<String, 3> family_names = {{
-
         "walk",
         "run",
         "sprint"
-
     }};
 
     std::array<FamilyStats, 3> family_stats;
-
 
     struct DirectionStats {
 
@@ -1216,7 +1077,6 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
 
         double minimum_speed = std::numeric_limits<double>::max();
         double maximum_speed = 0.0;
-
         double maximum_total_speed = 0.0;
 
         String fastest_animation;
@@ -1229,10 +1089,9 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
 
     std::array<std::array<DirectionStats, 8>, 4> stats;
 
-
-    // ------------------------------------------------
+    // ----------------------------------------------
     // ITERATE ELIGIBLE ANIMATIONS
-    // ------------------------------------------------
+    // ----------------------------------------------
 
     for (const MotionAnimation &animation : database) {
 
@@ -1258,7 +1117,6 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
 
         family_stats[family_index - 1].animation_count++;
 
-
         for (const MotionSample &sample : animation.samples) {
 
             if (
@@ -1269,13 +1127,11 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
             }
 
             Vector3 velocity = sample.matching_velocity;
-
             velocity.y = 0.0;
 
             double total_speed = velocity.length();
 
             family_stats[family_index - 1].valid_sample_count++;
-
 
             for (int direction_index = 0; direction_index < 8; direction_index++) {
 
@@ -1311,7 +1167,6 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
                         stats[group_index][direction_index];
 
                     entry.aligned_samples++;
-
                     entry.has_samples = true;
 
                     entry.minimum_speed = std::min(
@@ -1322,13 +1177,9 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
                     if (projected_speed > entry.maximum_speed) {
 
                         entry.maximum_speed = projected_speed;
-
                         entry.maximum_total_speed = total_speed;
-
                         entry.fastest_animation = animation.name;
-
                         entry.fastest_time = sample.time;
-
                         entry.fastest_velocity = velocity;
                     }
                 }
@@ -1336,10 +1187,9 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
         }
     }
 
-
-    // ------------------------------------------------
+    // ----------------------------------------------
     // BUILD FAMILY REPORTS
-    // ------------------------------------------------
+    // ----------------------------------------------
 
     Dictionary families;
 
@@ -1356,10 +1206,9 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
         families[family_names[family_index]] = family;
     }
 
-
-    // ------------------------------------------------
+    // ----------------------------------------------
     // BUILD DIRECTION REPORTS
-    // ------------------------------------------------
+    // ----------------------------------------------
 
     Array direction_reports;
 
@@ -1389,13 +1238,11 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
             Dictionary group;
 
             group["aligned_samples"] = entry.aligned_samples;
-
             group["has_samples"] = entry.has_samples;
 
             if (entry.has_samples) {
 
                 group["minimum_speed"] = entry.minimum_speed;
-
                 group["maximum_speed"] = entry.maximum_speed;
 
                 group["maximum_total_speed"] =
@@ -1404,24 +1251,16 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
                 group["fastest_animation"] =
                     entry.fastest_animation;
 
-                group["fastest_time"] =
-                    entry.fastest_time;
-
-                group["fastest_velocity"] =
-                    entry.fastest_velocity;
+                group["fastest_time"] = entry.fastest_time;
+                group["fastest_velocity"] = entry.fastest_velocity;
             }
             else {
 
                 group["minimum_speed"] = 0.0;
-
                 group["maximum_speed"] = 0.0;
-
                 group["maximum_total_speed"] = 0.0;
-
                 group["fastest_animation"] = "";
-
                 group["fastest_time"] = 0.0;
-
                 group["fastest_velocity"] = Vector3();
             }
 
@@ -1429,13 +1268,10 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
         }
 
         direction_report["groups"] = group_reports;
-
         direction_reports.push_back(direction_report);
     }
 
-
     result["success"] = true;
-
     result["direction_alignment_degrees"] = 25.0;
 
     result["eligible_animation_count"] =
@@ -1445,7 +1281,6 @@ Dictionary MotionMatchingSearch::analyze_database_coverage() const {
         eligible_search_samples;
 
     result["families"] = families;
-
     result["directions"] = direction_reports;
 
     return result;
@@ -1463,10 +1298,8 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
     Dictionary result;
 
     if (database.empty()) {
-
         result["success"] = false;
         result["error"] = "Database has not been loaded.";
-
         return result;
     }
 
@@ -1475,13 +1308,7 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
         std::min(samples_per_direction, 100)
     );
 
-
-    // ------------------------------------------------
-    // DIRECTION DEFINITIONS
-    // ------------------------------------------------
-
     struct Direction {
-
         String name;
         Vector3 vector;
     };
@@ -1492,27 +1319,19 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
 
         {"forward", Vector3(0.0, 0.0, 1.0)},
         {"backward", Vector3(0.0, 0.0, -1.0)},
-
         {"left", Vector3(-1.0, 0.0, 0.0)},
         {"right", Vector3(1.0, 0.0, 0.0)},
 
         {"forward_left", Vector3(-diagonal, 0.0, diagonal)},
         {"forward_right", Vector3(diagonal, 0.0, diagonal)},
-
         {"backward_left", Vector3(-diagonal, 0.0, -diagonal)},
         {"backward_right", Vector3(diagonal, 0.0, -diagonal)}
 
     }};
 
-
     const double minimum_alignment = std::cos(
         Math::deg_to_rad(25.0)
     );
-
-
-    // ------------------------------------------------
-    // CANDIDATE STRUCTURE
-    // ------------------------------------------------
 
     struct Candidate {
 
@@ -1532,26 +1351,18 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
         Vector3 velocity;
     };
 
-
     Array direction_reports;
-
     int total_candidates = 0;
 
-
-    // ------------------------------------------------
+    // ----------------------------------------------
     // PROCESS EACH DIRECTION
-    // ------------------------------------------------
+    // ----------------------------------------------
 
     for (int direction_index = 0; direction_index < 8; direction_index++) {
 
         const Direction &direction = directions[direction_index];
 
         std::vector<Candidate> candidates;
-
-
-        // --------------------------------------------
-        // ITERATE ELIGIBLE ANIMATIONS
-        // --------------------------------------------
 
         for (
             int animation_index = 0;
@@ -1566,8 +1377,6 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
                 continue;
             }
 
-
-            // Determine animation family.
             String family = "unknown";
 
             for (const String &tag : animation.tags) {
@@ -1588,11 +1397,6 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
                 }
             }
 
-
-            // ----------------------------------------
-            // ITERATE ANIMATION SAMPLES
-            // ----------------------------------------
-
             for (
                 int sample_index = 0;
                 sample_index < (int)animation.samples.size();
@@ -1610,8 +1414,6 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
                 }
 
                 Vector3 velocity = sample.matching_velocity;
-
-                // Ignore vertical movement.
                 velocity.y = 0.0;
 
                 double total_speed = velocity.length();
@@ -1638,7 +1440,6 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
                     continue;
                 }
 
-
                 Candidate candidate;
 
                 candidate.animation_name = animation.name;
@@ -1653,32 +1454,19 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
                 candidate.total_speed = total_speed;
 
                 candidate.yaw = sample.yaw;
-
                 candidate.velocity = velocity;
 
                 candidates.push_back(candidate);
             }
         }
 
-
-        // --------------------------------------------
-        // SORT FASTEST FIRST
-        // --------------------------------------------
-
         std::sort(
             candidates.begin(),
             candidates.end(),
             [](const Candidate &a, const Candidate &b) {
-
                 return a.projected_speed > b.projected_speed;
-
             }
         );
-
-
-        // --------------------------------------------
-        // BUILD DIRECTION REPORT
-        // --------------------------------------------
 
         Dictionary direction_report;
 
@@ -1694,7 +1482,6 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
             (int)candidates.size()
         );
 
-
         for (int i = 0; i < result_count; i++) {
 
             const Candidate &candidate = candidates[i];
@@ -1702,30 +1489,14 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
             Dictionary sample;
 
             sample["rank"] = i + 1;
-
-            sample["animation_name"] =
-                candidate.animation_name;
-
-            sample["family"] =
-                candidate.family;
-
-            sample["animation_index"] =
-                candidate.animation_index;
-
-            sample["sample_index"] =
-                candidate.sample_index;
-
-            sample["time"] =
-                candidate.time;
-
-            sample["projected_speed"] =
-                candidate.projected_speed;
-
-            sample["total_speed"] =
-                candidate.total_speed;
-
-            sample["velocity"] =
-                candidate.velocity;
+            sample["animation_name"] = candidate.animation_name;
+            sample["family"] = candidate.family;
+            sample["animation_index"] = candidate.animation_index;
+            sample["sample_index"] = candidate.sample_index;
+            sample["time"] = candidate.time;
+            sample["projected_speed"] = candidate.projected_speed;
+            sample["total_speed"] = candidate.total_speed;
+            sample["velocity"] = candidate.velocity;
 
             sample["yaw_degrees"] =
                 Math::rad_to_deg(candidate.yaw);
@@ -1734,22 +1505,312 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
         }
 
         direction_report["fastest_samples"] = fastest_samples;
-
         direction_reports.push_back(direction_report);
 
         total_candidates += (int)candidates.size();
     }
 
+    result["success"] = true;
+    result["direction_alignment_degrees"] = 25.0;
+    result["samples_per_direction"] = samples_per_direction;
 
-    // ------------------------------------------------
+    result["eligible_animations"] = eligible_animation_count;
+    result["eligible_samples"] = eligible_search_samples;
+
+    result["total_directional_candidates"] = total_candidates;
+    result["directions"] = direction_reports;
+
+    return result;
+}
+
+
+// ==================================================
+// FASTEST UNIQUE ANIMATIONS ANALYZER
+// ==================================================
+
+Dictionary MotionMatchingSearch::analyze_fastest_unique_animations(
+    int animations_per_direction
+) const {
+
+    Dictionary result;
+
+    if (database.empty()) {
+        result["success"] = false;
+        result["error"] = "Database has not been loaded.";
+        return result;
+    }
+
+    animations_per_direction = std::max(
+        1,
+        std::min(animations_per_direction, 100)
+    );
+
+    struct Direction {
+        String name;
+        Vector3 vector;
+    };
+
+    const double diagonal = 1.0 / std::sqrt(2.0);
+
+    const std::array<Direction, 8> directions = {{
+
+        {"forward", Vector3(0.0, 0.0, 1.0)},
+        {"backward", Vector3(0.0, 0.0, -1.0)},
+        {"left", Vector3(-1.0, 0.0, 0.0)},
+        {"right", Vector3(1.0, 0.0, 0.0)},
+
+        {"forward_left", Vector3(-diagonal, 0.0, diagonal)},
+        {"forward_right", Vector3(diagonal, 0.0, diagonal)},
+        {"backward_left", Vector3(-diagonal, 0.0, -diagonal)},
+        {"backward_right", Vector3(diagonal, 0.0, -diagonal)}
+
+    }};
+
+    const double minimum_alignment = std::cos(
+        Math::deg_to_rad(25.0)
+    );
+
+    struct Candidate {
+
+        String animation_name;
+        String family;
+
+        int animation_index = -1;
+        int sample_index = -1;
+
+        double time = 0.0;
+
+        double projected_speed = 0.0;
+        double total_speed = 0.0;
+
+        double yaw = 0.0;
+
+        Vector3 velocity;
+    };
+
+    Array direction_reports;
+
+    int total_directional_samples = 0;
+    int total_unique_directional_animations = 0;
+
+    // ----------------------------------------------
+    // PROCESS EACH DIRECTION
+    // ----------------------------------------------
+
+    for (int direction_index = 0; direction_index < 8; direction_index++) {
+
+        const Direction &direction = directions[direction_index];
+
+        std::vector<Candidate> unique_candidates;
+
+        int available_directional_samples = 0;
+
+        // Each animation can contribute only one result:
+        // its fastest matching sample for this direction.
+
+        for (
+            int animation_index = 0;
+            animation_index < (int)database.size();
+            animation_index++
+        ) {
+
+            const MotionAnimation &animation =
+                database[animation_index];
+
+            if (!animation.eligible_steady_locomotion) {
+                continue;
+            }
+
+            String family = "unknown";
+
+            for (const String &tag : animation.tags) {
+
+                if (tag == "locomotion_walk") {
+                    family = "walk";
+                    break;
+                }
+
+                if (tag == "locomotion_run") {
+                    family = "run";
+                    break;
+                }
+
+                if (tag == "locomotion_sprint") {
+                    family = "sprint";
+                    break;
+                }
+            }
+
+            Candidate best_candidate;
+            bool found_candidate = false;
+
+            for (
+                int sample_index = 0;
+                sample_index < (int)animation.samples.size();
+                sample_index++
+            ) {
+
+                const MotionSample &sample =
+                    animation.samples[sample_index];
+
+                if (
+                    !sample.has_future_trajectory ||
+                    !sample.has_future_rotation
+                ) {
+                    continue;
+                }
+
+                Vector3 velocity = sample.matching_velocity;
+                velocity.y = 0.0;
+
+                double total_speed = velocity.length();
+
+                if (total_speed <= 0.0001) {
+                    continue;
+                }
+
+                Vector3 normalized_velocity = velocity / total_speed;
+
+                double alignment = normalized_velocity.dot(
+                    direction.vector
+                );
+
+                if (alignment < minimum_alignment) {
+                    continue;
+                }
+
+                double projected_speed = velocity.dot(
+                    direction.vector
+                );
+
+                if (projected_speed <= 0.0) {
+                    continue;
+                }
+
+                available_directional_samples++;
+
+                if (
+                    found_candidate &&
+                    projected_speed <= best_candidate.projected_speed
+                ) {
+                    continue;
+                }
+
+                best_candidate.animation_name = animation.name;
+                best_candidate.family = family;
+
+                best_candidate.animation_index = animation_index;
+                best_candidate.sample_index = sample_index;
+
+                best_candidate.time = sample.time;
+
+                best_candidate.projected_speed = projected_speed;
+                best_candidate.total_speed = total_speed;
+
+                best_candidate.yaw = sample.yaw;
+                best_candidate.velocity = velocity;
+
+                found_candidate = true;
+            }
+
+            if (found_candidate) {
+                unique_candidates.push_back(best_candidate);
+            }
+        }
+
+        // ------------------------------------------
+        // SORT UNIQUE ANIMATIONS BY SPEED
+        // ------------------------------------------
+
+        std::sort(
+            unique_candidates.begin(),
+            unique_candidates.end(),
+            [](const Candidate &a, const Candidate &b) {
+                return a.projected_speed > b.projected_speed;
+            }
+        );
+
+        // ------------------------------------------
+        // BUILD DIRECTION REPORT
+        // ------------------------------------------
+
+        Dictionary direction_report;
+
+        direction_report["direction"] = direction.name;
+
+        direction_report["available_directional_samples"] =
+            available_directional_samples;
+
+        direction_report["unique_animation_count"] =
+            (int)unique_candidates.size();
+
+        Array fastest_animations;
+
+        int result_count = std::min(
+            animations_per_direction,
+            (int)unique_candidates.size()
+        );
+
+        for (int i = 0; i < result_count; i++) {
+
+            const Candidate &candidate = unique_candidates[i];
+
+            Dictionary animation;
+
+            animation["rank"] = i + 1;
+
+            animation["animation_name"] =
+                candidate.animation_name;
+
+            animation["family"] =
+                candidate.family;
+
+            animation["animation_index"] =
+                candidate.animation_index;
+
+            animation["best_sample_index"] =
+                candidate.sample_index;
+
+            animation["best_sample_time"] =
+                candidate.time;
+
+            animation["projected_speed"] =
+                candidate.projected_speed;
+
+            animation["total_speed"] =
+                candidate.total_speed;
+
+            animation["velocity"] =
+                candidate.velocity;
+
+            animation["yaw_degrees"] =
+                Math::rad_to_deg(candidate.yaw);
+
+            fastest_animations.push_back(animation);
+        }
+
+        direction_report["fastest_animations"] =
+            fastest_animations;
+
+        direction_reports.push_back(direction_report);
+
+        total_directional_samples +=
+            available_directional_samples;
+
+        total_unique_directional_animations +=
+            (int)unique_candidates.size();
+    }
+
+    // ----------------------------------------------
     // FINAL RESULT
-    // ------------------------------------------------
+    // ----------------------------------------------
 
     result["success"] = true;
 
     result["direction_alignment_degrees"] = 25.0;
 
-    result["samples_per_direction"] = samples_per_direction;
+    result["animations_per_direction"] =
+        animations_per_direction;
 
     result["eligible_animations"] =
         eligible_animation_count;
@@ -1757,8 +1818,11 @@ Dictionary MotionMatchingSearch::analyze_fastest_directional_samples(
     result["eligible_samples"] =
         eligible_search_samples;
 
-    result["total_directional_candidates"] =
-        total_candidates;
+    result["total_directional_samples"] =
+        total_directional_samples;
+
+    result["total_unique_directional_animations"] =
+        total_unique_directional_animations;
 
     result["directions"] = direction_reports;
 
@@ -1832,6 +1896,15 @@ void MotionMatchingSearch::_bind_methods() {
             "samples_per_direction"
         ),
         &MotionMatchingSearch::analyze_fastest_directional_samples,
+        DEFVAL(20)
+    );
+
+    ClassDB::bind_method(
+        D_METHOD(
+            "analyze_fastest_unique_animations",
+            "animations_per_direction"
+        ),
+        &MotionMatchingSearch::analyze_fastest_unique_animations,
         DEFVAL(20)
     );
 
