@@ -520,7 +520,7 @@ TOTAL COST: 0.0073072060186
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.022 ms
+Search time: 11.746 ms
 
 ========================================
 TEST: BACKWARD
@@ -642,7 +642,7 @@ TOTAL COST: 6.47182264924049
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.119 ms
+Search time: 10.887 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -764,7 +764,7 @@ TOTAL COST: 3.17230535298586
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.885 ms
+Search time: 11.091 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -886,7 +886,7 @@ TOTAL COST: 3.39603653550148
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.538 ms
+Search time: 11.394 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -1008,7 +1008,7 @@ TOTAL COST: 0.0074778572889
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 14.116 ms
+Search time: 10.979 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -1130,7 +1130,7 @@ TOTAL COST: 0.00718434622831
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 13.588 ms
+Search time: 12.882 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1252,7 +1252,7 @@ TOTAL COST: 6.50248402357101
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 16.188 ms
+Search time: 12.128 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1374,32 +1374,64 @@ TOTAL COST: 6.07472166419029
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.148 ms
+Search time: 15.78 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
-========== ROOT MOTION CHARACTER TEST ==========
-Transferred library: 
-Root Motion Track: Armature/Skeleton3D:root
+========================================
+   MOTION MATCHING RUNTIME PREPARATION
+========================================
 
-========== ANIMATION TRACK DIAGNOSTIC ==========
-Track index: 0
-Track path: Armature/Skeleton3D:root
-Track type: 1
-Key count: 2
-Track index: 1
-Track path: Armature/Skeleton3D:root
-Track type: 2
-Key count: 1
-AnimationPlayer root node: ..
-AnimationTree root motion track: Armature/Skeleton3D:root
-================================================
-Selected animation: M Neutral Run Loop F_fit_Armature_114
-ROOT MOTION CHARACTER TEST STARTED
+========== LOADING ANIMATION LIBRARIES ==========
+
+Processing: res://Assets/Animations/Run.glb
+  Registered library: Run | Animations: 229
+
+Processing: res://Assets/Animations/Walk.glb
+  Registered library: Walk | Animations: 224
+
+Processing: res://Assets/Animations/Sprint.glb
+  Registered library: Sprint | Animations: 44
+
+Processing: res://Assets/Animations/Crouch.glb
+  Registered library: Crouch | Animations: 213
+
+Processing: res://Assets/Animations/Idle.glb
+  Registered library: Idle | Animations: 23
+
+Total imported animations: 733
+
+========== BUILDING ANIMATION LOOKUP ==========
+
+Database animations: 718
+Successfully mapped: 718
+Missing animations: 0
+Eligible steady locomotion mapped: 251
+
+========== CONFIGURING ANIMATION TREE ==========
+AnimationPlayer root: ..
+AnimationTree player: ../Character_01/AnimationPlayer
+Root motion track: Armature/Skeleton3D:root
+Test animation: Run/M Neutral Run Loop F_fit_Armature_114
+
+========================================
+       RUNTIME PREPARATION COMPLETE
+========================================
+Imported animations: 733
+Database animations: 718
+
+Animation libraries:
+  Run: 229 animations
+  Walk: 224 animations
+  Sprint: 44 animations
+  Crouch: 213 animations
+  Idle: 23 animations
+
+ROOT MOTION TEST STARTED
 Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 2.212958)
-Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 4.425915)
-Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 6.791491)
-Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 9.080758)
-Root Motion: (0.0, -0.0, 0.076308) | Character Position: (0.0, -0.0, 11.37002)
+Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 4.578533)
+Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 6.944109)
+Root Motion: (0.0, -0.0, 0.076308) | Character Position: (0.0, -0.0, 9.309684)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (0.0, -0.0, 11.44633)
 Root Motion: (0.0, 0.0, 0.0) | Character Position: (0.0, -0.0, 11.44633)
 --- Debugging process stopped ---
