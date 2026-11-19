@@ -180,7 +180,7 @@ Running continuous search...
 ========== SEARCH RESULT ==========
 { "success": true, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 13, "time": 0.43333333333333, "duration": 4.5, "position": (0.0, -0.0, 1.986277), "raw_velocity": (0.000001, -0.0, 4.49825), "velocity": (0.000001, -0.0, 4.49825), "yaw": 0.0, "yaw_degrees": 0.0, "desired_facing_yaw_degrees": 0.0, "velocity_cost": 0.00000306080506, "trajectory_cost": 0.00296563070151, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00593432220808, "continuity_cost": 0.0, "selection_score": 0.00593432220808, "cost": 0.00593432220808, "samples_evaluated": 25164, "valid_database_samples": 69461, "eligible_animations": 251, "eligible_samples": 25164, "current_animation_index": -1, "current_animation_time": 0.0, "top_matches": [{ "rank": 1, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 13, "time": 0.43333333333333, "duration": 4.5, "position": (0.0, -0.0, 1.986277), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.49825), "velocity": (0.000001, -0.0, 4.49825), "future_positions": [(0.0, -0.0, 0.916065), (0.0, -0.0, 1.825022), (0.0, -0.0, 2.745623)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00000306080506, "trajectory_cost": 0.00296563070151, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00593432220808, "continuity_cost": 0.0, "selection_score": 0.00593432220808, "cost": 0.00593432220808 }, { "rank": 2, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 28, "time": 0.93333333333333, "duration": 4.5, "position": (0.000001, -0.0, 4.275509), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.498272), "velocity": (0.000001, -0.0, 4.498272), "future_positions": [(0.0, -0.0, 0.916063), (0.0, -0.0, 1.825022), (-0.000161, -0.0, 2.746047)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00000298618443, "trajectory_cost": 0.00300451426301, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00601201471045, "continuity_cost": 0.0, "selection_score": 0.00601201471045, "cost": 0.00601201471045 }, { "rank": 3, "animation_name": "M Neutral Run Box RL F Rfoot_fit_Armature_195", "animation_index": 33, "sample_index": 41, "time": 1.36666666666667, "duration": 3.0, "position": (-2.637629, -0.0, 2.378104), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.017306, -0.0, 4.528838), "velocity": (-0.017306, -0.0, 4.528838), "future_positions": [(-0.002176, -0.0, 0.912217), (-0.002836, -0.0, 1.828403), (-0.002928, -0.0, 2.743023)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00113112363033, "trajectory_cost": 0.00282826388138, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.0067876513931, "continuity_cost": 0.0, "selection_score": 0.0067876513931, "cost": 0.0067876513931 }, { "rank": 4, "animation_name": "M Neutral Run Diamond BL F Lfoot_fit_Armature_182", "animation_index": 46, "sample_index": 46, "time": 1.53333333333333, "duration": 3.125, "position": (1.953773, 0.0, -0.204682), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.019172, -0.0, 4.484269), "velocity": (0.019172, -0.0, 4.484269), "future_positions": [(0.000809, -0.0, 0.913856), (0.001083, -0.0, 1.829607), (0.001357, -0.0, 2.745357)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00061505689519, "trajectory_cost": 0.00312949446379, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00687404582277, "continuity_cost": 0.0, "selection_score": 0.00687404582277, "cost": 0.00687404582277 }, { "rank": 5, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 8, "time": 0.26666666666667, "duration": 4.5, "position": (0.0, -0.0, 1.223938), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.503264), "velocity": (0.000001, -0.0, 4.503264), "future_positions": [(0.0, -0.0, 0.912281), (0.0, -0.0, 1.831628), (0.0, -0.0, 2.747835)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00001065648485, "trajectory_cost": 0.00343928864459, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00688923377402, "continuity_cost": 0.0, "selection_score": 0.00688923377402, "cost": 0.00688923377402 }, { "rank": 6, "animation_name": "M Neutral Run Diamond F BL Lfoot_fit_Armature_172", "animation_index": 56, "sample_index": 23, "time": 0.76666666666667, "duration": 4.5, "position": (0.0, -0.0, 3.51317), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.000001, -0.0, 4.503286), "velocity": (0.000001, -0.0, 4.503286), "future_positions": [(0.0, -0.0, 0.912281), (0.0, -0.0, 1.831627), (0.0, -0.0, 2.747835)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00001079703907, "trajectory_cost": 0.00343925358902, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00688930421711, "continuity_cost": 0.0, "selection_score": 0.00688930421711, "cost": 0.00688930421711 }, { "rank": 7, "animation_name": "M Neutral Run Box RR F Rfoot_fit_Armature_191", "animation_index": 37, "sample_index": 72, "time": 2.4, "duration": 3.66666674613953, "position": (-2.481842, -0.0, 7.338494), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (0.0, -0.0, 4.53505), "velocity": (0.0, -0.0, 4.53505), "future_positions": [(0.0, -0.0, 0.911656), (0.0, -0.0, 1.827959), (0.0, -0.0, 2.744262)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00122852995992, "trajectory_cost": 0.00287668102828, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00698189201648, "continuity_cost": 0.0, "selection_score": 0.00698189201648, "cost": 0.00698189201648 }, { "rank": 8, "animation_name": "M Neutral Run Box RR F Lfoot_fit_Armature_192", "animation_index": 36, "sample_index": 43, "time": 1.43333333333333, "duration": 2.91666674613953, "position": (-2.852414, -0.0, 2.377769), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.01791, -0.0, 4.532633), "velocity": (-0.01791, -0.0, 4.532633), "future_positions": [(-0.001883, -0.0, 0.911361), (-0.002065, -0.0, 1.827557), (-0.002249, -0.0, 2.743753)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00138566968963, "trajectory_cost": 0.00281565870682, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00701698710327, "continuity_cost": 0.0, "selection_score": 0.00701698710327, "cost": 0.00701698710327 }, { "rank": 9, "animation_name": "M Neutral Run Box RL F Rfoot_fit_Armature_195", "animation_index": 33, "sample_index": 42, "time": 1.4, "duration": 3.0, "position": (-2.638206, -0.0, 2.529065), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.017306, -0.0, 4.528838), "velocity": (-0.017306, -0.0, 4.528838), "future_positions": [(-0.001748, -0.0, 0.914366), (-0.002293, -0.0, 1.829312), (-0.002357, -0.0, 2.743828)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00113112363033, "trajectory_cost": 0.00300039730791, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.00713191824616, "continuity_cost": 0.0, "selection_score": 0.00713191824616, "cost": 0.00713191824616 }, { "rank": 10, "animation_name": "M Neutral Run Box RL F Lfoot_fit_Armature_196", "animation_index": 32, "sample_index": 43, "time": 1.43333333333333, "duration": 3.04166674613953, "position": (-2.853814, -0.0, 2.377819), "yaw": 0.0, "yaw_degrees": 0.0, "raw_velocity": (-0.017906, -0.0, 4.531728), "velocity": (-0.017906, -0.0, 4.531728), "future_positions": [(-0.00228, -0.0, 0.912643), (-0.002844, -0.0, 1.828605), (-0.002872, -0.0, 2.744613)], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0], "velocity_cost": 0.00132729276083, "trajectory_cost": 0.00298996501078, "facing_cost": 0.0, "rotation_cost": 0.0, "base_cost": 0.0073072227824, "continuity_cost": 0.0, "selection_score": 0.0073072227824, "cost": 0.0073072227824 }], "future_yaw_deltas_degrees": [0.0, 0.0, 0.0] }
 
-Search time: 12.573 ms
+Search time: 12.805 ms
 
 ========== TEST FINISHED ==========
 
@@ -309,7 +309,7 @@ TOTAL COST: 0.0073072060186
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.682 ms
+Search time: 11.43 ms
 
 ========================================
 TEST: BACKWARD
@@ -431,7 +431,7 @@ TOTAL COST: 6.47182264924049
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.51 ms
+Search time: 10.945 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -553,7 +553,7 @@ TOTAL COST: 3.17230535298586
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.337 ms
+Search time: 10.85 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -675,7 +675,7 @@ TOTAL COST: 3.39603653550148
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.537 ms
+Search time: 10.78 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -797,7 +797,7 @@ TOTAL COST: 0.0074778572889
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.982 ms
+Search time: 11.219 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -919,7 +919,7 @@ TOTAL COST: 0.00718434622831
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.7 ms
+Search time: 10.856 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1041,7 +1041,7 @@ TOTAL COST: 6.50248402357101
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.484 ms
+Search time: 11.45 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1163,13 +1163,12 @@ TOTAL COST: 6.07472166419029
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.618 ms
+Search time: 10.803 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
-
 ==================================================
-       C++ CONTINUOUS MOTION MATCHING TEST
+ C++ CONTINUOUS MOTION MATCHING TEST - LOOP FIX
 ==================================================
 
 ----------------------------------------
@@ -1222,7 +1221,9 @@ Absolute source-animation time: 1.43333333333333
 Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
 Animation switches: 0
 Same-clip decisions (no restart): 4
-Colliding: true
+On floor: true
+On wall: false
+On ceiling: false
 No slide collisions detected.
 ====================================================
 
@@ -1233,8 +1234,8 @@ Sample index: 41
 Selected source timestamp: 1.36666666666667
 Duration: 3.0
 Runtime path: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Node loop mode: 1 (1 = LOOP_LINEAR)
 Matched velocity: (-0.017306, -0.0, 4.528838)
-Matching yaw: 0.0
 Base cost: 0.0067876513931
 Continuity cost: 0.5
 Selection score: 0.5067876513931
@@ -1253,7 +1254,9 @@ Absolute source-animation time: 1.63333333333334
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 8
-Colliding: false
+On floor: false
+On wall: false
+On ceiling: false
 No slide collisions detected.
 ====================================================
 
@@ -1267,77 +1270,265 @@ Absolute source-animation time: 2.63333333333334
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 12
-Colliding: false
+On floor: false
+On wall: false
+On ceiling: false
 No slide collisions detected.
 ====================================================
 
 ========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
-CharacterBody3D world position: (0.96294, -0.0, 12.66037)
-Actual displacement: (0.0, -0.0, 2.098052)
-Actual world velocity: (0.0, -0.0, 2.098052)
-Root motion this frame: (0.0, -0.0, 0.015138)
-Velocity passed to move_and_slide(): (0.0, -0.0, 0.90826)
+CharacterBody3D world position: (-1.068457, -0.0, 12.06945)
+Actual displacement: (-2.031398, -0.0, 1.507139)
+Actual world velocity: (-2.031398, -0.0, 1.507139)
+Root motion this frame: (-0.053458, 0.0, -0.000014)
+Velocity passed to move_and_slide(): (-3.207464, 0.0, -0.000835)
 Absolute source-animation time: 0.63333333333333
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 17
-Colliding: false
+On floor: false
+On wall: false
+On ceiling: false
 No slide collisions detected.
 ====================================================
 
 ========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
-CharacterBody3D world position: (0.96294, -0.0, 13.32642)
-Actual displacement: (0.0, -0.0, 0.666058)
-Actual world velocity: (0.0, -0.0, 0.666058)
-Root motion this frame: (0.0, 0.0, 0.0)
-Velocity passed to move_and_slide(): (0.0, 0.0, 0.0)
+CharacterBody3D world position: (-1.677163, -0.0, 15.66652)
+Actual displacement: (-0.608706, -0.0, 3.597067)
+Actual world velocity: (-0.608706, -0.0, 3.597067)
+Root motion this frame: (-0.000074, -0.0, 0.076555)
+Velocity passed to move_and_slide(): (-0.004453, -0.0, 4.593329)
 Absolute source-animation time: 1.63333333333333
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 22
-Colliding: true
-First collision normal: (0.0, 1.0, 0.0)
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
 ====================================================
 
 ========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
-CharacterBody3D world position: (0.96294, -0.0, 13.32642)
-Actual displacement: (0.0, 0.0, 0.0)
-Actual world velocity: (0.0, 0.0, 0.0)
-Root motion this frame: (0.0, 0.0, 0.0)
-Velocity passed to move_and_slide(): (0.0, 0.0, 0.0)
+CharacterBody3D world position: (-1.677639, -0.0, 20.24605)
+Actual displacement: (-0.000476, -0.0, 4.579529)
+Actual world velocity: (-0.000476, -0.0, 4.579529)
+Root motion this frame: (0.0, -0.0, 0.076724)
+Velocity passed to move_and_slide(): (0.0, -0.0, 4.603443)
 Absolute source-animation time: 2.63333333333333
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 26
-Colliding: true
-First collision normal: (0.0, 1.0, 0.0)
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
 ====================================================
 
 ========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
-CharacterBody3D world position: (0.96294, -0.0, 13.32642)
-Actual displacement: (0.0, 0.0, 0.0)
-Actual world velocity: (0.0, 0.0, 0.0)
-Root motion this frame: (0.0, 0.0, 0.0)
-Velocity passed to move_and_slide(): (0.0, 0.0, 0.0)
+CharacterBody3D world position: (-3.709035, -0.0, 21.76836)
+Actual displacement: (-2.031396, -0.0, 1.522314)
+Actual world velocity: (-2.031396, -0.0, 1.522314)
+Root motion this frame: (-0.053458, 0.0, -0.000014)
+Velocity passed to move_and_slide(): (-3.207464, 0.0, -0.000835)
 Absolute source-animation time: 0.63333333333332
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 31
-Colliding: true
-First collision normal: (0.0, 1.0, 0.0)
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
 ====================================================
 
 ========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
-CharacterBody3D world position: (0.96294, -0.0, 13.32642)
-Actual displacement: (0.0, 0.0, 0.0)
-Actual world velocity: (0.0, 0.0, 0.0)
-Root motion this frame: (0.0, 0.0, 0.0)
-Velocity passed to move_and_slide(): (0.0, 0.0, 0.0)
+CharacterBody3D world position: (-4.317742, -0.0, 25.36543)
+Actual displacement: (-0.608707, -0.0, 3.597069)
+Actual world velocity: (-0.608707, -0.0, 3.597069)
+Root motion this frame: (-0.000074, -0.0, 0.076555)
+Velocity passed to move_and_slide(): (-0.004453, -0.0, 4.593329)
 Absolute source-animation time: 1.63333333333332
 Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
 Animation switches: 1
 Same-clip decisions (no restart): 35
-Colliding: true
-First collision normal: (0.0, 1.0, 0.0)
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-4.318217, -0.0, 29.94496)
+Actual displacement: (-0.000475, -0.0, 4.579529)
+Actual world velocity: (-0.000475, -0.0, 4.579529)
+Root motion this frame: (0.0, -0.0, 0.076724)
+Velocity passed to move_and_slide(): (0.0, -0.0, 4.603443)
+Absolute source-animation time: 2.63333333333332
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 40
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-6.349611, -0.0, 31.46727)
+Actual displacement: (-2.031394, -0.0, 1.522312)
+Actual world velocity: (-2.031394, -0.0, 1.522312)
+Root motion this frame: (-0.053458, 0.0, -0.000014)
+Velocity passed to move_and_slide(): (-3.207464, 0.0, -0.000835)
+Absolute source-animation time: 0.63333333333333
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 45
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-6.958318, -0.0, 35.06435)
+Actual displacement: (-0.608707, -0.0, 3.597073)
+Actual world velocity: (-0.608707, -0.0, 3.597073)
+Root motion this frame: (-0.000074, -0.0, 0.076555)
+Velocity passed to move_and_slide(): (-0.004453, -0.0, 4.593329)
+Absolute source-animation time: 1.63333333333338
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 49
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-6.958793, -0.0, 39.64388)
+Actual displacement: (-0.000475, -0.0, 4.579533)
+Actual world velocity: (-0.000475, -0.0, 4.579533)
+Root motion this frame: (0.0, -0.0, 0.076724)
+Velocity passed to move_and_slide(): (0.0, -0.0, 4.603443)
+Absolute source-animation time: 2.63333333333343
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 54
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-8.990195, -0.0, 41.16612)
+Actual displacement: (-2.031403, -0.0, 1.522243)
+Actual world velocity: (-2.031403, -0.0, 1.522243)
+Root motion this frame: (-0.053458, 0.0, -0.000014)
+Velocity passed to move_and_slide(): (-3.207464, 0.0, -0.000835)
+Absolute source-animation time: 0.63333333333348
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 58
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-9.598897, -0.0, 44.76321)
+Actual displacement: (-0.608702, -0.0, 3.597084)
+Actual world velocity: (-0.608702, -0.0, 3.597084)
+Root motion this frame: (-0.000074, -0.0, 0.076555)
+Velocity passed to move_and_slide(): (-0.004453, -0.0, 4.593329)
+Absolute source-animation time: 1.63333333333353
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 63
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-9.599383, -0.0, 49.34274)
+Actual displacement: (-0.000486, -0.0, 4.579533)
+Actual world velocity: (-0.000486, -0.0, 4.579533)
+Root motion this frame: (0.0, -0.0, 0.076724)
+Velocity passed to move_and_slide(): (0.0, -0.0, 4.603443)
+Absolute source-animation time: 2.63333333333358
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 68
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-11.6308, -0.0, 50.86498)
+Actual displacement: (-2.031412, -0.0, 1.522243)
+Actual world velocity: (-2.031412, -0.0, 1.522243)
+Root motion this frame: (-0.053458, 0.0, -0.000014)
+Velocity passed to move_and_slide(): (-3.207464, 0.0, -0.000835)
+Absolute source-animation time: 0.63333333333363
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 72
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-12.2395, -0.0, 54.46207)
+Actual displacement: (-0.608702, -0.0, 3.597084)
+Actual world velocity: (-0.608702, -0.0, 3.597084)
+Root motion this frame: (-0.000074, -0.0, 0.076555)
+Velocity passed to move_and_slide(): (-0.004453, -0.0, 4.593329)
+Absolute source-animation time: 1.63333333333367
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 77
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-12.23998, -0.0, 59.0416)
+Actual displacement: (-0.000486, -0.0, 4.579533)
+Actual world velocity: (-0.000486, -0.0, 4.579533)
+Root motion this frame: (0.0, -0.0, 0.076724)
+Velocity passed to move_and_slide(): (0.0, -0.0, 4.603443)
+Absolute source-animation time: 2.6333333333337
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 82
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
+====================================================
+
+========== PHYSICAL MOVEMENT DIAGNOSTICS ==========
+CharacterBody3D world position: (-14.2714, -0.0, 60.56384)
+Actual displacement: (-2.031412, -0.0, 1.522243)
+Actual world velocity: (-2.031412, -0.0, 1.522243)
+Root motion this frame: (-0.053458, 0.0, -0.000014)
+Velocity passed to move_and_slide(): (-3.207464, 0.0, -0.000835)
+Absolute source-animation time: 0.63333333333364
+Animation: Run/M Neutral Run Box RL F Rfoot_fit_Armature_195
+Animation switches: 1
+Same-clip decisions (no restart): 86
+On floor: false
+On wall: false
+On ceiling: false
+No slide collisions detected.
 ====================================================
 --- Debugging process stopped ---
