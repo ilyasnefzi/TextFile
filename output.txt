@@ -520,7 +520,7 @@ TOTAL COST: 0.0073072060186
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.746 ms
+Search time: 12.473 ms
 
 ========================================
 TEST: BACKWARD
@@ -642,7 +642,7 @@ TOTAL COST: 6.47182264924049
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.887 ms
+Search time: 11.747 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -764,7 +764,7 @@ TOTAL COST: 3.17230535298586
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.091 ms
+Search time: 11.985 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -886,7 +886,7 @@ TOTAL COST: 3.39603653550148
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.394 ms
+Search time: 11.702 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -1008,7 +1008,7 @@ TOTAL COST: 0.0074778572889
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 10.979 ms
+Search time: 11.65 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -1130,7 +1130,7 @@ TOTAL COST: 0.00718434622831
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.882 ms
+Search time: 10.761 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1252,7 +1252,7 @@ TOTAL COST: 6.50248402357101
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.128 ms
+Search time: 11.353 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1374,7 +1374,7 @@ TOTAL COST: 6.07472166419029
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 15.78 ms
+Search time: 10.562 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
@@ -1401,18 +1401,27 @@ Processing: res://Assets/Animations/Idle.glb
 
 Total imported animations: 733
 
+========== LOADING MOTION DATABASE ==========
+Database entries: 718
+
 ========== BUILDING ANIMATION LOOKUP ==========
 
 Database animations: 718
 Successfully mapped: 718
 Missing animations: 0
-Eligible steady locomotion mapped: 251
 
 ========== CONFIGURING ANIMATION TREE ==========
 AnimationPlayer root: ..
 AnimationTree player: ../Character_01/AnimationPlayer
 Root motion track: Armature/Skeleton3D:root
-Test animation: Run/M Neutral Run Loop F_fit_Armature_114
+
+========== INITIALIZING C++ SEARCH ==========
+C++ MotionMatchingSearch created.
+C++ database loaded successfully.
+C++ animations: 718
+C++ samples: 82385
+Eligible animations: 251
+Eligible samples: 25164
 
 ========================================
        RUNTIME PREPARATION COMPLETE
@@ -1420,18 +1429,55 @@ Test animation: Run/M Neutral Run Loop F_fit_Armature_114
 Imported animations: 733
 Database animations: 718
 
-Animation libraries:
-  Run: 229 animations
-  Walk: 224 animations
-  Sprint: 44 animations
-  Crouch: 213 animations
-  Idle: 23 animations
+========================================
+       FIRST MOTION MATCHING SEARCH
+========================================
+Desired velocity: (0.0, 0.0, 4.5)
+Desired facing yaw: 0.0
+Desired future positions:
+  (0.0, 0.0, 0.9)
+  (0.0, 0.0, 1.8)
+  (0.0, 0.0, 2.7)
 
-ROOT MOTION TEST STARTED
-Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 2.212958)
-Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 4.578533)
-Root Motion: (0.0, -0.0, 0.076309) | Character Position: (0.0, -0.0, 6.944109)
-Root Motion: (0.0, -0.0, 0.076308) | Character Position: (0.0, -0.0, 9.309684)
-Root Motion: (0.0, 0.0, 0.0) | Character Position: (0.0, -0.0, 11.44633)
-Root Motion: (0.0, 0.0, 0.0) | Character Position: (0.0, -0.0, 11.44633)
+Searching database...
+
+========== SEARCH RESULT ==========
+Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Animation index: 56
+Sample index: 13
+Matched timestamp: 0.43333333333333
+Matching velocity: (0.000001, -0.0, 4.49825)
+Matching yaw: 0.0 degrees
+
+Cost breakdown:
+  Velocity: 0.00000306080506
+  Trajectory: 0.00296563070151
+  Facing: 0.0
+  Rotation: 0.0
+  Total: 0.00593432220808
+
+Samples evaluated: 25164
+Search time: 13.824 ms
+
+Selected runtime animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+
+========================================
+     MOTION MATCHING PLAYBACK STARTED
+========================================
+Playing: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Selected database timestamp: 0.43333333333333
+Note: Playback currently starts at time 0.
+Root Motion: (0.0, -0.0, 0.076612) | Character Position: (0.0, -0.0, 2.212816)
+Root Motion: (0.0, -0.0, 0.076612) | Character Position: (0.000001, -0.0, 4.57866)
+Root Motion: (-0.00004, -0.0, 0.076718) | Character Position: (-0.000161, -0.0, 6.944928)
+Root Motion: (0.038943, 0.0, -0.037295) | Character Position: (0.732725, -0.0, 6.977108)
+Root Motion: (0.028621, 0.0, -0.028145) | Character Position: (1.811084, -0.0, 5.905162)
+Root Motion: (0.032373, 0.0, -0.032372) | Character Position: (2.724119, -0.0, 5.003242)
+Root Motion: (0.032373, 0.0, -0.032373) | Character Position: (3.727675, -0.0, 3.999695)
+Root Motion: (0.032373, 0.0, -0.032372) | Character Position: (4.731231, -0.0, 2.996148)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (5.411063, -0.0, 2.316321)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (5.411063, -0.0, 2.316321)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (5.411063, -0.0, 2.316321)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (5.411063, -0.0, 2.316321)
+Root Motion: (0.0, 0.0, 0.0) | Character Position: (5.411063, -0.0, 2.316321)
 --- Debugging process stopped ---
