@@ -520,7 +520,7 @@ TOTAL COST: 0.0073072060186
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.601 ms
+Search time: 11.86 ms
 
 ========================================
 TEST: BACKWARD
@@ -642,7 +642,7 @@ TOTAL COST: 6.47182264924049
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.828 ms
+Search time: 13.877 ms
 
 ========================================
 TEST: LEFT STRAFE
@@ -764,7 +764,7 @@ TOTAL COST: 3.17230535298586
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 12.536 ms
+Search time: 15.33 ms
 
 ========================================
 TEST: RIGHT STRAFE
@@ -886,7 +886,7 @@ TOTAL COST: 3.39603653550148
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 11.422 ms
+Search time: 15.262 ms
 
 ========================================
 TEST: FORWARD LEFT
@@ -1008,7 +1008,7 @@ TOTAL COST: 0.0074778572889
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 14.28 ms
+Search time: 11.613 ms
 
 ========================================
 TEST: FORWARD RIGHT
@@ -1130,7 +1130,7 @@ TOTAL COST: 0.00718434622831
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 13.433 ms
+Search time: 11.78 ms
 
 ========================================
 TEST: BACKWARD LEFT
@@ -1252,7 +1252,7 @@ TOTAL COST: 6.50248402357101
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 14.004 ms
+Search time: 11.339 ms
 
 ========================================
 TEST: BACKWARD RIGHT
@@ -1374,13 +1374,13 @@ TOTAL COST: 6.07472166419029
 Future yaw changes: [0.0, 0.0, 0.0]
 
 Samples evaluated: 25164
-Search time: 13.905 ms
+Search time: 11.573 ms
 
 ========== 8-DIRECTIONAL TESTS COMPLETED ==========
 
 
 ==================================================
-       CONTINUOUS MOTION MATCHING TEST
+       MOTION MATCHING - PLAYBACK CONTINUITY TEST
 ==================================================
 
 ----------------------------------------
@@ -1439,506 +1439,33 @@ Eligible animations: 251
 Eligible samples: 25164
 
 ----------------------------------------
-STARTING CONTINUOUS MOTION MATCHING
+STARTING MOTION MATCHING
 ----------------------------------------
 
-========== MATCH #1 ==========
+========== NEW MATCH #1 ==========
 Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
+Animation index: 56
+Sample index: 13
 Timestamp: 0.43333333333333
 Duration: 4.5
 Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
+Matched velocity: (0.000001, -0.0, 4.49825)
+Matching yaw: 0.0
 Velocity cost: 0.00000306080506
 Trajectory cost: 0.00296563070151
 Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
 ========================================
 
-Continuous Motion Matching is running.
+Motion Matching is running.
 Search interval: 0.2 seconds
-
-========== MATCH #2 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #3 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #4 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #5 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000001, -0.0, 4.428741) | Velocity: (0.000001, 0.0, 4.596748) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #6 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #7 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #8 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #9 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #10 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000001, -0.0, 9.009064) | Velocity: (0.000001, 0.0, 4.596748) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #11 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #12 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #13 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #14 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000002, -0.0, 13.59266) | Velocity: (0.000001, 0.0, 4.596748) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #15 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #16 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #17 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #18 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #19 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000002, -0.0, 18.17299) | Velocity: (0.000001, 0.0, 4.596719) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #20 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #21 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #22 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #23 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #24 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000003, -0.0, 22.75497) | Velocity: (0.000001, 0.0, 4.498272) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #25 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #26 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #27 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #28 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000004, -0.0, 27.33694) | Velocity: (0.000001, 0.0, 4.596719) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #29 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #30 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #31 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #32 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #33 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-[RUNTIME] Position: (0.000004, -0.0, 31.91728) | Velocity: (0.000001, 0.0, 4.596719) | Current animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-
-========== MATCH #34 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
-
-========== MATCH #35 ==========
-Animation: M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Timestamp: 0.43333333333333
-Duration: 4.5
-Runtime path: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172
-Matched velocity: N/A
-Matching yaw: N/A
-Velocity cost: 0.00000306080506
-Trajectory cost: 0.00296563070151
-Total cost: 0.00593432220808
-Samples evaluated: 25164
-Search time: N/A ms
-========================================
+Repeated identical matches will not restart playback.
+[RUNTIME] Position: (0.000001, -0.0, 4.428524) | Velocity: (0.000001, 0.0, 4.498236) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 4
+[RUNTIME] Position: (1.541155, -0.0, 4.187672) | Velocity: (1.905591, 0.0, -1.899755) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 9
+[RUNTIME] Position: (3.371574, -0.0, 2.371173) | Velocity: (1.942363, 0.0, -1.942348) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 13
+[RUNTIME] Position: (5.313941, -0.0, 0.428824) | Velocity: (1.942377, 0.0, -1.942348) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 18
+[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 23
+[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 27
+[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 32
+[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 36
+[RUNTIME] Position: (5.579425, -0.0, 0.16334) | Velocity: (0.0, 0.0, 0.0) | Animation: Run/M Neutral Run Diamond F BL Lfoot_fit_Armature_172 | Skipped restarts: 41
 --- Debugging process stopped ---
