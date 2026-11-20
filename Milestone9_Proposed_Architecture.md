@@ -125,9 +125,10 @@ The following are useful as evidence or offline generators but must not be promo
 3. **Phases classify; policies decide.** `MovementPhaseController` remains a pure classifier. A new policy layer turns phase + gameplay state into clip requests.
 4. **AnimationTree owns playback.** Runtime code must not call `AnimationPlayer.play()` directly once an `AnimationTree` is active.
 5. **Native search stays inside its validated contract.** No new C++ cost terms, no eligibility changes, no database rebuild.
-6. **Target-facing is a local-frame problem.** Because native query yaw and future yaw deltas are fixed at zero, combat facing must be represented by the facing reference frame rather than by changing C++.
+6. **Target-facing is a local-frame problem.** Because native query yaw and future yaw deltas are fixed at zero, combat facing must be represented by the facing reference frame rather than by changing C++. The facing frame is an identity child of the authoritative body; it is not a second yaw authority.
 7. **Unsupported means unsupported.** No silent substitution with unrelated, crouch-family, or visually unreviewed clips.
 8. **Golden diagnostics stay golden.** Existing validations and baseline manifests are regression oracles, not runtime dependencies.
+9. **Preserve the 180-degree visual correction.** `Visual/Character_01` keeps the existing local yaw correction from `root_motion_test.tscn`; it is presentation-only and must not be treated as a gameplay facing frame or root-motion basis.
 
 ### 3.2 Layer cake
 
@@ -164,26 +165,26 @@ Signals flow upward. Calls flow downward. No global signal bus is needed for M9;
 ### 3.3 Proposed scene topology
 
 ```text
-PlayerCharacter (CharacterBody3D)                  [NEW: PlayerMotionBody.gd]
+PlayerCharacter (CharacterBody3D)                  [NEW: PlayerMotionBody.gd; SOLE world-yaw owner]
 ├── CollisionShape3D                               [NEW: CapsuleShape3D]
 ├── Visual/
-│   ├── Character_01                               [EXISTING GLB instance]
+│   ├── Character_01                               [EXISTING GLB instance; KEEP 180-degree local yaw correction]
 │   │   └── AnimationPlayer                        [EXISTING generated player]
-│   └── AnimationTree                              [NEW configuration]
-├── AimFacingPivot (Node3D)                        [NEW]
+│   └── AnimationTree                              [NEW configuration; MANUAL callback mode]
+├── AimFacingPivot (Node3D)                        [NEW: identity child of PlayerCharacter; query/facing frame only]
 └── MotionRuntimeDirector (Node)                   [NEW]
     ├── MovementIntentController                   [EXISTING, unchanged]
     ├── MovementPredictionController               [EXISTING, unchanged]
     ├── TrajectoryPredictionController             [EXISTING, unchanged]
     ├── MovementPhaseController                    [EXISTING, unchanged]
     ├── MotionMatchingQueryBuilder                 [EXISTING, unchanged]
-    ├── MotionMatchingSearchController             [EXISTING, unchanged]
-    ├── MotionSearchSession                        [NEW]
+    ├── MotionMatchingSearchController             [EXISTING, unchanged; load_database_on_ready=false in scene]
+    ├── MotionSearchSession                        [NEW: creates/injects one native instance; does not load DB]
     ├── CombatTargetComponent                      [NEW]
-    ├── CharacterFacingController                  [NEW]
+    ├── CharacterFacingController                  [NEW: writes desired yaw to PlayerCharacter]
     ├── MotionSelectionPolicy                      [NEW, RefCounted/Resource-backed]
-    ├── AnimationTreeController                    [NEW]
-    ├── RootMotionIntegrator                       [NEW]
+    ├── AnimationTreeController                    [NEW: owns playback order and STOP lock]
+    ├── RootMotionIntegrator                       [NEW: single-read root motion + generation guard]
     └── MotionTelemetry                            [NEW]
 
 ThirdPersonCameraRig (Node3D)                      [NEW scene]
@@ -194,6 +195,8 @@ ThirdPersonCameraRig (Node3D)                      [NEW scene]
 
 The camera rig is a sibling of the player, not a child of the physics body. This avoids inheriting physics jitter and body roll.
 
+`Visual/Character_01` retains the existing `180-degree` local yaw correction from `root_motion_test.tscn`. That correction stays on the visual mesh only. It is not applied to `PlayerMotionBody`, `AimFacingPivot`, the native query, or the root-motion basis conversion.
+
 ---
 
 ## 4. Required new scripts and responsibilities
@@ -202,17 +205,17 @@ All proposed paths are additive under `res://Runtime/MotionMatching/`.
 
 | New script | Base | Responsibility |
 | --- | --- | --- |
-| `PlayerMotionBody.gd` | `CharacterBody3D` | Owns collision, floor state, gravity if needed, final velocity, and `move_and_slide()`. Owns the authoritative transform. Does not choose animations. |
+| `PlayerMotionBody.gd` | `CharacterBody3D` | Sole owner of the authoritative world transform, world position, and world yaw. Owns collision, floor state, gravity if needed, final velocity, and `move_and_slide()`. Does not choose animations. |
 | `ThirdPersonCameraRig.gd` | `Node3D` | Owns yaw/pitch state, SpringArm3D occlusion, smooth follow, and exposes the camera basis as the movement-intent reference. |
 | `CombatTargetComponent.gd` | `Node` | Acquires, validates, clears, and exposes the current combat target. Uses existing `combat_mode`; no InputMap change in the first stage. |
-| `CharacterFacingController.gd` | `Node` | Owns character yaw as a scalar. Smoothly faces the target in combat mode or movement heading otherwise. Owns `AimFacingPivot`. Prevents root rotation and facing logic from fighting. |
+| `CharacterFacingController.gd` | `Node` | Computes desired yaw and writes it only to `PlayerMotionBody`. Maintains `AimFacingPivot` as an identity local-frame proxy; it never introduces a second yaw authority. Smoothly faces the target in combat mode or movement heading otherwise. Prevents root rotation and facing logic from fighting. |
 | `MotionRuntimeDirector.gd` | `Node` | Owns explicit update order. Disables `update_in_process` on all self-processing controllers. Wires references. Emits high-level runtime state. |
-| `MotionSearchSession.gd` | `Node` | Owns exactly one native `MotionMatchingSearch` instance, loads the database once, exposes continuous search, and injects the same instance into the existing `MotionMatchingSearchController`. |
+| `MotionSearchSession.gd` | `Node` | Creates and holds exactly one native `MotionMatchingSearch` instance reference, injects it through the existing `set_motion_matching_search()` API before any load, delegates the single database load to the unchanged controller, and exposes continuous search on that same instance. It never calls native `load_database()`. |
 | `RuntimeAnimationPolicyData.gd` | `Resource` | Curated offline data: reviewed clip names, library/path, phase, posture, gait, direction, speed range, turn style, support flag, and fallback reason. No database rules. |
 | `MotionSelectionPolicy.gd` | `RefCounted` | Pure policy: converts phase + prediction + trajectory + search result + policy data into a `ClipRequest` and fallback reason. Does not touch nodes. |
 | `AnimationLibraryResolver.gd` | `RefCounted` | Builds and owns the immutable `animation_index -> library/clip path` lookup from the read-only database array and `AnimationPlayer.has_animation()`. |
-| `AnimationTreeController.gd` | `Node` | Owns AnimationTree parameter writes and state-machine `travel()` requests. Sets dynamic `AnimationNodeAnimation` clip, duration, loop mode, and start offset. Never calls `AnimationPlayer.play()`. |
-| `RootMotionIntegrator.gd` | `Node` | Reads root-motion translation/rotation once per physics tick, discards seek/switch deltas, clamps invalid spikes, and supplies velocity/rotation to `PlayerMotionBody`. |
+| `AnimationTreeController.gd` | `Node` | Owns AnimationTree parameter writes, manual `advance()` ordering, state-machine `travel()` requests, and the active STOP playback lock. Sets dynamic `AnimationNodeAnimation` clip, duration, loop mode, and start offset. Never calls `AnimationPlayer.play()`. |
+| `RootMotionIntegrator.gd` | `Node` | Reads root-motion translation/rotation once per physics tick, discards seek/switch deltas using a generation guard, clamps invalid spikes, converts raw motion with `PlayerMotionBody.global_transform.basis`, and supplies velocity/rotation to `PlayerMotionBody`. |
 | `MotionTelemetry.gd` | `Node` | Rate-limited, debug-only state: phase, query validity, search result, selected clip, fallback reason, timings, root-motion delta, and frame budget counters. |
 | `M9ValidationHarness.gd` and stage-specific validators | `Node` | New headless validation scenes for each stage. Do not modify existing validation scenes. |
 
@@ -252,7 +255,7 @@ Important: measured direction labels must come from M7/M8 analysis. Several asse
 | `res://MotionMatching/motion_matching_query_builder.gd` | Builds the exact native query shape. Keep `allow_identity_fallback = false`. |
 | `res://MotionMatching/motion_matching_search_controller.gd` | Database load, query validation, throttling, signals, and basic search boundary. |
 | `res://Native/motion_matching.gdextension` | Loads the existing native class. Do not modify or rebuild. |
-| Native `MotionMatchingSearch` class | Use `load_database()`, `search_best_match()`, `search_best_match_continuous()`, counts, and `get_last_error()`. No source changes. |
+| Native `MotionMatchingSearch` class | Existing controller uses `load_database()`, `search_best_match()`, counts, and `get_last_error()`. New session uses `search_best_match_continuous()` on the same instance. No source changes. |
 | `res://Assets/Characters/Character_01.glb` | Character mesh and skeleton. Do not modify. |
 | `res://Assets/Animations/{Idle,Walk,Run,Sprint,Crouch}.glb` | Animation libraries. Do not modify. |
 | Existing `project.godot` input actions | Reuse `move_*`, `sprint`, and `combat_mode`. No InputMap change in the first M9 stage. |
@@ -270,6 +273,26 @@ Important: measured direction labels must come from M7/M8 analysis. Several asse
 | `animation_compatibility_classifier.gd` | Offline generator input for curated policy data. Not a runtime singleton. |
 | `root_motion_test.gd` | Reference pattern only for AnimationTree dynamic clip switching and root motion. Do not copy verbatim as production code. |
 
+### 5.3 Native search ownership: verified controller facts
+
+Inspection of `res://MotionMatching/motion_matching_search_controller.gd` establishes the following:
+
+- The controller declares `var motion_matching_search: MotionMatchingSearch = null`.
+- `set_motion_matching_search(new_search: MotionMatchingSearch)` already exists and is a valid injection mechanism. It assigns the supplied instance and clears `database_loaded`, `database_error`, and `_loaded_database_path` when the instance changes. No controller API change is needed.
+- `load_database(force_reload: bool = false)` creates `MotionMatchingSearch.new()` only when `motion_matching_search == null`. If an instance was injected first, the controller does not create another native instance.
+- `_ready()` calls `ensure_database_loaded()` when `load_database_on_ready` is `true`, which is the controller default. If left enabled in the new runtime scene, the controller can auto-create and load a native instance before the director injects the session instance.
+- `ensure_database_loaded()` is idempotent while `database_loaded`, `_loaded_database_path`, and the instance are unchanged. Existing validation already sets `load_database_on_ready = false` before adding the controller to the tree.
+
+Therefore `MotionSearchSession` can own the instance without changing the controller API, but only with this startup contract:
+
+1. In the new runtime scene, set `MotionMatchingSearchController.load_database_on_ready = false` before the node enters the tree. Because child `_ready()` can run before the parent director's `_ready()`, set this in the scene file or instantiate the controller in code with the flag already set and only then call `add_child()`.
+2. `MotionSearchSession` creates exactly one `MotionMatchingSearch` instance.
+3. Before any database load, call `MotionMatchingSearchController.set_motion_matching_search(session.native_search)`.
+4. Call `MotionMatchingSearchController.ensure_database_loaded()` exactly once. This is the only native `load_database()` call in M9 runtime.
+5. Wait for `database_load_completed(true)`. Only then may the session call `search_best_match_continuous()` on the same native instance with the existing native signature: `desired_velocity`, `desired_future_positions`, `desired_facing_yaw` (still `0.0`), `current_animation_index`, `current_animation_time`, `animation_switch_penalty`, and `same_animation_time_weight`.
+
+The session must not call native `load_database()` itself. Doing so would create a second 62 MB load on the same instance and violate the single-load guarantee. The controller must not be modified to call `search_best_match_continuous()`; the native continuous API is reached directly by the new session adapter on the injected instance.
+
 ---
 
 ## 6. Required integration points
@@ -277,7 +300,8 @@ Important: measured direction labels must come from M7/M8 analysis. Several asse
 | From | To | Purpose |
 | --- | --- | --- |
 | `ThirdPersonCameraRig` camera | `MovementIntentController.reference_node` | Camera-relative WASD intent. Axis `NEGATIVE_Z`. |
-| `CharacterFacingController` pivot | `MovementPredictionController.facing_reference` | Local-facing conversion frame. Axis `POSITIVE_Z`. |
+| `CharacterFacingController` | `PlayerMotionBody` yaw | Computes desired yaw and writes it to the sole world-yaw owner. Does not rotate `AimFacingPivot` independently. |
+| `AimFacingPivot` (identity child of `PlayerMotionBody`) | `MovementPredictionController.facing_reference` | Local-facing conversion frame. Axis `POSITIVE_Z`; global yaw mirrors the body. |
 | `PlayerMotionBody.global_position` | `TrajectoryPredictionController.set_actor_position()` | Real actor origin each physics tick. |
 | `CombatTargetComponent` | `TrajectoryPredictionController.set_target_node()` / `clear_target()` | Real target for orbit prediction. |
 | `MovementIntentController` | `MovementPredictionController` | Intent to desired velocity. |
@@ -288,8 +312,12 @@ Important: measured direction labels must come from M7/M8 analysis. Several asse
 | `MotionMatchingSearchController` signals | `MotionSelectionPolicy`, `MotionTelemetry` | `database_load_completed`, `search_completed`, `search_rejected`. |
 | `MotionSearchSession` | Native `MotionMatchingSearch` | Continuous search with current animation index/time. |
 | `MotionSelectionPolicy` | `AnimationTreeController` | Emits reviewed `ClipRequest` with clip path, phase state, blend policy, and start time. |
-| `AnimationTreeController` | `RootMotionIntegrator` | Notifies on clip switch/seek so root delta can be discarded once. |
-| `RootMotionIntegrator` | `PlayerMotionBody` | Supplies root-motion-derived velocity and optional yaw delta. |
+| `AnimationTreeController` | `RootMotionIntegrator` | Notifies on clip switch/seek with a new generation so the seek delta can be discarded once. |
+| `RootMotionIntegrator` | `PlayerMotionBody` | Supplies root-motion-derived velocity and optional yaw delta after converting with `PlayerMotionBody.global_transform.basis`. |
+| `PlayerMotionBody.global_transform.basis` | `RootMotionIntegrator` | Authoritative basis for raw root-motion conversion. Never use `Visual/Character_01.global_transform.basis`. |
+| `AnimationTreeController` STOP lock | `MotionSelectionPolicy` | Suppresses search-driven and early-IDLE clip changes until reviewed STOP playback completes. |
+| `MotionSearchSession` | `MotionMatchingSearchController.set_motion_matching_search()` | Injects the one native instance through the existing API before first load. |
+| `MotionMatchingSearchController.ensure_database_loaded()` | Native `MotionMatchingSearch` | Sole database load path; `MotionSearchSession` never loads the database. |
 | All new state | `MotionTelemetry` | Rate-limited runtime diagnostics, not a runtime dependency. |
 
 ### 6.1 Controller processing ownership
@@ -304,6 +332,26 @@ The existing controllers have inconsistent defaults:
 
 `MotionRuntimeDirector` must set all self-processing flags to `false` and call update methods explicitly in one deterministic order. This does not modify the controller scripts.
 
+### 6.2 Transform ownership and coordinate-space synchronization
+
+| Node | Owns world yaw? | Transform rule |
+| --- | --- | --- |
+| `PlayerMotionBody` (`CharacterBody3D`) | **Yes** | Sole authoritative world transform. All gameplay yaw writes land here. `move_and_slide()` uses this transform. |
+| `AimFacingPivot` (`Node3D`) | No | Identity local child of `PlayerMotionBody`. Its global yaw mirrors the body. Used only as `facing_reference`; never independently translated or rotated. |
+| `Visual/Character_01` | No | Presentation-only GLB instance. Keeps the existing static `180-degree` local yaw correction. No runtime code writes its transform. |
+| `AnimationTree` | No | Playback/root-motion source only. Configured with `root_node = ../Character_01` and `root_motion_track = Armature/Skeleton3D:root`, matching the diagnostic. It is not a gameplay facing frame. |
+| `RootMotionIntegrator` | No | Converts raw root-motion vectors using `PlayerMotionBody.global_transform.basis`, matching `root_motion_test.gd`. It does not use the visual mesh basis. |
+
+Synchronization rule: when `CharacterFacingController` changes facing, it changes `PlayerMotionBody` yaw. Because `AimFacingPivot` is an identity child, the prediction/query frame follows automatically. Because `Visual/Character_01` keeps only its static mesh correction, the visual mesh remains aligned with that logical frame without adding another runtime yaw source. Because root motion is converted by the body basis rather than the visual basis, the existing `180-degree` correction cannot leak into gameplay displacement.
+
+Startup validation must assert:
+
+- `AimFacingPivot.get_parent() == PlayerMotionBody`;
+- `AimFacingPivot.transform` is identity within tolerance;
+- `Visual/Character_01` local basis still represents the existing `180-degree` yaw correction;
+- `AnimationTree.root_node` and `root_motion_track` match the diagnostic configuration;
+- `PlayerMotionBody` has unit scale, so its basis is safe for root-motion conversion.
+
 ---
 
 ## 7. Runtime update sequence
@@ -316,37 +364,58 @@ The existing controllers have inconsistent defaults:
 
 ### 7.2 Physics frame
 
+The new `AnimationTree` uses manual callback mode. The director is the only source of animation advancement, so there is no dependence on implicit engine callback ordering.
+
 ```text
+0. Consume queued ClipRequests only inside this physics step. Never apply a clip from _process() or from a signal callback.
 1. Apply camera yaw/pitch to the camera rig transform.
 2. Update CombatTargetComponent validity.
-3. Update CharacterFacingController yaw:
+3. CharacterFacingController computes desired yaw and writes it to PlayerMotionBody:
    - target direction when combat target is valid;
    - movement/camera heading otherwise.
+   AimFacingPivot mirrors the body automatically as an identity child.
 4. MovementIntentController.update_movement_intent()
 5. MovementPredictionController.update_prediction(delta)
 6. TrajectoryPredictionController.set_actor_position(body.global_position)
 7. TrajectoryPredictionController.update_trajectory(delta)
 8. MovementPhaseController.update_phase(delta)
 9. MotionSelectionPolicy.evaluate(phase, prediction, trajectory)
-10. If query is needed:
+10. If a STOP playback lock is active:
+    a. suppress search-driven clip changes;
+    b. suppress early IDLE changes;
+    c. emit rate-limited STOP_LOCK_SUPPRESSED telemetry;
+    d. jump to step 12.
+11. If query is needed:
     a. MotionMatchingQueryBuilder.update_query()
     b. Validate get_query_report()
     c. Search at throttled interval using the validated arguments
-11. MotionSelectionPolicy.resolve_clip_request(search_result)
-12. AnimationTreeController.apply_clip_request_if_changed()
-13. RootMotionIntegrator.read_root_motion(delta)
-14. PlayerMotionBody.velocity = integrated_world_motion / delta
-15. PlayerMotionBody.move_and_slide()
-16. MotionTelemetry.publish_rate_limited_state()
+12. Resolve at most one accepted ClipRequest this tick. If accepted:
+    a. set dynamic AnimationNodeAnimation clip, timeline, loop mode, and start offset;
+    b. start/travel to the target state;
+    c. call animation_tree.advance(0.0);
+    d. call get_root_motion_position() once and discard it; call get_root_motion_rotation() once if used;
+    e. increment the root-motion generation and clear the pending seek-discard flag.
+13. Call animation_tree.advance(delta) exactly once for this physics tick.
+14. RootMotionIntegrator.read_root_motion(delta) exactly once:
+    a. reject reads with a pending seek-discard flag;
+    b. validate finite values and clamp/discard spikes;
+    c. convert translation with PlayerMotionBody.global_transform.basis;
+    d. apply accepted root rotation to PlayerMotionBody yaw only when no combat target owns facing.
+15. PlayerMotionBody.velocity = integrated_world_motion / delta
+16. PlayerMotionBody.move_and_slide()
+17. MotionTelemetry.publish_rate_limited_state()
 ```
 
 Rules:
 
+- `AnimationTree.callback_mode_process` is `CALLBACK_MODE_PROCESS_MANUAL` (`2`); the director calls `advance(delta)` explicitly. Do not rely on implicit physics callback order.
 - Movement and root motion happen only in `_physics_process()`.
 - No `await` in `_physics_process()`.
 - Native search is not called every physics frame.
-- Root motion is read exactly once per physics frame.
-- Clip switch/seek delta is discarded once, following the proven `root_motion_test.gd` pattern.
+- Dynamic clip changes are applied before `advance(delta)`, never after root-motion extraction.
+- `advance(0.0)` plus one discard read happens only for an accepted switch/seek.
+- Normal root motion is extracted exactly once per physics frame; telemetry and diagnostics must not call `get_root_motion_position()` again.
+- A clip switch/seek delta is discarded once, following the proven `root_motion_test.gd` pattern, with an added generation guard.
 
 ### 7.3 Render frame
 
@@ -365,6 +434,7 @@ Use an `AnimationTree` as the only playback owner.
 Rules:
 
 - Set `animation_tree.active = true` once during setup.
+- Set `animation_tree.callback_mode_process = AnimationTree.CALLBACK_MODE_PROCESS_MANUAL` (`2`). The director calls `advance()`; automatic physics/idle processing is disabled.
 - Set `anim_player` to the character's existing `AnimationPlayer`.
 - Set `root_motion_track` to `NodePath("Armature/Skeleton3D:root")`, matching the database builder and `root_motion_test.gd`.
 - Do not call `AnimationPlayer.play()` from production M9 code.
@@ -391,6 +461,29 @@ The existing `root_motion_test.gd` proves a viable pattern:
 
 M9 should productionize this pattern, not copy its hard-coded velocities, one-state graph, or diagnostic logging.
 
+### 8.2.1 Exact animation/root-motion timing and stale-delta prevention
+
+The following order is mandatory inside one physics tick:
+
+1. Resolve policy and search results into at most one accepted `ClipRequest`.
+2. If a request is accepted, write all dynamic animation parameters first.
+3. Start or travel to the target state.
+4. Call `animation_tree.advance(0.0)` to evaluate the seek/switch state without consuming gameplay delta.
+5. Call `get_root_motion_position()` once to discard the seek delta. If root rotation is enabled, call `get_root_motion_rotation()` once at the same point.
+6. Increment `root_motion_generation`; clear `pending_seek_discard`.
+7. Call `animation_tree.advance(delta)` exactly once to advance normal playback for the tick.
+8. Read normal root motion exactly once and tag it with the current generation.
+9. Convert, validate, and apply it to `PlayerMotionBody`.
+10. Call `move_and_slide()` after velocity is set.
+
+Stale, duplicate, and switch deltas are prevented as follows:
+
+- **Stale deltas:** a switch always performs `advance(0.0)` and a discard read before any normal extraction. `RootMotionIntegrator` refuses normal reads while `pending_seek_discard` is set.
+- **Duplicate deltas:** only `RootMotionIntegrator` may call `get_root_motion_position()` during normal playback. Debug/telemetry code reads cached values only. Godot clears the root-motion accumulator when it is read, so a second read would consume or corrupt the next sample.
+- **Clip-switch deltas:** each accepted switch increments `root_motion_generation`. Samples carrying an older generation are rejected. Multiple requests in one tick are collapsed to one; superseded requests emit `CLIP_REQUEST_SUPERSEDED` and do not cause another seek or discard.
+- **Timing drift:** manual callback mode plus one `advance(delta)` per physics tick removes dependence on engine-internal animation callback order.
+- **Invalid deltas:** non-finite values and spikes above the configured threshold are discarded before reaching `velocity`; counters are emitted through telemetry.
+
 ### 8.3 State machine states
 
 Minimum states:
@@ -401,7 +494,9 @@ Minimum states:
 - `Stop`
 - `Turn`
 
-Each state uses a dynamic `AnimationNodeAnimation` node whose clip can be swapped from `RuntimeAnimationPolicyData` or a validated native result.
+Each state uses a dynamic `AnimationNodeAnimation` node whose clip can be swapped from `RuntimeAnimationPolicyData` or a validated native result. `Idle`, `Start`, `Locomotion`, and `Stop` use reviewed clips from policy data. Only `Locomotion` accepts native sustained-search results.
+
+The `Stop` state is one-shot: `loop_mode = Animation.LOOP_NONE`, `use_custom_timeline = true`, and `timeline_length` equals the reviewed clip duration. It is governed by the STOP playback lock in section 9.4.
 
 For later combat layering, a nested upper-body state machine or `BlendTree` overlay can be added, but M9 should first prove the base locomotion loop.
 
@@ -416,12 +511,14 @@ For later combat layering, a nested upper-body state machine or `BlendTree` over
 
 ### 8.5 Root motion application
 
-- Translate: `world_motion = body.global_transform.basis * root_motion_position`; `velocity = world_motion / delta`.
-- Rotate: read root-motion rotation as telemetry. Apply to body yaw only when no combat target owns facing.
-- Target lock: `CharacterFacingController` owns yaw; root rotation is suppressed for visual/facing stability.
+- `PlayerMotionBody` owns the world transform. Root motion never writes directly to `Visual/Character_01` or `AimFacingPivot`.
+- Translate: `world_motion = PlayerMotionBody.global_transform.basis * root_motion_local`; `velocity = world_motion / delta`. This is the same mapping used by `root_motion_test.gd`.
+- Do not use `Visual/Character_01.global_transform.basis` for conversion. The mesh's static `180-degree` correction is presentation-only and would invert gameplay displacement if treated as the root-motion basis.
+- Rotate: read root-motion rotation as telemetry. Apply accepted rotation only to `PlayerMotionBody` yaw, before `move_and_slide()`, and only when no combat target owns facing.
+- Target lock: `CharacterFacingController` writes body yaw; root rotation is suppressed for visual/facing stability.
 - Free locomotion: root rotation may be blended in only after runtime visual validation.
 - Clamp non-finite or implausible deltas and discard them.
-- If a clip is switched or seeked, discard exactly one root-motion read.
+- If a clip is switched or seeked, discard exactly one root-motion read using the generation guard from section 8.2.1.
 
 ### 8.6 Why query yaw remains zero
 
@@ -432,7 +529,7 @@ M9 handles this without C++ changes by making `AimFacingPivot` the local referen
 - forward motion is `+Z` in that frame;
 - strafe right/left is `+X` / `-X`;
 - backward is `-Z`;
-- target-facing is achieved by rotating the pivot, not by requesting nonzero yaw from the search.
+- target-facing is achieved by writing yaw to `PlayerMotionBody`; `AimFacingPivot` mirrors that yaw as an identity child, so the query frame is rotated without requesting nonzero yaw from the search.
 
 This preserves the validated 3-argument native contract while supporting 360-degree movement directions.
 
@@ -446,8 +543,9 @@ This preserves the validated 3-argument native contract while supporting 360-deg
 | --- | --- | --- |
 | `IDLE -> START` | `RuntimeAnimationPolicyData`, M8.1 standing substitutions | Use reviewed direction-specific start clip. Unsupported left/right/back-diagonal starts report `UNSUPPORTED`; do not substitute unrelated motion. |
 | `START -> SUSTAINED` | Native search result | Begin sustained search once phase is `SUSTAINED`. Use continuous search when available. |
-| `SUSTAINED -> STOP` | `RuntimeAnimationPolicyData`, reviewed stop clips | Use direction-specific reviewed stop clip. Full deceleration is expected, not a defect. |
-| `STOP -> IDLE` | `RuntimeAnimationPolicyData`, reviewed idle clip | Enter idle only after stop completion or phase classification. |
+| `SUSTAINED -> STOP` | `RuntimeAnimationPolicyData`, reviewed stop clips | Use direction-specific reviewed stop clip. Starting STOP acquires a playback lock. The genuine WALK stop plays its full deceleration sequence; it is never truncated by search results or an early IDLE phase. |
+| `STOP -> IDLE` | Reviewed idle clip after STOP lock release | Enter IDLE only after the STOP clip reaches its intended end and resting conditions are satisfied. Phase classification alone cannot release the lock. |
+| Search result during STOP lock | Suppressed by `AnimationTreeController` | Do not apply the clip. Emit rate-limited `STOP_LOCK_SUPPRESSED`; telemetry may still record the rejected result. |
 | `SUSTAINED -> TURN` | `RuntimeAnimationPolicyData`, reviewed turn clips | Use explicit standing pivot or translating reface clip. Native search does not provide turn clips. |
 | `TURN -> SUSTAINED` | Reviewed reface/sustained combination | Prefer translating-turn-to-sustained evidence. Do not force pivot-to-sustained without new visual validation. |
 | Combat strafe direction change | Native sustained search | Keep facing target; change local velocity direction. Do not classify as `TURN` if facing is stable. |
@@ -474,6 +572,38 @@ This preserves the validated 3-argument native contract while supporting 360-deg
 
 Armed state remains `UNKNOWN` for all 718 clips, so combat-armed animation matching is not claimable in M9.
 
+### 9.4 STOP playback lock
+
+`AnimationTreeController` owns a one-shot STOP playback lock. `MotionSelectionPolicy` consults `is_stop_lock_active()` before emitting any clip change.
+
+Lock acquisition:
+
+- Acquire the lock at the same physics-step point where the reviewed STOP clip is accepted.
+- Record `locked_clip_path`, `locked_state = Stop`, `locked_duration`, `lock_start_time`, and `root_motion_generation`.
+- Configure the STOP state as one-shot: `LOOP_NONE`, custom timeline enabled, timeline length equal to the reviewed duration, start offset `0.0`.
+- Perform the normal `advance(0.0)` and discard read for the switch.
+
+While locked:
+
+- Search results may be computed for telemetry but must not change animation state.
+- `MovementPhaseController` may report `IDLE` early; that report must not change animation state.
+- New `START`, `SUSTAINED`, `TURN`, or `IDLE` clip requests are suppressed with `STOP_LOCK_SUPPRESSED` telemetry.
+- User input may resume, but the current STOP clip still finishes its intended deceleration before any new clip is considered.
+- Movement driven by the STOP clip's root motion continues until the lock is released.
+
+Lock release requires both conditions:
+
+1. **Playback completion:** the one-shot STOP clip reaches `duration - epsilon`, or AnimationTree reports the state has stopped.
+2. **Resting conditions:** desired velocity is near zero, the body is grounded or otherwise stable, and no conflicting phase such as `START` or `TURN` is being forced by a separate gameplay event.
+
+After release:
+
+- Clear the lock, return to the reviewed idle clip, and re-enable normal policy/search clip requests.
+- If resting conditions fail after completion, re-evaluate policy normally; do not extend the STOP clip artificially.
+- If the STOP clip is missing or invalid, never acquire a lock; emit `MISSING_STOP_CLIP`, use the safe idle fallback, and record the reason.
+
+This preserves the genuine WALK stop behavior identified in M8: full deceleration playback is a requirement, not an optional polish step.
+
 ---
 
 ## 10. Error handling and fallback behavior
@@ -493,7 +623,13 @@ Armed state remains `UNKNOWN` for all 718 clips, so combat-armed animation match
 | Target lost | `CombatTargetComponent` validity check | Clear lock; trajectory target cleared; facing returns to movement/camera heading. |
 | Root-motion NaN/Inf | Finite checks | Discard delta for that frame; increment telemetry counter. |
 | Root-motion spike | Configurable max m/s threshold | Clamp or discard; log; if repeated, fall back to velocity-driven movement. |
-| Clip switch/seek | `AnimationTreeController` notification | Discard exactly one root-motion read. |
+| Clip switch/seek | `AnimationTreeController` notification | Discard exactly one root-motion read and increment the generation. |
+| Duplicate clip request in one tick | More than one accepted `ClipRequest` before `advance()` | Apply one; emit `CLIP_REQUEST_SUPERSEDED`; do not repeat seek/discard. |
+| Root-motion read with pending seek discard | `pending_seek_discard == true` during normal extraction | Reject the read, return zero motion, and log a timing error. |
+| Search result during STOP lock | `is_stop_lock_active() == true` | Suppress clip change; emit `STOP_LOCK_SUPPRESSED`. |
+| Early IDLE during STOP lock | Phase classifier reports `IDLE` before STOP completion | Suppress clip change; keep the locked STOP clip until playback completion and resting conditions pass. |
+| STOP clip missing or invalid | Policy path missing / invalid duration | Do not acquire lock; emit `MISSING_STOP_CLIP`; use safe idle fallback. |
+| Native instance injected after load started | `database_load_calls > 0` before `set_motion_matching_search()` | Startup validation failure; do not start runtime search. |
 | Release build attempted | Missing release DLL | Report platform/packaging blocker; do not rebuild under M9 constraints. |
 
 ### 10.1 Fallback priority
@@ -516,7 +652,9 @@ Never fall back to:
 ### 11.1 Database and native search
 
 - Load the database once. One native instance only.
-- Inject the same native instance into the existing search controller; do not let two systems each load 62 MB.
+- `MotionSearchSession` creates the instance and injects it through `set_motion_matching_search()` before the first load; the unchanged controller owns the sole `ensure_database_loaded()` call.
+- Set `load_database_on_ready = false` on the runtime scene's search controller. Otherwise the controller can auto-create and load a second native instance in `_ready()` before injection.
+- Assert `database_load_calls == 1` after startup and `controller.motion_matching_search == session.native_search`.
 - Keep search at the validated default interval of `0.2 s` (~5 Hz) until profiling proves a different rate is safe.
 - Do not call native search from `_process()`.
 - Cache search results; avoid calling `get_result()` and `get_top_matches()` repeatedly per frame because they deep-copy dictionaries.
@@ -562,6 +700,10 @@ Initial desktop targets:
 | M8.2 used simple crossfades | Production transition quality is not proven | Add runtime visual pass with actual AnimationTree transitions. |
 | Existing controllers have mixed self-processing defaults | Nondeterministic update order | Director disables self-processing and calls updates explicitly. |
 | Duck-typed `Node` references in existing controllers | Refactor fragility | Preserve expected methods/properties exactly; add adapter validation at startup. |
+| `load_database_on_ready` left enabled in the new scene | Controller can create/load its own native instance before session injection, producing two instances or two loads | Set the exported flag to `false` in the new scene and assert `database_load_calls == 1`. |
+| Implicit AnimationTree callback ordering | Root motion could be read one tick early/late or twice | Use manual callback mode and director-owned `advance(delta)`, validated in M9.3. |
+| Static 180-degree visual correction is changed or moved | Visual facing and root-motion direction can diverge | Keep the correction on `Visual/Character_01`; startup assertion checks it; never convert root motion with the visual basis. |
+| STOP lock held too long or released too early | Genuine WALK deceleration can be truncated or gameplay can feel stuck | Require both clip playback completion and resting conditions; validate both in M9.4. |
 | New AnimationTree graph is required | Runtime authoring effort | Build new scene/resources only; do not modify diagnostic scenes. |
 
 ---
@@ -599,6 +741,8 @@ Each stage must be independently testable. No stage should depend on an unproven
 **Acceptance criteria**
 
 - Scene runs standalone with `CharacterBody3D`, capsule collision, character GLB, and camera rig.
+- `PlayerMotionBody` is the only node with authoritative world yaw; `AimFacingPivot` is an identity child.
+- `Visual/Character_01` retains the existing 180-degree local yaw correction; no runtime code writes its transform.
 - SpringArm3D has a world/environment collision mask.
 - WASD produces normalized camera-relative intent for all eight directions.
 - Direction error for cardinal/diagonal scripted inputs is at most 5 degrees after deadzone.
@@ -619,6 +763,7 @@ Each stage must be independently testable. No stage should depend on an unproven
 **Acceptance criteria**
 
 - All self-processing flags are disabled by the director; asserted in validation.
+- Runtime scene sets `load_database_on_ready = false`; startup reports `database_load_calls == 1`.
 - Scripted input produces valid query reports for eight directions.
 - Every query has exactly 3 future displacements and finite `Vector3` values.
 - `allow_identity_fallback` remains false; missing facing reference is rejected, not silently converted.
@@ -639,13 +784,27 @@ Each stage must be independently testable. No stage should depend on an unproven
 **Acceptance criteria**
 
 - Runtime code makes zero direct `AnimationPlayer.play()` calls.
+- AnimationTree uses `CALLBACK_MODE_PROCESS_MANUAL`; no implicit animation callback advances playback.
 - Dynamic clip path, duration, loop mode, and start offset are set from validated result data.
 - Every selected clip has a valid runtime mapping; 0 unmapped selections.
-- On clip switch, `advance(0.0)` and one discard root-motion read occur exactly once.
+- Exactly one `advance(delta)` occurs per physics tick; instrumentation counter matches tick count.
+- On clip switch, `advance(0.0)` occurs exactly once and one discard root-motion read occurs exactly once.
+- Root motion normal extraction occurs exactly once per physics tick; `get_root_motion_position()` call count equals normal tick reads plus switch-discard reads, with no extra telemetry reads.
+- A forced stale read while `pending_seek_discard` is set is rejected and applies zero motion.
+- Duplicate clip requests in one tick produce one switch/discard and one `CLIP_REQUEST_SUPERSEDED` telemetry event.
 - Root motion moves the `CharacterBody3D`; after 5 simulated seconds, integrated displacement error against accumulated root motion is at most 5%.
 - No non-finite root-motion delta reaches `velocity`.
 - Character remains on the ground plane in scripted tests.
 - Existing `root_motion_test.tscn` is unchanged.
+
+**Dedicated M9.3 timing validation**
+
+- Add a new M9-only headless validator, not an edit to any existing validation scene.
+- It must record an ordered event log for at least 120 scripted physics ticks: `clip_request`, `advance_zero`, `discard_root_motion`, `advance_delta`, `extract_root_motion`, `move_and_slide`.
+- It must assert that every switch event has the exact subsequence `clip_request -> advance_zero -> discard_root_motion -> advance_delta -> extract_root_motion -> move_and_slide`.
+- It must assert that non-switch ticks have the exact subsequence `advance_delta -> extract_root_motion -> move_and_slide`.
+- It must assert one generation increment per accepted switch and zero generation increments for same-clip continuous decisions.
+- It must assert that `PlayerMotionBody.global_transform.basis`, not `Visual/Character_01.global_transform.basis`, was used for the conversion path by checking the resulting displacement sign against a scripted forward-motion case.
 
 ---
 
@@ -661,7 +820,11 @@ Each stage must be independently testable. No stage should depend on an unproven
 - Scripted `Idle -> Start -> Sustained -> Stop -> Idle` produces the exact phase sequence.
 - Each phase selects a clip from the reviewed policy data, not from native search.
 - Standing requests never select crouch-family clips.
-- The genuine walk stop plays its full deceleration sequence.
+- Starting the genuine WALK STOP acquires a playback lock with the reviewed clip duration.
+- The full STOP deceleration plays to `duration - epsilon`; no search result, new input, or early `IDLE` phase shortens it.
+- During STOP lock, every rejected clip change emits `STOP_LOCK_SUPPRESSED` telemetry.
+- IDLE is selected only after STOP playback completion and resting conditions are both true.
+- A missing or invalid STOP clip emits `MISSING_STOP_CLIP`, never acquires a lock, and falls back to safe idle.
 - The four unsupported walk starts emit explicit `UNSUPPORTED` telemetry and do not select unrelated clips.
 - Curved/unsupported-speed/turn-angle fallbacks emit explicit reasons.
 - AnimationTree `travel()` is used for state changes; no `auto_advance` is enabled.
@@ -701,7 +864,10 @@ Each stage must be independently testable. No stage should depend on an unproven
 **Acceptance criteria**
 
 - Exactly one `MotionMatchingSearch` instance owns the loaded database.
-- Existing search controller receives that same instance via its unchanged API.
+- Runtime scripts contain exactly one `MotionMatchingSearch.new()` call, located in `MotionSearchSession`.
+- Existing search controller receives that same instance via its unchanged `set_motion_matching_search()` API.
+- Startup reports `controller.motion_matching_search == session.native_search` and `database_load_calls == 1`.
+- Session never calls native `load_database()`; a static runtime-script check confirms this.
 - Same-clip continuous-search results do not restart the clip.
 - Different-clip results use the returned phase/time correctly.
 - Simulated database failure, invalid query, missing clip, search failure, NaN root motion, and root-motion spike each produce a logged fallback and no crash.
