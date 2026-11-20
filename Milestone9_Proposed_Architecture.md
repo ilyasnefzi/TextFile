@@ -339,7 +339,7 @@ The existing controllers have inconsistent defaults:
 | `PlayerMotionBody` (`CharacterBody3D`) | **Yes** | Sole authoritative world transform. All gameplay yaw writes land here. `move_and_slide()` uses this transform. |
 | `AimFacingPivot` (`Node3D`) | No | Identity local child of `PlayerMotionBody`. Its global yaw mirrors the body. Used only as `facing_reference`; never independently translated or rotated. |
 | `Visual/Character_01` | No | Presentation-only GLB instance. Keeps the existing static `180-degree` local yaw correction. No runtime code writes its transform. |
-| `AnimationTree` | No | Playback/root-motion source only. Configured with `root_node = ../Character_01` and `root_motion_track = Armature/Skeleton3D:root`, matching the diagnostic. It is not a gameplay facing frame. |
+| `AnimationTree` | No | Playback/root-motion source only. Configured with `root_node = NodePath("../Character_01")`, `anim_player = NodePath("../Character_01/AnimationPlayer")`, and `root_motion_track = NodePath("Armature/Skeleton3D:root")`, matching the diagnostic. These two NodePaths are resolved from the `AnimationTree` node itself, so the sibling `Character_01` requires `..`. It is not a gameplay facing frame. |
 | `RootMotionIntegrator` | No | Converts raw root-motion vectors using `PlayerMotionBody.global_transform.basis`, matching `root_motion_test.gd`. It does not use the visual mesh basis. |
 
 Synchronization rule: when `CharacterFacingController` changes facing, it changes `PlayerMotionBody` yaw. Because `AimFacingPivot` is an identity child, the prediction/query frame follows automatically. Because `Visual/Character_01` keeps only its static mesh correction, the visual mesh remains aligned with that logical frame without adding another runtime yaw source. Because root motion is converted by the body basis rather than the visual basis, the existing `180-degree` correction cannot leak into gameplay displacement.
@@ -349,7 +349,8 @@ Startup validation must assert:
 - `AimFacingPivot.get_parent() == PlayerMotionBody`;
 - `AimFacingPivot.transform` is identity within tolerance;
 - `Visual/Character_01` local basis still represents the existing `180-degree` yaw correction;
-- `AnimationTree.root_node` and `root_motion_track` match the diagnostic configuration;
+- `AnimationTree.root_node == NodePath("../Character_01")` and `AnimationTree.anim_player == NodePath("../Character_01/AnimationPlayer")`;
+- `AnimationTree.root_motion_track == NodePath("Armature/Skeleton3D:root")`;
 - `PlayerMotionBody` has unit scale, so its basis is safe for root-motion conversion.
 
 ---
@@ -370,11 +371,11 @@ The new `AnimationTree` uses manual callback mode. The director is the only sour
 0. Consume queued ClipRequests only inside this physics step. Never apply a clip from _process() or from a signal callback.
 1. Apply camera yaw/pitch to the camera rig transform.
 2. Update CombatTargetComponent validity.
-3. CharacterFacingController computes desired yaw and writes it to PlayerMotionBody:
+3. MovementIntentController.update_movement_intent()
+4. CharacterFacingController computes desired yaw and writes it to PlayerMotionBody using the current intent or a valid combat target:
    - target direction when combat target is valid;
-   - movement/camera heading otherwise.
+   - current movement/camera heading otherwise.
    AimFacingPivot mirrors the body automatically as an identity child.
-4. MovementIntentController.update_movement_intent()
 5. MovementPredictionController.update_prediction(delta)
 6. TrajectoryPredictionController.set_actor_position(body.global_position)
 7. TrajectoryPredictionController.update_trajectory(delta)
@@ -409,6 +410,7 @@ The new `AnimationTree` uses manual callback mode. The director is the only sour
 Rules:
 
 - `AnimationTree.callback_mode_process` is `CALLBACK_MODE_PROCESS_MANUAL` (`2`); the director calls `advance(delta)` explicitly. Do not rely on implicit physics callback order.
+- Facing is resolved after `MovementIntentController.update_movement_intent()` so it uses current-tick intent. Only `PlayerMotionBody` yaw is written; `AimFacingPivot` remains an identity child and there is no second yaw authority.
 - Movement and root motion happen only in `_physics_process()`.
 - No `await` in `_physics_process()`.
 - Native search is not called every physics frame.
@@ -435,8 +437,8 @@ Rules:
 
 - Set `animation_tree.active = true` once during setup.
 - Set `animation_tree.callback_mode_process = AnimationTree.CALLBACK_MODE_PROCESS_MANUAL` (`2`). The director calls `advance()`; automatic physics/idle processing is disabled.
-- Set `anim_player` to the character's existing `AnimationPlayer`.
-- Set `root_motion_track` to `NodePath("Armature/Skeleton3D:root")`, matching the database builder and `root_motion_test.gd`.
+- Set `root_node` to `NodePath("../Character_01")` and `anim_player` to `NodePath("../Character_01/AnimationPlayer")`. With the proposed hierarchy, `AnimationTree` and `Character_01` are siblings under `Visual`; Godot resolves both NodePaths from the `AnimationTree` node itself, so `../Character_01` is required.
+- Set `root_motion_track` to `NodePath("Armature/Skeleton3D:root")`, matching the database builder and `root_motion_test.gd`. This path is unchanged.
 - Do not call `AnimationPlayer.play()` from production M9 code.
 - Use state-machine `travel()` or explicit state start through `AnimationNodeStateMachinePlayback`.
 - Use relative parameter paths such as `parameters/StateMachine/...`.
