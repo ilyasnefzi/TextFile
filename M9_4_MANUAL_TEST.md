@@ -2,7 +2,9 @@
 
 **Status:** manual testing checklist only. Automated headless validation lives in `M9/M9_4/m9_4_validation.gd` and does **not** prove visual blend quality. M9.4 remains **unaccepted until this checklist is completed by a human tester**.
 
-**Latest finding:** manual Test 1 passed the default sequence but reported a clearly visible pose snap at `RUN START → sustained RUN`. A headless pose probe measured the cause: the old speed-only release left START at `0.800 s`, whose pose differs from loop phase `0.000 s` by `24.04 deg` RMS (`87.63 deg` max, worst bone `calf_l`). The sampled START frame at `2.733 s` matches loop phase `0.000 s` at `1.93 deg` RMS (`6.20 deg` max). The same probe found the native switch entering loop phase `1.900 s` and interrupting the configured `0.12 s` `StartMove → Run` crossfade one frame early. The implemented fix releases at the reviewed final START frame, waits for the full crossfade, and aligns the first native handoff to reviewed loop phase `0.000 s`. Automated evidence is recorded in `M9_4_ARCHITECTURE_INTERPRETATION.md`; visual acceptance still requires the retest below.
+**Latest finding:** manual Test 1 passed the default sequence but reported a clearly visible pose snap at `RUN START → sustained RUN`. A headless pose probe measured the cause: the old speed-only release left START at `0.800 s`, whose pose differs from loop phase `0.000 s` by `24.04 deg` RMS (`87.63 deg` max, worst bone `calf_l`). The sampled START frame at `2.733 s` matches loop phase `0.000 s` at `1.93 deg` RMS (`6.20 deg` max). The same probe found the native switch entering loop phase `1.900 s` and interrupting the configured `0.12 s` `StartMove → Run` crossfade one frame early. The implemented fix releases at the reviewed final START frame, waits for the full crossfade, and aligns the first native handoff to reviewed loop phase `0.000 s`. The user then confirmed the default RUN transition appears visually correct.
+
+**Current finding:** manual Test 2 still reports a noticeable pose snap at `WALK START → sustained WALK`. A separate headless WALK probe measured the same class of cause with independently sampled evidence: the old speed-only rule released START at `0.400 s`, whose pose differs from loop phase `0.000 s` by `24.26 deg` RMS (`91.61 deg` max, worst bone `ik_hand_l`). The sampled START frame at `0.983333 s` matches loop phase `0.000 s` at `0.57 deg` RMS (`2.87 deg` max, worst bone `foot_l`); root speed there is `1.8302 m/s` versus the sustained `1.8314 m/s`. The native switch was applying searched loop phase `3.1667 s`, which differs from loop phase `0.000 s` by `15.28 deg` RMS / `37.81 deg` max. The implemented WALK fix releases at the measured `0.9833 s` frame and aligns the first native handoff to reviewed loop phase `0.000 s`; it does not copy RUN timing. Automated evidence is recorded in `M9_4_ARCHITECTURE_INTERPRETATION.md`; visual acceptance still requires the WALK retest below.
 
 **Playable scene:** `res://M9/M9_4/m94_playable_scene.tscn`
 
@@ -78,20 +80,41 @@ Issues: ___________________________________________________________
 
 ---
 
-## 2. IDLE → WALK START → WALK (hold C)
+## 2. IDLE → WALK START → WALK (hold C) — snap-fix retest
 
-1. From IDLE, hold `C` first, then press and hold `move_forward`.
-2. Keep `C` held through START and into sustained locomotion.
+This is the primary regression for manual Test 2. Retest from a clean scene start; do not rely on the default RUN result.
+
+1. Let the character idle for at least 2 seconds.
+2. Hold `C` first. Confirm telemetry shows `gait=WALK`, `masked_sprint=ON`, `phase=IDLE`, `eff=IDLE`, `playback=Idle`, and `node=Idle`.
+3. Press and hold `move_forward` once. Do not tap-release-tap.
+4. Confirm telemetry shows `playback=Start` and `node=StartMove` with `Walk/M Neutral Walk Start F Rfoot_fit_Armature_048`, `compat=COMPATIBLE`, and `START hold=ON [WALK]`.
+5. Keep holding and watch the whole handoff window. The hold must remain `ON` until START elapsed reaches about `0.983 s`; it must **not** release at `0.400 s` as before.
+6. Confirm the release event is `start_hold_released reviewed_final_pose`, with `pose_continuity_reviewed=true` and `elapsed_s` at or just above `0.9833`.
+7. Confirm the next reviewed entry is `Walk/M Neutral Walk Loop F_fit_Armature_112` on node `Run` while logical playback remains `Run`. This is the frame that previously snapped; verify the pose, foot contacts, and knee/calf angle carry across continuously.
+8. Continue holding. After the configured `StartMove → Run` crossfade has completed, confirm a `native_handoff_phase_aligned` event followed by `clip_request Run -> RunNative [native_search]` and `node=RunNative`.
+9. On the handoff telemetry line, confirm `xfade=0.120`, `aligned=YES`, `applied_t=0.000`, and a nonzero `search_t` (for example `3.167`). The native search result is still recorded; M9.4 deliberately applies reviewed loop phase `0.000 s` so the same WALK clip does not jump to search phase.
+10. Hold for several seconds of sustained WALK and confirm no recurrent pose, foot, yaw, or root-motion pop.
+
+Expected 60 Hz headless evidence: START release at tick `65` (`elapsed=0.983333`), reviewed loop entry at tick `65`, first native handoff at tick `74` with `crossfade_elapsed_s=0.150000 >= configured_crossfade_s=0.120`, `search_start_time=3.166667`, `applied_start_time=0.000000`, and `reviewed_entry_phase=0.0`. Root speed is `1.8302 m/s` immediately before handoff and `1.8314 m/s` after it, accumulated forward root motion is monotonic, and body yaw stays at `-180 deg`. The recorded clip-end `handoff=` delta remains `+0.3662 m/s` metadata; it is not a physical velocity jump. Wall-clock ticks in the editor may differ; the hold reason, release frame, event order, crossfade completion, applied phase, and pose continuity are the required evidence.
 
 - [ ] Telemetry shows `gait=WALK` and `masked_sprint=ON`.
 - [ ] `Walk/M Neutral Walk Start F Rfoot_fit_Armature_048` plays on `StartMove`.
-- [ ] `START hold=ON [WALK]` releases by `sustained_speed_matched` at `1.8314 m/s`.
+- [ ] `START hold=ON [WALK]` holds to the measured pose frame, not the old speed release.
+- [ ] `start_hold_released reviewed_final_pose` is observed at about `0.983 s` with reviewed pose continuity.
 - [ ] `Walk/M Neutral Walk Loop F_fit_Armature_112` is the reviewed sustained entry on node `Run`.
-- [ ] `handoff=` shows `+0.3662 m/s` and `status=HANDOFF_SPEED_MATCHED`.
+- [ ] The `WALK START → WALK` handoff has no visible pose snap, foot snap, or knee/calf jump.
+- [ ] The `Run → RunNative` switch has no one-frame pose/foot snap.
+- [ ] Root speed, accumulated motion, and yaw remain continuous through both switches.
+- [ ] Native telemetry shows `xfade=0.120`, `aligned=YES`, and `applied_t=0.000`.
+- [ ] `handoff=` still shows the recorded `+0.3662 m/s` and `status=HANDOFF_SPEED_MATCHED`.
 - [ ] Native sustained playback still reaches `RunNative`.
 - [ ] No RUN START or SPRINT clip appears.
 
 Observed clip/state/handoff: _______________________________________
+
+Observed START hold elapsed / release reason / handoff delta: _______
+
+Observed `xfade` / `aligned` / `search_t` / `applied_t`: ____________
 
 Issues: ___________________________________________________________
 
