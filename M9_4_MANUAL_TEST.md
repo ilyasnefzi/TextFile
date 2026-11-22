@@ -6,6 +6,8 @@
 
 **Current finding:** manual Test 2 still reports a noticeable pose snap at `WALK START → sustained WALK`. A separate headless WALK probe measured the same class of cause with independently sampled evidence: the old speed-only rule released START at `0.400 s`, whose pose differs from loop phase `0.000 s` by `24.26 deg` RMS (`91.61 deg` max, worst bone `ik_hand_l`). The sampled START frame at `0.983333 s` matches loop phase `0.000 s` at `0.57 deg` RMS (`2.87 deg` max, worst bone `foot_l`); root speed there is `1.8302 m/s` versus the sustained `1.8314 m/s`. The native switch was applying searched loop phase `3.1667 s`, which differs from loop phase `0.000 s` by `15.28 deg` RMS / `37.81 deg` max. The implemented WALK fix releases at the measured `0.9833 s` frame and aligns the first native handoff to reviewed loop phase `0.000 s`; it does not copy RUN timing. Automated evidence is recorded in `M9_4_ARCHITECTURE_INTERPRETATION.md`; visual acceptance still requires the WALK retest below.
 
+**New finding (manual Test 3):** sustained WALK → RUN on `C` release still snapped even though the gait policy switch was continuous. Headless measurement confirmed the policy changed at tick `101` with root speed unchanged at `1.8314 m/s`, but at tick `109` the native WALK loop was replaced inside the same `RunNative` node by a same-state `start()` reset. That produced a one-frame root-speed jump from `1.8314` to `4.5785 m/s` and a `26.78 deg` RMS / `102.80 deg` max pose delta. Phase alignment alone was insufficient: the best single-frame WALK/RUN pose match still left `19.56 deg` RMS / `71.75 deg` max IK-bone error. The fix gives sustained WALK its own `WalkNative` node and uses a real travel-enabled `WalkNative -> RunNative` state-machine crossfade of `0.24 s` with a measured RUN loop entry phase of `1.400 s` (raw search `1.900 s`). The final production probe measured `3.35 deg` RMS / `17.19 deg` max peak per-frame pose error and a `0.5087 m/s` maximum root-speed step across the `1.8314 -> 4.5785 m/s` ramp. Visual acceptance still requires the Test 3 retest below.
+
 **Playable scene:** `res://M9/M9_4/m94_playable_scene.tscn`
 
 **Purpose:** visually verify the RUN-default gait policy, WALK/SPRINT transitions, phase-aware transition feel, root motion, and interruption behavior that cannot be proven by deterministic scripted checks.
@@ -91,7 +93,7 @@ This is the primary regression for manual Test 2. Retest from a clean scene star
 5. Keep holding and watch the whole handoff window. The hold must remain `ON` until START elapsed reaches about `0.983 s`; it must **not** release at `0.400 s` as before.
 6. Confirm the release event is `start_hold_released reviewed_final_pose`, with `pose_continuity_reviewed=true` and `elapsed_s` at or just above `0.9833`.
 7. Confirm the next reviewed entry is `Walk/M Neutral Walk Loop F_fit_Armature_112` on node `Run` while logical playback remains `Run`. This is the frame that previously snapped; verify the pose, foot contacts, and knee/calf angle carry across continuously.
-8. Continue holding. After the configured `StartMove → Run` crossfade has completed, confirm a `native_handoff_phase_aligned` event followed by `clip_request Run -> RunNative [native_search]` and `node=RunNative`.
+8. Continue holding. After the configured `StartMove → Run` crossfade has completed, confirm a `native_handoff_phase_aligned` event followed by `clip_request Run -> WalkNative [native_search]` and `node=WalkNative`.
 9. On the handoff telemetry line, confirm `xfade=0.120`, `aligned=YES`, `applied_t=0.000`, and a nonzero `search_t` (for example `3.167`). The native search result is still recorded; M9.4 deliberately applies reviewed loop phase `0.000 s` so the same WALK clip does not jump to search phase.
 10. Hold for several seconds of sustained WALK and confirm no recurrent pose, foot, yaw, or root-motion pop.
 
@@ -103,11 +105,11 @@ Expected 60 Hz headless evidence: START release at tick `65` (`elapsed=0.983333`
 - [ ] `start_hold_released reviewed_final_pose` is observed at about `0.983 s` with reviewed pose continuity.
 - [ ] `Walk/M Neutral Walk Loop F_fit_Armature_112` is the reviewed sustained entry on node `Run`.
 - [ ] The `WALK START → WALK` handoff has no visible pose snap, foot snap, or knee/calf jump.
-- [ ] The `Run → RunNative` switch has no one-frame pose/foot snap.
+- [ ] The `Run → WalkNative` switch has no one-frame pose/foot snap.
 - [ ] Root speed, accumulated motion, and yaw remain continuous through both switches.
 - [ ] Native telemetry shows `xfade=0.120`, `aligned=YES`, and `applied_t=0.000`.
 - [ ] `handoff=` still shows the recorded `+0.3662 m/s` and `status=HANDOFF_SPEED_MATCHED`.
-- [ ] Native sustained playback still reaches `RunNative`.
+- [ ] Native sustained playback still reaches `WalkNative`.
 - [ ] No RUN START or SPRINT clip appears.
 
 Observed clip/state/handoff: _______________________________________
@@ -120,19 +122,37 @@ Issues: ___________________________________________________________
 
 ---
 
-## 3. WALK release while moving → RUN
+## 3. WALK release while moving → RUN — snap-fix retest
 
-1. Hold `C` + `WASD` until sustained WALK is playing.
+This is the primary regression for manual Test 3. Retest from sustained WALK; do not rely on Test 2 alone.
+
+1. Hold `C` + `WASD` until sustained WALK is playing. Confirm telemetry shows `gait=WALK`, `phase=SUSTAINED`, `node=WalkNative`, and the WALK loop clip.
 2. Keep movement held and release `C` only.
-3. Observe the next 12–30 frames.
+3. Confirm telemetry shows `change=WALK>RUN` exactly once and the phase sequence does **not** return to `IDLE` or `START`.
+4. Confirm one `gait_native_crossfade` event with `from_node=WalkNative`, `to_node=RunNative`, `from_gait=WALK`, and `to_gait=RUN`. This is the frame that previously snapped inside a single node.
+5. On that event line confirm `xfade=0.240`, `search_t=1.900`, and `applied_t=1.400`. The native search result is recorded unchanged; M9.4 applies the measured stability phase `1.400 s` for this curated loop pair. It is not a START handoff value.
+6. Confirm the RUN loop request is `Run/M Neutral Run Loop F_fit_Armature_114` on `node=RunNative` from `native_search` with `phase_aligned=YES`.
+7. Confirm logical playback remains `Run`, prediction target returns to `4.5 m/s`, and sustained thresholds return to RUN values (`2.5 / 1.6`).
+8. Confirm root speed ramps from `1.8314 m/s` to `4.5785 m/s` over the crossfade rather than jumping in one frame, and accumulated root motion keeps advancing forward with no reversal.
+9. Confirm no visible pose pop, IK-foot snap, foot slide, yaw jump, or camera pop at the switch frame. A visible acceleration is expected; an instantaneous teleport or single-frame pose snap is a defect.
+
+Expected 60 Hz headless evidence: gait change at tick `101` with root speed still `1.8314 m/s`, `gait_native_crossfade` at tick `109` from `WalkNative` to `RunNative` with `search_t=1.900`, `applied_t=1.400`, and `xfade=0.240`. Peak per-frame pose error is `3.3524 deg` RMS / `17.1895 deg` max; max root-speed step is `0.5087 m/s` across the `1.8314 -> 4.5785 m/s` ramp. Wall-clock ticks in the editor may differ; the node pair, event fields, applied phase, no IDLE/START replay, and continuous speed ramp are the required evidence.
 
 - [ ] Active gait changes from `WALK` to `RUN` exactly once; telemetry shows `change=WALK>RUN`.
 - [ ] Phase sequence does **not** return to `IDLE`.
 - [ ] Phase sequence does **not** return to `START`; no START clip is replayed.
-- [ ] Logical playback remains `Run`; native sustained continues on `RunNative`.
+- [ ] Sustained WALK plays on `WalkNative` before the switch.
+- [ ] A `gait_native_crossfade` event logs `WalkNative -> RunNative` with `xfade=0.240`, `search_t=1.900`, and `applied_t=1.400`.
+- [ ] Logical playback remains `Run`; sustained playback ends on `RunNative` from `native_search`.
 - [ ] Prediction target returns to `4.5 m/s` and sustained thresholds return to RUN values.
-- [ ] No clip flicker or one-frame pose pop at the gait switch.
+- [ ] Root speed ramps continuously; no one-frame jump from `1.8314 m/s` to RUN speed.
+- [ ] Accumulated root motion stays monotonic with no reversal or teleport.
+- [ ] No clip flicker, IK-bone spike, foot snap, yaw jump, or camera pop at the gait switch.
 - [ ] A visible acceleration toward RUN speed is acceptable; an instantaneous teleport is a defect.
+
+Observed crossfade event / `search_t` / `applied_t` / `xfade`: ______________
+
+Observed root-speed ramp / pose continuity: ______________________________
 
 Issues: ___________________________________________________________
 
